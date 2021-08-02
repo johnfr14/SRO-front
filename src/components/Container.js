@@ -11,7 +11,6 @@ function Container({ children, className }) {
       >
         {children}
       </section>
-      ;
     </>
   );
 }

@@ -1,53 +1,22 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { Button } from "./index";
 
 const Header = () => (
   <div className="flex flex-col justify-between px-6 py-8 space-y-8 md:space-y-0 md:flex-row md:px-10 md:py-10">
     <div className="flex flex-row items-center justify-between">
-      <NavLink
-        to="/"
-        className="text-white hover:text-primary-200 transition duration-300 bg-gradient-to-br rounded-xl hover:opacity-75"
-      >
-        XSRO
-      </NavLink>
-      <NavLink
-        to="/"
-        className="text-black px-8 py-3 transition duration-300 bg-gradient-to-br  from-primary-200 to-primary-200 rounded-xl hover:opacity-75 md:hidden"
-      >
+      <Button target={"/"}>XSRO</Button>
+      <Button target={"/"} buttonStyle className={"md:hidden"}>
         Create NFT
-      </NavLink>
+      </Button>
     </div>
     <div className="flex flex-row items-center justify-around text-sm sm:space-x-12 sm:mx-auto md:mx-0">
-      <NavLink
-        to="/"
-        className="text-white hover:text-primary-200 transition duration-300 bg-gradient-to-br rounded-xl hover:opacity-75"
-      >
-        Marketplace
-      </NavLink>
-      <NavLink
-        to="/"
-        className="text-white hover:text-primary-200 transition duration-300 bg-gradient-to-br rounded-xl hover:opacity-75"
-      >
-        Dashboard
-      </NavLink>
-      <NavLink
-        to="/"
-        className="text-white hover:text-primary-200 transition duration-300 bg-gradient-to-br rounded-xl hover:opacity-75"
-      >
-        Community
-      </NavLink>
-      <NavLink
-        to="/"
-        className="text-white hover:text-primary-200 transition duration-300 bg-gradient-to-br rounded-xl hover:opacity-75"
-      >
-        Ressources
-      </NavLink>
-      <NavLink
-        to="/"
-        className="hidden text-black px-8 py-3 transition duration-300 bg-gradient-to-br  from-primary-200 to-primary-200 rounded-xl hover:opacity-75 md:block"
-      >
+      <Button target={"/"}>Marketplace</Button>
+      <Button target={"/"}>Dashboard</Button>
+      <Button target={"/"}>Community</Button>
+      <Button target={"/"}>Ressources</Button>
+      <Button target={"/"} buttonStyle className={"hidden md:block"}>
         Create NFT
-      </NavLink>
+      </Button>
     </div>
   </div>
 );
