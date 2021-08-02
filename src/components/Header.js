@@ -20,7 +20,7 @@ const Header = () => (
         Create NFT
       </Button>
       {/* Test add "noLogged" to see the button*/}
-      <Login />
+      <Login noLogged />
     </div>
   </div>
 );
