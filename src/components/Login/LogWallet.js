@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 import metamaskIcon from "../../images/icons/metamask.svg";
 
-function LogWallet() {
+function LogWallet({ className }) {
   let [isOpen, setIsOpen] = useState(false);
 
   function closeModal() {

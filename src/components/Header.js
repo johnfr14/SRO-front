@@ -5,9 +5,7 @@ const Header = () => (
   <div className="flex flex-col justify-between px-6 py-8 space-y-8 md:space-y-0 md:flex-row md:px-10 md:py-10">
     <div className="flex flex-row items-center justify-between">
       <Button target={"/"}>XSRO</Button>
-      <Button target={"/"} buttonStyle className={"md:hidden"}>
-        Create NFT
-      </Button>
+      <Login noLogged className={"md:hidden"} />
     </div>
     <div className="flex flex-row items-center justify-around text-sm sm:space-x-5 sm:mx-auto md:mx-0">
       <Button target={"/"}>Marketplace</Button>
@@ -20,7 +18,7 @@ const Header = () => (
         Create NFT
       </Button>
       {/* Test add "noLogged" to see the button*/}
-      <Login noLogged />
+      <Login className={"hidden md:block"} />
     </div>
   </div>
 );
