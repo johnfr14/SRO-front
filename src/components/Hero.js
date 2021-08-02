@@ -3,7 +3,7 @@ import { Divider } from "./index";
 function Hero() {
   return (
     <>
-      <div className="">
+      <div>
         <div className="md:mx-8">
           <p className="mb-2 text-3xl font-bold text-left text-white">
             TOP liked
@@ -11,7 +11,7 @@ function Hero() {
         </div>
         <Divider className="ml:mx-8 mb-2" />
       </div>
-      <div className="">
+      <div>
         <div className="md:mx-8">
           <p className="mb-2 text-3xl font-bold text-left text-white">
             Market Place
