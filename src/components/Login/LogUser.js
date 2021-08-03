@@ -9,7 +9,7 @@ import userIcon from "../../images/icons/user.svg";
 const profile = [
   {
     name: "My items",
-    url: "/",
+    url: "/user",
   },
   {
     name: "Edit profile",
@@ -72,6 +72,7 @@ export default function LogUser() {
                       {({ active }) => (
                         <NavLink
                           to={item.url}
+                          key={item}
                           className={classNames(
                             active ? "bg-gray-100" : "",
                             "block px-4 py-2 text-sm text-black-700"

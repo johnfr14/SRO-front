@@ -1,5 +1,5 @@
 import { Switch, Route, Redirect } from "react-router-dom";
-import { HomePage } from "./pages";
+import { HomePage, OwnedPage } from "./pages";
 import "./App.css";
 
 function App() {
@@ -7,6 +7,7 @@ function App() {
     <>
       <Switch>
         <Route exact path="/" component={HomePage} />
+        <Route exact path="/user" component={OwnedPage} />
         <Redirect to="/" />
       </Switch>
     </>

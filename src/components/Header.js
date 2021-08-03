@@ -9,7 +9,7 @@ const Header = () => (
     </div>
     <div className="flex flex-row items-center justify-around text-sm sm:space-x-5 sm:mx-auto md:mx-0">
       <Button target={"/"}>Marketplace</Button>
-      <Button target={"/"}>Dashboard</Button>
+      <Button target={"/user"}>Dashboard</Button>
       <Button target={"/"}>Community</Button>
       <Button target={"/"} className={"hidden md:block"}>
         Ressources
