@@ -1,3 +1,5 @@
 import BannerInfos from "./BannerInfos";
+import TabZone from "./TabZone";
+import Noitems from "./Noitems";
 
-export { BannerInfos };
+export { BannerInfos, TabZone, Noitems };

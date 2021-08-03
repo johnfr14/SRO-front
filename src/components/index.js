@@ -5,6 +5,16 @@ import Hero from "./Hero";
 import Divider from "./Divider";
 import Button from "./Button";
 import { Login } from "./Login";
-import { BannerInfos } from "./UserMainPage/index";
+import { BannerInfos, TabZone } from "./UserMainPage/index";
 
-export { Header, Footer, Container, Hero, Divider, Button, Login, BannerInfos };
+export {
+  Header,
+  Footer,
+  Container,
+  Hero,
+  Divider,
+  Button,
+  Login,
+  BannerInfos,
+  TabZone,
+};
