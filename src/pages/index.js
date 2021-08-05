@@ -1,4 +1,5 @@
+import EditProfile from "./EditProfile";
 import HomePage from "./Home";
 import OwnedPage from "./OwnedPage";
 
-export { HomePage, OwnedPage };
+export { EditProfile, HomePage, OwnedPage };
