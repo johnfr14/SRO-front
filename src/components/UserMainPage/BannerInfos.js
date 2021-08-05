@@ -29,7 +29,7 @@ const BannerInfos = () => {
         <div className="w-full">
           <div className="items-center relative">
             <div className="mb-10 absolute top-5 right-0">
-              <Button target={"/"} buttonStyle>
+              <Button target={"/settings"} buttonStyle>
                 Edit Profile
               </Button>
             </div>
