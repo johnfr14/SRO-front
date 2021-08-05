@@ -13,7 +13,7 @@ const profile = [
   },
   {
     name: "Edit profile",
-    url: "/",
+    url: "/settings",
   },
   {
     name: "Dark Themes",
