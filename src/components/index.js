@@ -6,6 +6,7 @@ import Divider from "./Divider";
 import Button from "./Button";
 import { Login } from "./Login";
 import { BannerInfos, TabZone } from "./UserMainPage/index";
+import Card from "./Card/Card";
 
 export {
   Header,
@@ -17,4 +18,5 @@ export {
   Login,
   BannerInfos,
   TabZone,
+  Card,
 };

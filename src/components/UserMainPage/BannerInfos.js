@@ -2,12 +2,11 @@ import { Link } from "react-router-dom";
 import { Button } from "../index";
 
 import "../../css/userProfil.css";
-import userBanner from "../../images/banner.png";
-import userPicture from "../../images/user.png";
+import { bannerTest, userTest } from "../../images/";
 
 const BannerInfos = () => {
   const styleBanner = {
-    backgroundImage: `url('${userBanner}')`,
+    backgroundImage: `url('${bannerTest}')`,
   };
 
   return (
@@ -20,7 +19,7 @@ const BannerInfos = () => {
           <div className="bYqeUY left-5">
             <div className="dWVFoH">
               <div className="cNAXjx">
-                <img alt="" className="kffNNE" src={userPicture} />
+                <img alt="" className="kffNNE" src={userTest} />
               </div>
             </div>
           </div>

@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { Tab } from "@headlessui/react";
-import { Link } from "react-router-dom";
 
 import { Noitems } from "./index";
+import { Card } from "../index";
+
 import "../../css/userTab.css";
 
 function classNames(...classes) {
@@ -15,7 +16,7 @@ export default function TabZone() {
       {
         id: 1,
         name: "On sale",
-        component: <Noitems />,
+        component: <Card />,
       },
     ],
     Owned: [

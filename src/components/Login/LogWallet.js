@@ -2,7 +2,7 @@ import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
 import { Link } from "react-router-dom";
 
-import metamaskIcon from "../../images/icons/metamask.svg";
+import { metamaskIcon } from "../../images/";
 
 function LogWallet({ className }) {
   let [isOpen, setIsOpen] = useState(false);
