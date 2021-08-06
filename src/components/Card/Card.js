@@ -1,23 +1,29 @@
-import { Link } from "react-router-dom";
 import { ProfilList, DotMenu, MediaCard } from "./index";
 import "../../css/card.css";
 
 import { userTest } from "../../images/";
 
-const Card = () => {
-  {
-    /* const styleCardMedia = {
-    backgroundImage: `url('${cardMedia}')`,
-  };
-  */
-  }
+const cardMedia =
+  "https://img.rarible.com/prod/image/upload/t_preview/prod-itemImages/0xd07dc4262bcdbf85190c01c996b4c06a461d2430:8207";
 
+const Card = ({
+  mediaURL = cardMedia,
+  name = "NAME",
+  price = "0.05",
+  unity = "ETH",
+  linkToNFT,
+  linkToProfil,
+}) => {
   return (
     <div className="max-w-xs bg-gray-900 shadow-lg rounded-xl p-2 border-2 border-gray-200 border-opacity-25 pb-5 relative">
       <div className="iHLBIg">
         <div className="flex bAGyCr">
           <ProfilList tipData="Collection: SRO" linkTo="/" />
-          <ProfilList tipData="Owner: 0x00000" userIcon={userTest} linkTo="/" />
+          <ProfilList
+            tipData="Owner: 0x00000"
+            userIcon={userTest}
+            linkTo={linkToProfil}
+          />
         </div>
         <div className="z-10">
           <DotMenu />
@@ -44,16 +50,18 @@ const Card = () => {
                 </svg>
               </button>
             </div>
-            {/* MediaCardJS */}
-            <MediaCard />
+            <MediaCard mediaURL={mediaURL} linkTo={linkToNFT} />
           </div>
           <div className="flex-auto justify-evenly ml-4 mr-4">
             <div className="flex flex-wrap ">
               <div className="flex items-center w-full justify-between min-w-0 ">
                 <h2 className="text-lg mr-auto cursor-pointer text-gray-200 hover:text-yellow-500 truncate font-black	">
-                  Name Name Name Name Name Name Name
+                  {name}
                 </h2>
               </div>
+            </div>
+            <div class=" text-white font-semibold mt-1">
+              {price + " " + unity}
             </div>
           </div>
         </div>
