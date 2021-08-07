@@ -1,12 +1,11 @@
 import React from 'react'
 import Layout from "../../components/Layout";
+import { Container, Erc721Nft } from "../../components/index";
 
 const CreateErc721 = () => {
   return (
     <Layout>
-      <div className="text-white">
-        Interface ERC721
-      </div>
+      <Container children={<Erc721Nft />} />
     </Layout>
   )
 }
