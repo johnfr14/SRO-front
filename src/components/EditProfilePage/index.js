@@ -1,3 +1,4 @@
+import AvatarSettings from "./AvatarSettings";
 import SettingsInfo from "./SettingsInfo";
 
-export { SettingsInfo };
+export { AvatarSettings, SettingsInfo };
