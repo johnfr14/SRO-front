@@ -14,7 +14,7 @@ const Header = () => (
       <Button target={"/"} className={"hidden md:block"}>
         Ressources
       </Button>
-      <Button target={"/"} buttonStyle className={"hidden md:block"}>
+      <Button target={"/create/erc721"} buttonStyle className={"hidden md:block"}>
         Create NFT
       </Button>
       {/* Test add "noLogged" to see the button*/}
