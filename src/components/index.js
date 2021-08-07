@@ -1,22 +1,24 @@
-import Header from "./Header";
-import Footer from "./Footer";
-import Container from "./Container";
-import Hero from "./Hero";
-import Divider from "./Divider";
-import Button from "./Button";
-import { Login } from "./Login";
 import { BannerInfos, TabZone } from "./UserMainPage/index";
+import Button from "./Button";
 import Card from "./Card/Card";
+import Container from "./Container";
+import Divider from "./Divider";
+import Footer from "./Footer";
+import Header from "./Header";
+import Hero from "./Hero";
+import { Login } from "./Login";
+import { SettingsInfo } from "./EditProfilePage/index"
 
 export {
-  Header,
-  Footer,
-  Container,
-  Hero,
-  Divider,
-  Button,
-  Login,
   BannerInfos,
-  TabZone,
+  Button,
   Card,
+  Container,
+  Divider,
+  Footer,
+  Header,
+  Hero,
+  Login,
+  SettingsInfo,
+  TabZone,
 };
