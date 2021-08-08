@@ -20,8 +20,8 @@ const NftPrice = () => {
           placeholder="Enter price for one piece"
         />
       </div>
-      <p className="text-white pt-4">Service fee 2.5%</p>
-      <p className="text-white py-4">You will receive xxx ETH $XXX</p>
+      <p className="text-xs text-white pt-4">Service fee 2.5%</p>
+      <p className="text-xs text-white py-4">You will receive xxx ETH $XXX</p>
     </>
   );
 }

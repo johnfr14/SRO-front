@@ -19,6 +19,7 @@ const UploadFile = () => {
               </Button>
             </div>
           </div>
+          <p className="text-xs text-red-500 ml-2 mb-2">"File" is required</p>
         </div>
       </div>
     </div>
