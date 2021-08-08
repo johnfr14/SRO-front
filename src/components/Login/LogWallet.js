@@ -1,3 +1,5 @@
+import { Web3Context } from "web3-hooks";
+import { useContext, useEffect } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
 import { Link } from "react-router-dom";
@@ -6,6 +8,7 @@ import { metamaskIcon } from "../../images/";
 
 function LogWallet({ className }) {
   let [isOpen, setIsOpen] = useState(false);
+  const [web3State, login] = useContext(Web3Context);
 
   function closeModal() {
     setIsOpen(false);
@@ -14,6 +17,12 @@ function LogWallet({ className }) {
   function openModal() {
     setIsOpen(true);
   }
+
+  useEffect(() => {
+    if (!!web3State.isLogged) {
+      closeModal()
+    }
+  }, [web3State.isLogged])
 
   return (
     <>
@@ -67,8 +76,8 @@ function LogWallet({ className }) {
                 </Dialog.Title>
                 <div className="mt-4">
                   <div className="relative grid gap-8 bg-white pt-2">
-                    <a
-                      href="/"
+                    <button
+                      onClick={() => login()}
                       className="flex items-center p-2 -m-3 transition duration-150 ease-in-out rounded-lg hover:bg-gray-50 focus:outline-none focus-visible:ring focus-visible:ring-orange-500 focus-visible:ring-opacity-50"
                     >
                       <div className="flex items-center justify-center flex-shrink-0 w-10 h-10 text-white sm:h-12 sm:w-12">
@@ -84,7 +93,7 @@ function LogWallet({ className }) {
                           Connect using browser wallet
                         </p>
                       </div>
-                    </a>
+                    </button>
                   </div>
                   <div className="pt-10 bg-gray-50">
                     <span className="flex items-center">
