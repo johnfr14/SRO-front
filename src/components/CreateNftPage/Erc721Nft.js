@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
-import { PreviewFile, NftPrice, SwitchToggle, UploadFile } from '.'
+import { PreviewFile, NftPrice, UploadFile } from '.'
+import { SwitchToggle } from '../index'
 import { Button } from "../index";
 
 const Erc721Nft = () => {

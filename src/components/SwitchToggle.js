@@ -1,5 +1,5 @@
 import React from 'react'
-import "../../css/switchToggle.css"
+import "../css/switchToggle.css"
 import cx from "classnames"
 
 const SwitchToggle = ({ rounded = true, isToggled, onToggle }) => {
