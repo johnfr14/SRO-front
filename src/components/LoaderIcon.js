@@ -1,7 +1,7 @@
 import React from 'react'
-import "../css/loader.css"
+import "../css/loaderIcon.css"
 
-const Loader = () => {
+const LoaderIcon = () => {
   return (
     <div>
       <div className="svg-loader pr-4">
@@ -14,4 +14,4 @@ const Loader = () => {
   )
 }
 
-export default Loader
+export default LoaderIcon
