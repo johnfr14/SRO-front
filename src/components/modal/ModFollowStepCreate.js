@@ -1,8 +1,8 @@
 import React from 'react'
-import { Button, Loader } from '../'
-import { deleteIcon, checkmarkIcon } from "../../images/";
+import { Button, Loader } from '..'
+import { deleteIcon, checkmarkIcon } from "../../images";
 
-const FollowStepModal = () => {
+const ModFollowStepCreate = () => {
   return (
     <div className="bg-gradient-to-b from-black to-gray-700 flex justify-center items-center py-5">
       <div className="bg-gray-700 rounded-lg">
@@ -57,4 +57,4 @@ const FollowStepModal = () => {
   )
 }
 
-export default FollowStepModal
+export default ModFollowStepCreate

@@ -1,3 +1,3 @@
-import FollowStepModal from "./FollowStepModal"
+import ModFollowStepCreate from "./ModFollowStepCreate"
 
-export { FollowStepModal };
+export { ModFollowStepCreate };
