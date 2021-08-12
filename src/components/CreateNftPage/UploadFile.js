@@ -5,7 +5,7 @@ const UploadFile = () => {
   return (
     <div>
       <div className="container mx-auto max-w-screen-lg h-full">
-        <div aria-label="File Upload Modal" className="relative h-full flex flex-col bg-gray-900 shadow-xl rounded-md" >
+        <div aria-label="File Upload Modal" className="relative h-full flex flex-col bg-gray-900 shadow-xl rounded-md mt-3 border-2 border-gray-200 border-opacity-25 pb-3 relative" >
           <div className="h-full overflow-auto py-5 px-24 w-full h-full flex flex-col">
             <h1 className="text-2xl text-white font-semibold text-center pt-1 pb-4">
               Upload File
@@ -18,8 +18,8 @@ const UploadFile = () => {
                 Upload a file
               </Button>
             </div>
+            <p className="text-xs text-red-500 mt-2">"File" is required</p>
           </div>
-          <p className="text-xs text-red-500 ml-2 mb-2">"File" is required</p>
         </div>
       </div>
     </div>
