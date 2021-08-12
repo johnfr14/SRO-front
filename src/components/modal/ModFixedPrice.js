@@ -2,9 +2,7 @@ import React from 'react'
 import { Button, TokenPrice } from '..'
 
 const ModFixedPrice = () => {
-  const handleDestinationChange = (event) => {
-    console.log(`Vous avez choisi ${event.target.value}`);
-  };
+
   return (
     <div className="bg-gradient-to-b from-black to-gray-700 flex justify-center items-center py-5">
       <div className="bg-gray-700 rounded-lg">
@@ -30,9 +28,6 @@ const ModFixedPrice = () => {
       </div>
     </div >
   )
-
-
-
 };
 
 export default ModFixedPrice
