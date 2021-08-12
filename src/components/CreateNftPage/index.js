@@ -2,6 +2,5 @@ import Erc721Nft from "./Erc721Nft";
 import NftPrice from "./NftPrice";
 import PreviewFile from "./PreviewFile";
 import UploadFile from "./UploadFile";
-import FollowSteps from "./modal/FollowSteps";
 
-export { Erc721Nft, FollowSteps, NftPrice, PreviewFile, UploadFile };
+export { Erc721Nft, NftPrice, PreviewFile, UploadFile };
