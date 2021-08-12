@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { PreviewFile, NftPrice, UploadFile } from '.'
 import { SwitchToggle } from '../index'
-import { Button } from "../index";
+
 
 const Erc721Nft = () => {
 
@@ -70,9 +70,11 @@ const Erc721Nft = () => {
           </p>
         </div>
         <div className="mt-10">
-          <Button target={""} buttonStyle>
-            Create item
-          </Button>
+
+
+
+
+
         </div>
       </div>
     </div>
