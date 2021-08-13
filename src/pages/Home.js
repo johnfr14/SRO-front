@@ -1,11 +1,11 @@
 import Layout from "../components/Layout";
-import { Container, Hero } from "../components/index";
+import { Container, MarketPlace } from "../components/index";
 
 function IndexPage() {
   return (
     <>
       <Layout>
-        <Container children={<Hero />} className="h-screen" />
+        <Container children={<MarketPlace />} className="h-screen" />
       </Layout>
     </>
   );
