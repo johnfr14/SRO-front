@@ -51,15 +51,12 @@ const NftBuy = () => {
                 <CollectionCard />
               </div>
             </div>
-
             <div className="flex items-center justify-center mb-5 mt-8">
               <a href="#royalties" className="  px-5 py-3 text-center bg-gray-400 text-white hover:bg-gray-200 hover:text-black font-bold rounded-lg text-sm">10% of sales will go to creator</a>
             </div>
             <div>
               <TabZoneBuyNft />
             </div>
-
-
             <div className="flex items-center justify-center mb-5 mt-8 space-x-10">
               <Button target={""} buttonStyle>
                 Buy for {priceNft} {SymboleNft}
@@ -68,12 +65,6 @@ const NftBuy = () => {
                 Coming Soon
               </Button>
             </div>
-
-
-
-
-
-
           </div>
         </div>
       </div >
