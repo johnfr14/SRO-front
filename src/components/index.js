@@ -12,6 +12,7 @@ import Hero from "./Hero";
 import LoaderIcon from "./LoaderIcon";
 import { Login } from "./Login";
 import { NftBuy, NftViewBuy, TabZoneBuyNft } from "./BuyNftPage/index"
+import { NftSale, NftViewSale, TabZoneSaleNft } from "./SaleNftPage";
 import TokenPrice from "./TokenPrice";
 import SwitchToggle from "./SwitchToggle"
 
@@ -39,12 +40,15 @@ export {
   ModFollowStepSale,
   ModPurchase,
   NftBuy,
+  NftSale,
   NftViewBuy,
+  NftViewSale,
   Noitems,
   OwnerCard,
   PreviewFile,
   ProfilList,
   TabZoneBuyNft,
+  TabZoneSaleNft,
   TokenPrice,
   SettingsInfo,
   SwitchToggle,

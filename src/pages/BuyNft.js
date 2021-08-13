@@ -6,7 +6,7 @@ const BuyNft = () => {
   return (
     <>
       <Layout>
-        <Container children={<NftBuy />} className="h-screen" />
+        <Container children={<NftBuy />} />
       </Layout>
     </>
   )
