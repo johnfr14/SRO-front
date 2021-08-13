@@ -1,11 +1,18 @@
-import React from 'react'
+import { MediaCard } from "../index";
+import "../../css/card.css";
 
-const NftViewSale = () => {
+const cardMedia =
+  "https://img.rarible.com/prod/image/upload/t_preview/prod-itemImages/0xd07dc4262bcdbf85190c01c996b4c06a461d2430:8207";
+
+const NftViewSale = ({
+  mediaURL = cardMedia,
+  linkToNFT,
+}) => {
   return (
-    <div>
-      Interface NftViewSale
+    <div className="">
+      <MediaCard mediaURL={mediaURL} linkTo={linkToNFT} />
     </div>
-  )
-}
+  );
+};
 
-export default NftViewSale
+export default NftViewSale;
