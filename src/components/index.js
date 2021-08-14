@@ -8,9 +8,9 @@ import { Erc721Nft, PreviewFile, UploadFile } from "./CreateNftPage"
 import { ModCheckout, ModFixedPrice, ModFollowStepCreate, ModFollowStepSale, ModPurchase } from "./Modal";
 import Footer from "./Footer";
 import Header from "./Header";
-import Hero from "./Hero";
 import LoaderIcon from "./LoaderIcon";
 import { Login } from "./Login";
+import { MarketPlace } from "./HomePage";
 import { NftBuy, NftViewBuy, TabZoneBuyNft } from "./BuyNftPage/index"
 import { NftSale, NftViewSale, TabZoneSaleNft } from "./SaleNftPage";
 import TokenPrice from "./TokenPrice";
@@ -30,9 +30,9 @@ export {
   Erc721Nft,
   Footer,
   Header,
-  Hero,
   LoaderIcon,
   Login,
+  MarketPlace,
   MediaCard,
   ModCheckout,
   ModFixedPrice,
