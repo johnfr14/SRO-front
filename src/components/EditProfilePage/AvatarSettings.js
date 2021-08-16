@@ -20,7 +20,7 @@ const AvatarSettings = () => {
                 Select Avatar
               </Button>
               <p className="mt-3 text-sm text-white pt-5">
-                We recommend an image of at least 400x400. Gifs work too.
+                We recommend an image of at least 400x400.
               </p>
             </div>
           </div>

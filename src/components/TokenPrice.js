@@ -1,13 +1,12 @@
 import React from 'react'
 
-const NftPrice = () => {
+const TokenPrice = () => {
   const handleDestinationChange = (event) => {
     console.log(`Vous avez choisi ${event.target.value}`);
   };
 
   return (
-    <>
-      <h2 className="text-2xl text-white font-semibold pt-4 pb-4">Price</h2>
+    <div >
       <div className="flex">
         <select class="text-sm border border-2 rounded-l px-4 py-2 bg-gray-300 whitespace-no-wrap" onChange={handleDestinationChange}>
           <option>ETH</option>
@@ -20,11 +19,12 @@ const NftPrice = () => {
           placeholder="Enter price for one piece"
         />
       </div>
-      <p className="text-xs text-white pt-4">Service fee 2.5%</p>
-      <p className="text-xs text-white py-4">You will receive xxx ETH $XXX</p>
-    </>
-  );
+      <div className="text-xs text-white">
+        <p className="pt-4">Service fee 2.5%</p>
+        <p >You will receive xxx ETH $XXX</p>
+      </div>
+    </div>
+  )
 }
 
-export default NftPrice
-
+export default TokenPrice
