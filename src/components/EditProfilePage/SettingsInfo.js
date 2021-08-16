@@ -1,8 +1,14 @@
-import React from 'react'
+import { useForm } from 'react-hook-form'
 import { AvatarSettings } from './index'
-import { Button } from "../index";
+import classnames from "classnames";
 
 const SettingsInfo = () => {
+  const { register, handleSubmit, formState: { errors } } = useForm();
+
+  const onSubmit = async (data) => {
+    console.log(data)
+  }
+
   return (
     <div className="mb-20">
       <div className="container mx-auto">
@@ -14,7 +20,7 @@ const SettingsInfo = () => {
         <div className="flex  items-center  " >
           <AvatarSettings />
           <div className="container mx-auto max-w-screen-lg h-full">
-            <div className=" relative h-full flex flex-col bg-gray-900 shadow-xl rounded-md mt-3 border-2 border-gray-200 border-opacity-25 pb-3 relative">
+            <form onSubmit={handleSubmit(onSubmit)} className=" relative h-full flex flex-col bg-gray-900 shadow-xl rounded-md mt-3 border-2 border-gray-200 border-opacity-25 pb-3 relative">
               <div className=" ml-24 items-center justify-center">
                 <label className="block uppercase tracking-wide text-white text-xl font-bold mb-2 mt-5">
                   Display name
@@ -24,6 +30,7 @@ const SettingsInfo = () => {
                     className="appearance-none block w-full bg-gray-900 text-white border border-gray-400 shadow-inner rounded-md py-3 px-4  leading-tight focus:outline-none  focus:border-gray-500"
                     type="text"
                     placeholder="Enter your display name"
+                    {...register("name")}
                   />
                 </div>
               </div>
@@ -36,6 +43,7 @@ const SettingsInfo = () => {
                     className="appearance-none block w-full bg-gray-900 text-white border border-gray-400 shadow-inner rounded-md py-3 px-4  leading-tight focus:outline-none  focus:border-gray-500"
                     type="text"
                     placeholder="Tell about yourself in a few words"
+                    {...register("bio")}
                   />
                 </div>
               </div>
@@ -53,7 +61,9 @@ const SettingsInfo = () => {
                     type="text"
                     className="flex-shrink flex-grow flex-auto leading-normal w-px flex-1 bg-gray-900 text-white border border-gray-400 shadow-inner rounded-md py-3 px-4 focus:outline-none  focus:border-gray-500"
                     placeholder="Enter your custom URL"
+                    {...register("url", { pattern: /^[A-Za-z]+$/i })}
                   />
+                  {errors.url && "Wrong syntaxe, only alphabet character accepted (a)"}
                 </div>
               </div>
               <div className=" ml-24 mr-24 items-center justify-center">
@@ -67,6 +77,7 @@ const SettingsInfo = () => {
                   className="appearance-none block w-full bg-gray-900 text-white border border-gray-400 shadow-inner rounded-md py-3 px-4 leading-tight focus:outline-none  focus:border-gray-500"
                   type="text"
                   placeholder="@pseudo"
+                  {...register("twitterName")}
                 />
               </div>
               <div className=" ml-24 mr-24 items-center justify-center">
@@ -77,14 +88,18 @@ const SettingsInfo = () => {
                   className="appearance-none block w-full bg-gray-900 text-white border border-gray-400 shadow-inner rounded-md py-3 px-4 leading-tight focus:outline-none  focus:border-gray-500"
                   type="text"
                   placeholder="https://"
+                  {...register("portfolio")}
                 />
               </div>
               <div className="flex items-center justify-center mb-5 mt-8">
-                <Button target={""} buttonStyle>
-                  Update Profile
-                </Button>
+                <input type="submit" className={classnames(
+                      "transition duration-300 bg-gradient-to-br rounded-xl hover:opacity-75",
+                      "text-black px-8 py-3 from-primary-200 to-primary-200" ||
+                      "text-white hover:text-primary-200"
+                      )} value="Update profile"
+                />
               </div>
-            </div>
+            </form>
           </div>
         </div>
       </div>
