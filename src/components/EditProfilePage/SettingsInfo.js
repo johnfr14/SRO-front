@@ -10,22 +10,9 @@ const SettingsInfo = () => {
   const [web3State] = useContext(Web3Context);
   const { userState } = useUser()
   const { register, handleSubmit, formState: { errors } } = useForm();
-  console.log(userState.user.address === '')
 
   const onSubmit = async (data) => {
     try {
-      if (userState.user.address === '') {
-        axios.get(`http://localhost:5000/create_user/${web3State.account}`)
-        .then((response) => {
-          axios.post(`http://localhost:5000/edit_profile/${web3State.account}`, {
-            name: data.name,
-            bio: data.bio,
-            url: data.url,
-            twitterName: data.twitterName,
-            portfolio: data.portfolio,
-          })
-        }) 
-      }
       axios.post(`http://localhost:5000/edit_profile/${web3State.account}`, {
         name: data.name,
         bio: data.bio,

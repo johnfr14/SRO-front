@@ -33,11 +33,11 @@ export const UserContextProvider = ({children}) => {
         }
     }
 
-    if(web3State.isLogged) {
+    if(!web3State.account.startsWith("0x000")) {
         dispatch({type: 'FETCH_INIT'})
         getAccount()
     }
-  }, [web3State.isLogged, web3State.account]) 
+  }, [web3State.account]) 
 
   
   return (
