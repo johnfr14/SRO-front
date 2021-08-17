@@ -7,12 +7,15 @@ export const UserContext = createContext()
 
 const initialState = {
   user: {
-    address: "",
-    name: "",
-    bio: "",
-    url: "",
-    twitterName: "",
-    portfolio: "",
+    address: ""
+  },  
+  profile: {
+    address: null,
+    name: null,
+    bio: null,
+    url: null,
+    twitterName: null,
+    portfolio: null,
   },
   loading: false,
   error: "",
@@ -26,13 +29,11 @@ export const UserContextProvider = ({children}) => {
     const getAccount = async () => {
         try {
           const result = await axios.get(`http://localhost:5000/user_by_address/${web3State.account}`)
-          console.log(result)
-          dispatch({type: 'FETCH_SUCCESS', payload: result})
+          dispatch({type: 'FETCH_SUCCESS', payload: result.data.payload})
         } catch (e) {
             dispatch({type: 'FETCH_FAILURE', payload: e.message})
         }
     }
-
     if(!web3State.account.startsWith("0x000")) {
         dispatch({type: 'FETCH_INIT'})
         getAccount()
