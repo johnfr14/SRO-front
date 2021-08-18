@@ -10,11 +10,20 @@ const SettingsInfo = () => {
   const [web3State] = useContext(Web3Context);
   const { userState, dispatch } = useUser();
   const { register, watch, handleSubmit, formState: { errors } } = useForm();
+  
+  console.log(watch())
+
 
   const onSubmit = async () => {
     try {
       const result = await axios.post(`https://bdd-sro.herokuapp.com/edit_profile/${web3State.account}`, {
-        data: watch()
+        data: {
+          username: watch().username || null,
+          bio: watch().bio || null,
+          url: watch().url || null,
+          twitterUsername: watch().twitterUsername || null,
+          portfolio: watch().portfolio || null,
+        }
       })
       dispatch({type: "UPDATE_PROFILE", payload: result.data.payload})
     } catch (e) {
@@ -30,7 +39,7 @@ const SettingsInfo = () => {
           You can set preferred display name, create your branded profile
           URL and manage other personal settings
         </p>
-        {userState.profile.id && <div className="flex  items-center  " >
+        {userState.profile.id && <div className="flex  items-center" >
           <AvatarSettings />
           <div className="container mx-auto max-w-screen-lg h-full">
             <form onSubmit={handleSubmit(onSubmit)} className=" relative h-full flex flex-col bg-gray-900 shadow-xl rounded-md mt-3 border-2 border-gray-200 border-opacity-25 pb-3 relative">
