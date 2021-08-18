@@ -13,7 +13,7 @@ const SettingsInfo = () => {
 
   const onSubmit = async () => {
     try {
-      const result = await axios.post(`http://localhost:5000/edit_profile/${web3State.account}`, {
+      const result = await axios.post(`https://bdd-sro.herokuapp.com/edit_profile/${web3State.account}`, {
         data: watch()
       })
       dispatch({type: "UPDATE_PROFILE", payload: result.data.payload})
