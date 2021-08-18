@@ -16,7 +16,7 @@ const SettingsInfo = () => {
       const result = await axios.post(`http://localhost:5000/edit_profile/${web3State.account}`, {
         data: watch()
       })
-      dispatch({type: "UPDATE_PROFILE", payload: result})
+      dispatch({type: "UPDATE_PROFILE", payload: result.data.payload})
     } catch (e) {
       console.error(e)
     }
@@ -30,7 +30,7 @@ const SettingsInfo = () => {
           You can set preferred display name, create your branded profile
           URL and manage other personal settings
         </p>
-        <div className="flex  items-center  " >
+        {userState.profile.id && <div className="flex  items-center  " >
           <AvatarSettings />
           <div className="container mx-auto max-w-screen-lg h-full">
             <form onSubmit={handleSubmit(onSubmit)} className=" relative h-full flex flex-col bg-gray-900 shadow-xl rounded-md mt-3 border-2 border-gray-200 border-opacity-25 pb-3 relative">
@@ -98,7 +98,7 @@ const SettingsInfo = () => {
                   placeholder="@pseudo"
                   defaultValue={userState.profile.twitterUsername}
                   value={watch().twitterUsername}
-                  {...register("twitterUserName")}
+                  {...register("twitterUsername")}
                 />
               </div>
               <div className=" ml-24 mr-24 items-center justify-center">
@@ -124,7 +124,7 @@ const SettingsInfo = () => {
               </div>
             </form>
           </div>
-        </div>
+        </div>}
       </div>
     </div>
 
