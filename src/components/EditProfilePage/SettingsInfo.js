@@ -1,25 +1,22 @@
-import { useForm } from 'react-hook-form'
 import { useContext } from "react"
+import { AvatarSettings } from './index'
+import { useForm } from 'react-hook-form'
 import { useUser } from '../../context/UserContext';
 import { Web3Context } from "web3-hooks";
-import { AvatarSettings } from './index'
 import classnames from "classnames";
 import axios from 'axios';
 
 const SettingsInfo = () => {
   const [web3State] = useContext(Web3Context);
   const { userState, dispatch } = useUser();
-  const { register, handleSubmit, formState: { errors } } = useForm();
-  const onSubmit = async (data) => {
+  const { register, watch, handleSubmit, formState: { errors } } = useForm();
+
+  const onSubmit = async () => {
     try {
       const result = await axios.post(`http://localhost:5000/edit_profile/${web3State.account}`, {
-        userName: data.userName || userState.profile.username || null,
-        bio: data.bio || userState.profile.bio || null,
-        url: data.url || userState.profile.url || null,
-        twitterUserName: data.twitterUserName || userState.profile.twitterUsername || null,
-        portfolio: data.portfolio || userState.profile.portfolio || null,
+        data: watch()
       })
-      dispatch({type: "UPDATE_PROFILE", payload: result})
+      dispatch({type: "UPDATE_PROFILE", payload: result.data.payload})
     } catch (e) {
       console.error(e)
     }
@@ -33,7 +30,7 @@ const SettingsInfo = () => {
           You can set preferred display name, create your branded profile
           URL and manage other personal settings
         </p>
-        <div className="flex  items-center  " >
+        {userState.profile.id && <div className="flex  items-center  " >
           <AvatarSettings />
           <div className="container mx-auto max-w-screen-lg h-full">
             <form onSubmit={handleSubmit(onSubmit)} className=" relative h-full flex flex-col bg-gray-900 shadow-xl rounded-md mt-3 border-2 border-gray-200 border-opacity-25 pb-3 relative">
@@ -45,8 +42,10 @@ const SettingsInfo = () => {
                   <input
                     className="appearance-none block w-full bg-gray-900 text-white border border-gray-400 shadow-inner rounded-md py-3 px-4  leading-tight focus:outline-none  focus:border-gray-500"
                     type="text"
-                    placeholder={userState.profile.username || "Enter your display name"}
-                    {...register("userName")}
+                    placeholder="Enter your display name"
+                    defaultValue={userState.profile.username}
+                    value={watch().username}
+                    {...register("username")}
                   />
                 </div>
               </div>
@@ -58,7 +57,9 @@ const SettingsInfo = () => {
                   <input
                     className="appearance-none block w-full bg-gray-900 text-white border border-gray-400 shadow-inner rounded-md py-3 px-4  leading-tight focus:outline-none  focus:border-gray-500"
                     type="text"
-                    placeholder={userState.profile.bio || "Tell about yourself in a few words"}
+                    placeholder="Tell about yourself in a few words"
+                    defaultValue={userState.profile.bio}
+                    value={watch().bio}
                     {...register("bio")}
                   />
                 </div>
@@ -76,7 +77,9 @@ const SettingsInfo = () => {
                   <input
                     type="text"
                     className="flex-shrink flex-grow flex-auto leading-normal w-px flex-1 bg-gray-900 text-white border border-gray-400 shadow-inner rounded-md py-3 px-4 focus:outline-none  focus:border-gray-500"
-                    placeholder={userState.profile.url || "Enter your custom URL"}
+                    placeholder="Enter your custom URL"
+                    defaultValue={userState.profile.url}
+                    value={watch().url}
                     {...register("url", { pattern: /^[A-Za-z0-9]+$/i })}
                   />
                   {errors.url && "Wrong syntaxe, only alphabet character accepted (a)"}
@@ -92,8 +95,10 @@ const SettingsInfo = () => {
                 <input
                   className="appearance-none block w-full bg-gray-900 text-white border border-gray-400 shadow-inner rounded-md py-3 px-4 leading-tight focus:outline-none  focus:border-gray-500"
                   type="text"
-                  placeholder={userState.profile.twitterUsername || "@pseudo"}
-                  {...register("twitterUserName")}
+                  placeholder="@pseudo"
+                  defaultValue={userState.profile.twitterUsername}
+                  value={watch().twitterUsername}
+                  {...register("twitterUsername")}
                 />
               </div>
               <div className=" ml-24 mr-24 items-center justify-center">
@@ -103,7 +108,9 @@ const SettingsInfo = () => {
                 <input
                   className="appearance-none block w-full bg-gray-900 text-white border border-gray-400 shadow-inner rounded-md py-3 px-4 leading-tight focus:outline-none  focus:border-gray-500"
                   type="text"
-                  placeholder={userState.profile.portfolio || "https://"}
+                  placeholder="https://"
+                  defaultValue={userState.profile.portfolio}
+                  value={watch().portfolio}
                   {...register("portfolio")}
                 />
               </div>
@@ -117,7 +124,7 @@ const SettingsInfo = () => {
               </div>
             </form>
           </div>
-        </div>
+        </div>}
       </div>
     </div>
 
