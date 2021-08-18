@@ -1,8 +1,8 @@
-import { useForm } from 'react-hook-form'
 import { useContext } from "react"
+import { AvatarSettings } from './index'
+import { useForm } from 'react-hook-form'
 import { useUser } from '../../context/UserContext';
 import { Web3Context } from "web3-hooks";
-import { AvatarSettings } from './index'
 import classnames from "classnames";
 import axios from 'axios';
 
