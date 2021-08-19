@@ -28,7 +28,7 @@ export const UserContextProvider = ({children}) => {
   useEffect(() => {
     const getAccount = async () => {
         try {
-          const result = await axios.get(`http://localhost:5000/user_by_address/${web3State.account}`)
+          const result = await axios.get(`https://bdd-sro.herokuapp.com/user_by_address/${web3State.account}`)
           dispatch({type: 'FETCH_SUCCESS', payload: result.data.payload})
         } catch (e) {
             dispatch({type: 'FETCH_FAILURE', payload: e.message})
