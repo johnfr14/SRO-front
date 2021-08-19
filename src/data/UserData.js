@@ -10,8 +10,13 @@ export const UserData = () => {
 
   const data = {
     address: web3State.account.substr(0, 6) + "..." + web3State.account.substr(-4),
+    id: userState.profile.id,
     username: userState.profile.username,
-    bio: userState.bio,
+    bio: userState.profile.bio,
+    url: userState.profile.url,
+    twitterUsername: userState.profile.twitterUsername,
+    portfolio: userState.profile.portfolio,
+    avatar: userState.profile.avatar,
   }
   
   return data

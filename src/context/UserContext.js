@@ -16,6 +16,7 @@ const initialState = {
     url: null,
     twitterName: null,
     portfolio: null,
+    avatar: null,
   },
   loading: false,
   error: "",
@@ -29,9 +30,9 @@ export const UserContextProvider = ({children}) => {
     const getAccount = async () => {
         try {
           const result = await axios.get(`https://bdd-sro.herokuapp.com/user_by_address/${web3State.account}`)
-          
           dispatch({type: 'FETCH_SUCCESS', payload: result.data.payload})
         } catch (e) {
+          console.log(e)
           dispatch({type: 'FETCH_FAILURE', payload: e.message})
         }
     }
