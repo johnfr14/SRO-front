@@ -29,9 +29,10 @@ export const UserContextProvider = ({children}) => {
     const getAccount = async () => {
         try {
           const result = await axios.get(`https://bdd-sro.herokuapp.com/user_by_address/${web3State.account}`)
+          
           dispatch({type: 'FETCH_SUCCESS', payload: result.data.payload})
         } catch (e) {
-            dispatch({type: 'FETCH_FAILURE', payload: e.message})
+          dispatch({type: 'FETCH_FAILURE', payload: e.message})
         }
     }
     if(!web3State.account.startsWith("0x000")) {
@@ -55,3 +56,4 @@ export const useUser = () => {
   }
   return context
 }
+

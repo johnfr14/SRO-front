@@ -6,13 +6,11 @@ import { Web3Context } from "web3-hooks";
 import classnames from "classnames";
 import axios from 'axios';
 
+// @TODO: toast pour l'update du profil ( dans la fonction "onSubmit()")
 const SettingsInfo = () => {
   const [web3State] = useContext(Web3Context);
   const { userState, dispatch } = useUser();
   const { register, watch, handleSubmit, formState: { errors } } = useForm();
-  
-  console.log(watch())
-
 
   const onSubmit = async () => {
     try {
@@ -25,8 +23,10 @@ const SettingsInfo = () => {
           portfolio: watch().portfolio || null,
         }
       })
+      //toast ici
       dispatch({type: "UPDATE_PROFILE", payload: result.data.payload})
     } catch (e) {
+      //toast ici
       console.error(e)
     }
   }

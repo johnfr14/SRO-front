@@ -1,10 +1,9 @@
 import { Link } from "react-router-dom";
 import { Button } from "../index";
-
 import "../../css/userProfil.css";
 import { bannerTest, userTest } from "../../images/";
 
-const BannerInfos = () => {
+const BannerInfos = ({ data }) => {
   const styleBanner = {
     backgroundImage: `url('${bannerTest}')`,
   };
@@ -34,8 +33,8 @@ const BannerInfos = () => {
               </Button>
             </div>
             <div className="ml-3">
-              <p className="font-bold text-lg">Name</p>
-              <p className=" ">0x0000...000</p>
+              <p className="font-bold text-lg">{data.username}</p>
+              <p className=" ">{data.address}</p>
               <p className="text-gray-500">@Name</p>
             </div>
 
