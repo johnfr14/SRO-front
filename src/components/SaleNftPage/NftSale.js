@@ -1,34 +1,40 @@
-import React from 'react'
-import { NftViewSale, TabZoneSaleNft } from './index'
-import { Button, CreatorCard, CollectionCard, OwnerCard } from '../index';
+import React from "react";
+import { NftViewSale, TabZoneSaleNft } from "./index";
+import { Button } from "../index";
+import { NameTag } from "../Tags";
 
 const nftNumber = "#1";
 const nftName = "NFTSROPOWAAA";
 const nftNumberOfCopie = "1";
-const nftDescription = "Its the Best NFT for TO THE MOON with SRO TEAM  Test de longueur text-gray-300!!!!!!";
+const nftDescription =
+  "Its the Best NFT for TO THE MOON with SRO TEAM  Test de longueur text-gray-300!!!!!!";
 let nftTitle = `${nftNumber} - ${nftName}`;
 
 const NftSale = () => {
   return (
     <div className="container mx-auto">
-      <div className="flex" >
-        <div className="container mx-auto max-w-screen-lg h-full pt-20">
+      <div className="flex">
+        <div className="container mx-auto max-w-screen-lg pt-20 h-screen">
           <NftViewSale />
         </div>
-        <div className="container mx-auto max-w-screen-lg h-full pl-20 pr-12">
+        <div className="container mx-auto max-w-screen-lg pl-20 pr-12">
           <div className=" relative h-full bg-gray-900 shadow-xl rounded-md border-2 border-gray-200 border-opacity-25  ">
             <div className="pt-12 items-center justify-center">
-              <h2 className="pb-5 text-5xl text-gray-300 text-center font-bold ">{nftTitle}</h2>
+              <h2 className="pb-5 text-5xl text-gray-300 text-center font-bold ">
+                {nftTitle}
+              </h2>
               <div className="flex py-2 pl-4 text-2xl  ">
-                <h3 className="text-white text-yellow-300 font-bold ">Number : </h3>
+                <h3 className="text-yellow-300 font-bold ">Number : </h3>
                 <p className="pl-4 text-gray-300">{nftNumber}</p>
               </div>
               <div className="flex py-2 pl-4 text-2xl text-left">
-                <h3 className="text-white text-yellow-300 font-bold">Name : </h3>
+                <h3 className="text-yellow-300 font-bold">Name : </h3>
                 <p className="pl-4 text-gray-300">{nftName}</p>
               </div>
               <div className="flex py-2 pl-4 text-2xl text-left ">
-                <h3 className="text-white text-yellow-300 font-bold">Number of copie : </h3>
+                <h3 className="text-yellow-300 font-bold">
+                  Number of copie :{" "}
+                </h3>
                 <p className="pl-4 text-gray-300">{nftNumberOfCopie}</p>
               </div>
               <div className="py-2 pl-4 text-2xl text-left ">
@@ -40,17 +46,22 @@ const NftSale = () => {
             </div>
             <div className="flex items-center justify-center space-x-10">
               <div className="pl-4">
-                <CreatorCard />
+                <NameTag />
               </div>
               <div className="">
-                <OwnerCard />
+                <NameTag />
               </div>
               <div className="pr-4">
-                <CollectionCard />
+                <NameTag />
               </div>
             </div>
             <div className="flex items-center justify-center mb-5 mt-8">
-              <a href="#royalties" className="  px-5 py-3 text-center bg-gray-400 text-white hover:bg-gray-200 hover:text-black font-bold rounded-lg text-sm">10% of sales will go to creator</a>
+              <a
+                href="#royalties"
+                className="  px-5 py-3 text-center bg-gray-400 text-white hover:bg-gray-200 hover:text-black font-bold rounded-lg text-sm"
+              >
+                10% of sales will go to creator
+              </a>
             </div>
             <div>
               <TabZoneSaleNft />
@@ -65,9 +76,9 @@ const NftSale = () => {
             </div>
           </div>
         </div>
-      </div >
-    </div >
-  )
-}
+      </div>
+    </div>
+  );
+};
 
-export default NftSale
+export default NftSale;

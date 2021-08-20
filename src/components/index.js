@@ -1,15 +1,7 @@
 import { AvatarSettings, SettingsInfo } from "./EditProfilePage/";
 import { BannerInfos, TabZone, Noitems } from "./UserMainPage";
 import { Button, ButtonModal } from "./Button";
-import {
-  Card,
-  CollectionCard,
-  CreatorCard,
-  DotMenu,
-  MediaCard,
-  ProfilList,
-  OwnerCard,
-} from "./Card/";
+import { Card, DotMenu, MediaCard, ProfilList } from "./Card/";
 import Container from "./Container";
 import Divider from "./Divider";
 import Footer from "./Footer";
@@ -37,8 +29,6 @@ export {
   ButtonModal,
   Card,
   Container,
-  CollectionCard,
-  CreatorCard,
   Divider,
   DotMenu,
   Erc721Nft,
@@ -58,7 +48,6 @@ export {
   NftViewBuy,
   NftViewSale,
   Noitems,
-  OwnerCard,
   PreviewFile,
   ProfilList,
   TabZoneBuyNft,
