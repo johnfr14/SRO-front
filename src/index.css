@@ -1,0 +1,37 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;700&family=Roboto:wght@100;400;700&display=swap");
+
+.font-text {
+  font-family: "Roboto", Arial, Helvetica, sans-serif;
+}
+
+.font-title,
+* {
+  font-family: "DM Sans";
+}
+
+.font-impact {
+  font-family: "Bebas Neue";
+}
+
+html {
+  @apply bg-black;
+}
+body {
+  @apply bg-primary-500;
+  @apply bg-opacity-75;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+@media (min-width: 1536px) {
+  html {
+    zoom: 140%;
+  }
+}
