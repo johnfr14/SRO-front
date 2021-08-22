@@ -69,7 +69,7 @@ function XpBar() {
                       </p>
                       <div className="">
                         <button className="text-black px-2 py-1 from-primary-200 to-primary-200 transition duration-300 bg-gradient-to-br rounded-md">
-                          Claim
+                          Soon
                         </button>
                       </div>
                     </div>
@@ -84,7 +84,7 @@ function XpBar() {
                       </p>
                       <div className="">
                         <button className="text-black px-2 py-1 from-primary-200 to-primary-200 transition duration-300 bg-gradient-to-br rounded-md">
-                          Claim
+                          Soon
                         </button>
                       </div>
                       <p className="quests__info">
@@ -94,7 +94,7 @@ function XpBar() {
                       </p>
                       <div className="">
                         <button className="text-black px-2 py-1 from-primary-200 to-primary-200 transition duration-300 bg-gradient-to-br rounded-md">
-                          Claim
+                          Soon
                         </button>
                       </div>
                     </div>
