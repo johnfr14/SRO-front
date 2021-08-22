@@ -5,6 +5,7 @@ import { useUser } from '../../context/UserContext';
 import { Web3Context } from "web3-hooks";
 import classnames from "classnames";
 import axios from 'axios';
+import { Button } from "../index";
 
 // @TODO: toast pour l'update du profil ( dans la fonction "onSubmit()")
 const SettingsInfo = ({ data }) => {
@@ -37,10 +38,12 @@ const SettingsInfo = ({ data }) => {
   return (
     <div className="mb-20">
       <div className="container mx-auto">
-        <h2 className="text-5xl text-white text-center font-bold ">Edit Profile</h2>
+        <h2 className="text-5xl text-white text-center font-bold ">
+          Edit Profile
+        </h2>
         <p className="text-white text-center my-8  pb-10 ">
-          You can set preferred display name, create your branded profile
-          URL and manage other personal settings
+          You can set preferred display name, create your branded profile URL
+          and manage other personal settings
         </p>
         <form onSubmit={handleSubmit(onSubmit)} className=" relative h-full flex flex-col bg-gray-900 shadow-xl rounded-md mt-3 border-2 border-gray-200 border-opacity-25 pb-3 relative">
           {data.id && <div className="flex  items-center" >
@@ -134,13 +137,41 @@ const SettingsInfo = ({ data }) => {
                         )} value="Update profile"
                   />
                 </div>
+              </div>
+              <div className=" ml-24 mr-24 items-center justify-center">
+                <label className="block uppercase tracking-wide text-white text-xl font-bold mb-2 mt-5">
+                  Twitter Username
+                </label>
+                <p className="block uppercase tracking-wide text-white text-xs mb-3">
+                  Link your Twitter account to gain more trust on the marketplace
+                </p>
+                <input
+                  className="appearance-none block w-full bg-gray-900 text-white border border-gray-400 shadow-inner rounded-md py-3 px-4 leading-tight focus:outline-none  focus:border-gray-500"
+                  type="text"
+                  placeholder="@pseudo"
+                />
+              </div>
+              <div className=" ml-24 mr-24 items-center justify-center">
+                <label className="block uppercase tracking-wide text-white text-xl font-bold mb-2 mt-5">
+                  Personal site or portfolio
+                </label>
+                <input
+                  className="appearance-none block w-full bg-gray-900 text-white border border-gray-400 shadow-inner rounded-md py-3 px-4 leading-tight focus:outline-none  focus:border-gray-500"
+                  type="text"
+                  placeholder="https://"
+                />
+              </div>
+              <div className="flex items-center justify-center mb-5 mt-8">
+                <Button target={""} buttonStyle>
+                  Update Profile
+                </Button>
+              </div>
             </div>
           </div>}
         </form>
       </div>
     </div>
+  );
+};
 
-  )
-}
-
-export default SettingsInfo
+export default SettingsInfo;

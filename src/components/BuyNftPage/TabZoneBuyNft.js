@@ -7,9 +7,7 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-
 const TabZoneBuyNft = () => {
-
   let [categories] = useState({
     Owners: [
       {
@@ -45,13 +43,13 @@ const TabZoneBuyNft = () => {
     <div className="">
       <Tab.Group>
         <div className="flex">
-          <Tab.List className="hPGlPu lhlpVE space-x-14">
+          <Tab.List className="hPGlPu lhlpVE space-x-14 pl-4 pr-4 ">
             {Object.keys(categories).map((category) => (
               <Tab
                 key={category}
                 className={({ selected }) =>
                   classNames(
-                    "py-2.5 text-xl  leading-5 font-medium text-white rounded-lg w-auto relative",
+                    "py-2.5   leading-5 font-medium text-white rounded-lg w-auto relative",
                     "",
                     selected
                       ? "selected"
@@ -68,7 +66,10 @@ const TabZoneBuyNft = () => {
 
         <Tab.Panels className="mt-2">
           {Object.values(categories).map((posts, idx) => (
-            <Tab.Panel key={idx} className={classNames("text-white text-center py-2")}>
+            <Tab.Panel
+              key={idx}
+              className={classNames("text-white text-center py-2")}
+            >
               <ul>
                 {posts.map((post) => (
                   <li
@@ -86,7 +87,7 @@ const TabZoneBuyNft = () => {
         </Tab.Panels>
       </Tab.Group>
     </div>
-  )
-}
+  );
+};
 
-export default TabZoneBuyNft
+export default TabZoneBuyNft;
