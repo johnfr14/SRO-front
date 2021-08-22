@@ -62,7 +62,7 @@ const BannerInfos = ({ data }) => {
                     rel="noopener"
                     href="#"
                   >
-                    {data.url}
+                    {data.portfolio}
                   </Link>
                 </p>
               </div>
