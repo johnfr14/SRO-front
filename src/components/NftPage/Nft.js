@@ -3,7 +3,7 @@ import { NftViewBuy, TabZoneBuyNft } from "./index";
 import { Button } from "../index";
 import { NameTag } from "../Tags";
 
-import { userTest } from "../../images/";
+import { userTest } from "../../images";
 
 const linkToNameTag1 = "/user";
 const userIcon1 = userTest;
@@ -52,8 +52,8 @@ const NftBuy = ({
               </div>
               <div className=" text-left ">
                 <h3 className="text-yellow-300 font-bold">Description : </h3>
-                <div class="p-3">
-                  <p class="text-gray-300 mb-3">{nftDescription}</p>
+                <div className="p-3">
+                  <p className="text-gray-300 mb-3">{nftDescription}</p>
                 </div>
               </div>
             </div>
@@ -65,7 +65,6 @@ const NftBuy = ({
                   NameTagTitle={NameTagTitle1}
                 />
               </div>
-
               <div className="mb-3 md:mb-0 m-2">
                 <NameTag
                   linkToNameTag={linkToNameTag2}

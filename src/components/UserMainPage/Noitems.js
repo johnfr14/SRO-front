@@ -4,15 +4,15 @@ import "../../css/noItems.css";
 const Noitems = () => {
   return (
     <>
-      <div class="flex jCiuZr">
-        <div class="enzXjY">
-          <div class="cMDrWL">
-            <span class="gHDLfe">No items found</span>
-            <span class="cnmfyd">
+      <div className="flex jCiuZr">
+        <div className="enzXjY">
+          <div className="cMDrWL">
+            <span className="gHDLfe">No items found</span>
+            <span className="cnmfyd">
               Come back soon! Or try to browse something for you on our
               marketplace
             </span>
-            <div class="iNCLVq">
+            <div className="iNCLVq">
               <Button target={"/"} buttonStyle>
                 Browse marketplace
               </Button>

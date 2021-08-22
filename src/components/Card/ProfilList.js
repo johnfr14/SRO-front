@@ -9,13 +9,13 @@ const ProfilList = ({
 }) => {
   return (
     <>
-      <div class="has-tooltip cqhhpO">
-        <span class="tooltip rounded shadow-lg p-1 bg-black text-white -mt-8">
+      <div className="has-tooltip cqhhpO">
+        <span className="tooltip rounded shadow-lg p-1 bg-black text-white -mt-8">
           {tipData}
         </span>
         <Link to={linkTo}>
           <img
-            class="avatar h-10 w-10 rounded-full border-2 border-opacity-40 border-black"
+            className="avatar h-10 w-10 rounded-full border-2 border-opacity-40 border-black"
             src={userIcon}
             alt={userIcon}
           />

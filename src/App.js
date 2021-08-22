@@ -1,5 +1,11 @@
 import { Switch, Route, Redirect } from "react-router-dom";
-import { BuyNft, CreateErc721, EditProfile, HomePage, OwnedPage, SaleNft } from "./pages";
+import {
+  NftPage,
+  CreateErc721,
+  EditProfile,
+  HomePage,
+  OwnedPage,
+} from "./pages";
 import "./App.css";
 
 function App() {
@@ -10,8 +16,7 @@ function App() {
         <Route exact path="/user" component={OwnedPage} />
         <Route exact path="/settings" component={EditProfile} />
         <Route exact path="/create/erc721" component={CreateErc721} />
-        <Route exact path="/token/buy" component={BuyNft} />
-        <Route exact path="/token/sale" component={SaleNft} />
+        <Route exact path="/token/action" component={NftPage} />
         <Redirect to="/" />
       </Switch>
     </>

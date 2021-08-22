@@ -1,5 +1,5 @@
-import NftBuy from "./NftBuy";
+import Nft from "./Nft";
 import NftViewBuy from "./NftView";
 import TabZoneBuyNft from "./TabZoneBuyNft";
 
-export { NftBuy, NftViewBuy, TabZoneBuyNft };
+export { Nft, NftViewBuy, TabZoneBuyNft };

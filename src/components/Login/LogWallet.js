@@ -20,9 +20,9 @@ function LogWallet({ className }) {
 
   useEffect(() => {
     if (!!web3State.isLogged) {
-      closeModal()
+      closeModal();
     }
-  }, [web3State.isLogged])
+  }, [web3State.isLogged]);
 
   return (
     <>
@@ -84,7 +84,7 @@ function LogWallet({ className }) {
                         <img
                           src={metamaskIcon}
                           alt="Metamask"
-                          class="align-self-center"
+                          className="align-self-center"
                         />
                       </div>
                       <div className="ml-4">

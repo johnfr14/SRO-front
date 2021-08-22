@@ -14,7 +14,7 @@ const NameTag = ({
           <div className=" py-1 px-2 flex w-52 rounded-lg">
             <Link to={linkToNameTag}>
               <img
-                class="avatar h-10 w-10 rounded-full border-2 border-opacity-40 border-black"
+                className="avatar h-10 w-10 rounded-full border-2 border-opacity-40 border-black"
                 src={userIcon}
                 alt={userIcon}
               />
