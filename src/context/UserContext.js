@@ -31,7 +31,7 @@ export const UserContextProvider = ({children}) => {
   useEffect(() => {
     const getAccount = async () => {
         try {
-          const result = await axios.get(`https://git.heroku.com/user_by_address/${web3State.account}`)
+          const result = await axios.get(`https://bdd-sro.herokuapp.com/user_by_address/${web3State.account}`)
           const ipfs = await IPFS.create()
           setIpfs(ipfs)
           dispatch({type: 'FETCH_SUCCESS', payload: result.data.payload})

@@ -28,7 +28,7 @@ const SettingsInfo = ({ data }) => {
 
     try {
       const result = await axios.post(
-        `https://git.heroku.com/edit_profile/${web3State.account}`,
+        `https://bdd-sro.herokuapp.com/edit_profile/${web3State.account}`,
         {
           data: {
             username: watch().username || null,
