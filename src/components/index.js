@@ -5,7 +5,7 @@ import { Card, CollectionCard, CreatorCard, DotMenu, MediaCard, ProfilList, Owne
 import Container from "./Container";
 import Divider from "./Divider";
 import { Erc721Nft, PreviewFile, UploadFile } from "./CreateNftPage"
-import { ModCheckout, ModFixedPrice, ModFollowStepCreate, ModFollowStepSale, ModPurchase } from "./Modal";
+import { ModCheckout, ModFixedPrice, ModFollowStepCreate, ModFollowStepSale, ModPurchase } from "./modal";
 import Footer from "./Footer";
 import Header from "./Header";
 import LoaderIcon from "./LoaderIcon";
