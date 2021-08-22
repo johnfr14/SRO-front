@@ -4,8 +4,14 @@ import { Button, ButtonModal } from "./Button";
 import { Card, DotMenu, MediaCard, ProfilList } from "./Card/";
 import Container from "./Container";
 import Divider from "./Divider";
-import { Erc721Nft, PreviewFile, UploadFile } from "./CreateNftPage"
-import { ModCheckout, ModFixedPrice, ModFollowStepCreate, ModFollowStepSale, ModPurchase } from "./modal";
+import { Erc721Nft, PreviewFile, UploadFile } from "./CreateNftPage";
+import {
+  ModCheckout,
+  ModFixedPrice,
+  ModFollowStepCreate,
+  ModFollowStepSale,
+  ModPurchase,
+} from "./Modal";
 import Footer from "./Footer";
 import Header from "./Header";
 import LoaderIcon from "./LoaderIcon";
@@ -15,14 +21,6 @@ import { NftBuy, NftViewBuy, TabZoneBuyNft } from "./BuyNftPage/";
 import { NftSale, NftViewSale, TabZoneSaleNft } from "./SaleNftPage";
 import TokenPrice from "./TokenPrice";
 import SwitchToggle from "./SwitchToggle";
-import { Erc721Nft, PreviewFile, UploadFile } from "./CreateNftPage";
-import {
-  ModCheckout,
-  ModFixedPrice,
-  ModFollowStepCreate,
-  ModFollowStepSale,
-  ModPurchase,
-} from "./Modal";
 
 export {
   AvatarSettings,
