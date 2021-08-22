@@ -18,7 +18,7 @@ const BannerInfos = ({ data }) => {
           <div className="bYqeUY left-5">
             <div className="dWVFoH">
               <div className="cNAXjx">
-                <img alt="" className="kffNNE" src={userTest} />
+                <img alt="" className="kffNNE" src={data.avatar || userTest} />
               </div>
             </div>
           </div>

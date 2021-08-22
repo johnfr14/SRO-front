@@ -1,7 +1,8 @@
 import axios from "axios";
-import {createContext, useContext, useEffect, useReducer} from "react"
+import {createContext, useContext, useEffect, useReducer, useState} from "react"
 import { Web3Context } from "web3-hooks";
 import { userReducer } from "../reducers/userReducer"
+import IPFS from "ipfs-core";
 
 export const UserContext = createContext()
 
@@ -25,11 +26,14 @@ const initialState = {
 export const UserContextProvider = ({children}) => {
   const [web3State] = useContext(Web3Context);  
   const [userState, dispatch] = useReducer(userReducer, initialState)
+  const [ipfs, setIpfs] = useState(null)
 
   useEffect(() => {
     const getAccount = async () => {
         try {
-          const result = await axios.get(`https://bdd-sro.herokuapp.com/user_by_address/${web3State.account}`)
+          const result = await axios.get(`https://git.heroku.com/user_by_address/${web3State.account}`)
+          const ipfs = await IPFS.create()
+          setIpfs(ipfs)
           dispatch({type: 'FETCH_SUCCESS', payload: result.data.payload})
         } catch (e) {
           console.log(e)
@@ -44,7 +48,7 @@ export const UserContextProvider = ({children}) => {
 
   
   return (
-    <UserContext.Provider value={{ userState, dispatch}}>
+    <UserContext.Provider value={{ userState, dispatch, ipfs}}>
       {children}
     </UserContext.Provider>
   )

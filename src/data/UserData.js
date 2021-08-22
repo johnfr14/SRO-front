@@ -16,7 +16,7 @@ export const UserData = () => {
     url: userState.profile.url,
     twitterUsername: userState.profile.twitterUsername,
     portfolio: userState.profile.portfolio,
-    avatar: userState.profile.avatar,
+    avatar: userState.profile.avatar !== null ? `https://ipfs.io/ipfs/${userState.profile.avatar}` : null,
   }
   
   return data

@@ -9,7 +9,7 @@ import axios from "axios";
 // @TODO: toast pour l'update du profil ( dans la fonction "onSubmit()")
 const SettingsInfo = ({ data }) => {
   const [web3State] = useContext(Web3Context);
-  const { dispatch } = useUser();
+  const { dispatch, ipfs } = useUser();
   const {
     register,
     watch,
@@ -17,10 +17,18 @@ const SettingsInfo = ({ data }) => {
     formState: { errors },
   } = useForm();
 
+
   const onSubmit = async () => {
+    let avatar = data.avatar
+    if (watch().avatar.length !== 0) {
+      avatar = await ipfs.add(watch().avatar[0]).then(avatar => avatar.path) 
+    } else {
+      avatar = avatar === null ? null : data.avatar.split('/').pop()
+    }
+
     try {
       const result = await axios.post(
-        `https://bdd-sro.herokuapp.com/edit_profile/${web3State.account}`,
+        `https://git.heroku.com/edit_profile/${web3State.account}`,
         {
           data: {
             username: watch().username || null,
@@ -28,14 +36,10 @@ const SettingsInfo = ({ data }) => {
             url: watch().url || null,
             twitterUsername: watch().twitterUsername || null,
             portfolio: watch().portfolio || null,
-            avatar:
-              watch().avatar.length > 0
-                ? URL.createObjectURL(watch().avatar[0])
-                : null,
+            avatar: avatar
           },
         }
       );
-      console.log(result);
       //toast ici
       dispatch({ type: "UPDATE_PROFILE", payload: result.data.payload });
     } catch (e) {
