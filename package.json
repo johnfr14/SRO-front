@@ -16,7 +16,6 @@
     "axios": "^0.21.1",
     "classnames": "^2.3.1",
     "framer-motion": "^4",
-    "ipfs-core": "^0.10.3",
     "next": "9.5.4-canary.20",
     "postcss": "^7",
     "postcss-cli": "^8.3.1",
