@@ -6,10 +6,15 @@ import { Web3Context } from "web3-hooks";
 import classnames from "classnames";
 import axios from "axios";
 
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import "../../css/toast.css";
+
 // @TODO: toast pour l'update du profil ( dans la fonction "onSubmit()")
 const SettingsInfo = ({ data }) => {
   const [web3State] = useContext(Web3Context);
   const { dispatch } = useUser();
+
   const {
     register,
     watch,
@@ -35,17 +40,34 @@ const SettingsInfo = ({ data }) => {
           },
         }
       );
-      console.log(result);
-      //toast ici
+      toast.success("Profile Updated", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
       dispatch({ type: "UPDATE_PROFILE", payload: result.data.payload });
     } catch (e) {
-      //toast ici
-      console.error(e);
+      toast.error(e);
     }
   };
 
   return (
-    <div className="mb-20">
+    <div className="mb-20 NotificationCustom">
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
       <div className="">
         <div>
           <h2 className=" text-white text-center font-bold ">Edit Profile</h2>
