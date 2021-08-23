@@ -5,11 +5,12 @@ import { useUser } from "../../context/UserContext";
 import { Web3Context } from "web3-hooks";
 import classnames from "classnames";
 import axios from "axios";
+const FormData = require('form-data');
 
 // @TODO: toast pour l'update du profil ( dans la fonction "onSubmit()")
 const SettingsInfo = ({ data }) => {
   const [web3State] = useContext(Web3Context);
-  const { dispatch, ipfs } = useUser();
+  const { dispatch } = useUser();
   const {
     register,
     watch,
@@ -17,15 +18,29 @@ const SettingsInfo = ({ data }) => {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = async () => {
-    let avatar = data.avatar
-    if (watch().avatar.length !== 0) {
-      avatar = await ipfs.add(watch().avatar[0]).then(avatar => avatar.path) 
-    } else {
-      avatar = avatar === null ? null : data.avatar.split('/').pop()
-    }
 
+  const onSubmit = async () => {
     try {
+
+      let avatar = data.avatar
+      if (watch().avatar.length !== 0) {
+        
+        let formatData = new FormData();
+        formatData.append('file', watch().avatar[0]);
+        console.log(formatData)
+        avatar = await axios.post(`https://api.pinata.cloud/pinning/pinFileToIPFS`, formatData, {
+          headers: {
+            'Content-Type': `multipart/form-data; boundary=${formatData._boundary}`,
+            'pinata_api_key': "2afeb39d3fc1e2b6aa90",
+            'pinata_secret_api_key': 'c5d937bf0715a2905136b9ca3b1d7f01839a40ee6f747fd6f1a092c432bcda24'
+          }
+        }).then((result) => result.data.IpfsHash)   
+      } else {
+        avatar = avatar === null ? null : data.avatar.split('/').pop()
+      }
+
+      console.log(avatar)
+
       const result = await axios.post(
         `https://bdd-sro.herokuapp.com/edit_profile/${web3State.account}`,
         {
@@ -39,6 +54,7 @@ const SettingsInfo = ({ data }) => {
           },
         }
       );
+      console.log(result)
       //toast ici
       dispatch({ type: "UPDATE_PROFILE", payload: result.data.payload });
     } catch (e) {
