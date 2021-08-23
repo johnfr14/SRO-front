@@ -41,33 +41,31 @@ const SettingsInfo = ({ data }) => {
         }
       );
       toast.success("Profile Updated", {
-        position: "top-right",
+        position: "bottom-right",
         autoClose: 5000,
         hideProgressBar: false,
         closeOnClick: true,
-        pauseOnHover: true,
+        pauseOnHover: false,
         draggable: true,
         progress: undefined,
       });
       dispatch({ type: "UPDATE_PROFILE", payload: result.data.payload });
     } catch (e) {
-      toast.error(e);
+      toast.error(e.message, {
+        position: "bottom-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
+      });
     }
   };
 
   return (
     <div className="mb-20 NotificationCustom">
-      <ToastContainer
-        position="top-right"
-        autoClose={5000}
-        hideProgressBar
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-      />
+      <ToastContainer />
       <div className="">
         <div>
           <h2 className=" text-white text-center font-bold ">Edit Profile</h2>
