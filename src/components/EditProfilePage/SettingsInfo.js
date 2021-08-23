@@ -17,6 +17,8 @@ const SettingsInfo = ({ data }) => {
     formState: { errors },
   } = useForm();
 
+  console.log(data)
+
 
   const onSubmit = async () => {
     let avatar = data.avatar
