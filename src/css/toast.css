@@ -1,0 +1,15 @@
+.Toastify__toast--success {
+  background: #ffd700;
+}
+
+.Toastify__toast-container .Toastify__toast-body {
+  color: #000;
+}
+
+.Toastify__close-button {
+  color: #000;
+}
+
+.Toastify__progress-bar {
+  background-color: rgba(0, 0, 0, 0.7);
+}
