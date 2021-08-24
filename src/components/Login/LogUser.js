@@ -71,12 +71,12 @@ export default function LogUser() {
                     <p className="ml-4 text-left">Balance : xx XSRO</p>
                   </div>
                   <Divider className="mt-3 mb-2 bg-black" />
-                  {profile.map((item) => (
-                    <Menu.Item key={item}>
+                  {profile.map((item, index) => (
+                    <Menu.Item key={index}>
                       {({ active }) => (
                         <NavLink
                           to={item.url}
-                          key={item}
+                          key={index}
                           className={classNames(
                             active ? "bg-gray-100" : "",
                             "block px-4 py-2 text-sm text-black-700"
