@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { Button } from "../index";
 import "../../css/userProfil.css";
-import { bannerTest, userTest } from "../../images/";
+import { bannerTest, userDefault } from "../../images/";
 
 const BannerInfos = ({ data }) => {
   const styleBanner = {
@@ -18,7 +18,7 @@ const BannerInfos = ({ data }) => {
           <div className="bYqeUY left-5">
             <div className="dWVFoH">
               <div className="cNAXjx">
-                <img alt="" className="kffNNE" src={userTest} />
+                <img alt="" className="kffNNE" src={data.avatar || userDefault} />
               </div>
             </div>
           </div>
