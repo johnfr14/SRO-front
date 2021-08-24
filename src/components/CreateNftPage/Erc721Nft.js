@@ -21,18 +21,47 @@ const Erc721Nft = () => {
     formState: { errors },
   } = useForm();
 
+  // smart contract SRO721
+  const nft = useContract(SRO721Address, SRO721Abi);
+
   const onSubmit = async (data) => {
-    console.log(data)
-  }
+    // loading on ?
+    console.log(data);
+    const royalties = data.royalties;
+    const title = data.title;
+    const description = data.description;
+    // const uri = data.file; // ipfs hash
+    try {
+      const tx = await nft.create(
+        royalties,
+        title,
+        description,
+        "https://sarahro.io/"
+      );
+      await tx.wait();
+      console.log("Nft minted");
+    } catch (e) {
+      console.error(e);
+    } finally {
+      // loading off ?
+    }
+  };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="min-h-screen pt-2 font-mono my-16 text-white">
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="min-h-screen pt-2 font-mono my-16 text-white"
+    >
       <div className="container mx-auto">
         <h1 className="text-5xl  text-center font-bold pb-10">
           Create single collectible
         </h1>
         <div className="mb-5">
-          <UploadFile register={register} watch={watch().file} errors={errors.file} />
+          <UploadFile
+            register={register}
+            watch={watch().file}
+            errors={errors.file}
+          />
         </div>
         <div className="flex flex-col md:flex-row items-center justify-center">
           <div>
@@ -85,10 +114,12 @@ const Erc721Nft = () => {
                   className="appearance-none block w-full bg-gray-900  border border-gray-400 shadow-inner rounded-md py-3 px-4  leading-tight focus:outline-none  focus:border-gray-500"
                   type="text"
                   placeholder="Title NFT"
-                  {...register("title", {required: true})}
+                  {...register("title", { required: true })}
                 />
               </div>
-              {errors.title && <p className="text-xs text-red-500 mt-2">"Title" is required</p>}
+              {errors.title && (
+                <p className="text-xs text-red-500 mt-2">"Title" is required</p>
+              )}
             </div>
             <div className="items-center justify-center">
               <label className="block uppercase tracking-wide  text-xl font-bold mb-2 mt-5">
@@ -112,7 +143,7 @@ const Erc721Nft = () => {
                   className="appearance-none block w-full bg-gray-900  border border-gray-400 shadow-inner rounded-md py-3 px-4  leading-tight focus:outline-none  focus:border-gray-500"
                   type="number"
                   placeholder="10 %"
-                  {...register("royalties", {min: 0})}
+                  {...register("royalties", { min: 0 })}
                 />
               </div>
               <p className="block tracking-wide text-xs mb-2 mt-2">
