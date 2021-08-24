@@ -6,6 +6,10 @@ import { PreviewFile, UploadFile } from ".";
 import { SwitchToggle, TokenPrice } from "../index";
 import classnames from "classnames";
 
+import { ethers } from "ethers";
+import { Web3Context, useContract } from "web3-hooks"; // contract
+import { SRO721Address, SRO721Abi } from "../../contracts/SRO721";
+
 const Erc721Nft = () => {
   const [isToggledPrice, setIsToggledPrice] = useState(false);
   const [isToggled, setIsToggled] = useState(false);
