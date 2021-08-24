@@ -1,5 +1,4 @@
 import React, { useState, useContext } from "react";
-import { Web3Context } from "web3-hooks";
 import { useForm } from "react-hook-form";
 import { useUser } from "../../context/UserContext";
 import { PreviewFile, UploadFile } from ".";
