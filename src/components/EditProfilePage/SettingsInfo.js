@@ -5,7 +5,12 @@ import { useUser } from "../../context/UserContext";
 import { Web3Context } from "web3-hooks";
 import classnames from "classnames";
 import axios from "axios";
-const FormData = require('form-data');
+const FormData = require("form-data");
+
+require("dotenv").config();
+
+const PINATA_API_KEY = process.env.REACT_APP_PINATA_API_KEY;
+const PINATA_SECRET_KEY = process.env.REACT_APP_PINATA_SECRET_KEY;
 
 // @TODO: toast pour l'update du profil ( dans la fonction "onSubmit()")
 const SettingsInfo = ({ data }) => {
@@ -18,28 +23,27 @@ const SettingsInfo = ({ data }) => {
     formState: { errors },
   } = useForm();
 
-
   const onSubmit = async () => {
     try {
-
-      let avatar = data.avatar
+      let avatar = data.avatar;
       if (watch().avatar.length !== 0) {
-        
         let formatData = new FormData();
-        formatData.append('file', watch().avatar[0]);
-        console.log(formatData)
-        avatar = await axios.post(`https://api.pinata.cloud/pinning/pinFileToIPFS`, formatData, {
-          headers: {
-            'Content-Type': `multipart/form-data; boundary=${formatData._boundary}`,
-            'pinata_api_key': "2afeb39d3fc1e2b6aa90",
-            'pinata_secret_api_key': 'c5d937bf0715a2905136b9ca3b1d7f01839a40ee6f747fd6f1a092c432bcda24'
-          }
-        }).then((result) => result.data.IpfsHash)   
+        formatData.append("file", watch().avatar[0]);
+        console.log(formatData);
+        avatar = await axios
+          .post(`https://api.pinata.cloud/pinning/pinFileToIPFS`, formatData, {
+            headers: {
+              "Content-Type": `multipart/form-data; boundary=${formatData._boundary}`,
+              pinata_api_key: PINATA_API_KEY,
+              pinata_secret_api_key: PINATA_SECRET_KEY,
+            },
+          })
+          .then((result) => result.data.IpfsHash);
       } else {
-        avatar = avatar === null ? null : data.avatar.split('/').pop()
+        avatar = avatar === null ? null : data.avatar.split("/").pop();
       }
 
-      console.log(avatar)
+      console.log(avatar);
 
       const result = await axios.post(
         `https://bdd-sro.herokuapp.com/edit_profile/${web3State.account}`,
@@ -50,11 +54,11 @@ const SettingsInfo = ({ data }) => {
             url: watch().url || null,
             twitterUsername: watch().twitterUsername || null,
             portfolio: watch().portfolio || null,
-            avatar: avatar
+            avatar: avatar,
           },
         }
       );
-      console.log(result)
+      console.log(result);
       //toast ici
       dispatch({ type: "UPDATE_PROFILE", payload: result.data.payload });
     } catch (e) {
