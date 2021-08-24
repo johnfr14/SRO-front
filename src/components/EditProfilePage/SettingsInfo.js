@@ -8,12 +8,9 @@ import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "../../css/toast.css";
-const FormData = require("form-data");
+import {pinOnIpfs} from "../../ipfs/ipfs"
 
 require("dotenv").config();
-
-const PINATA_API_KEY = process.env.REACT_APP_PINATA_API_KEY;
-const PINATA_SECRET_KEY = process.env.REACT_APP_PINATA_SECRET_KEY;
 
 // @TODO: toast pour l'update du profil ( dans la fonction "onSubmit()")
 const SettingsInfo = ({ data }) => {
@@ -31,18 +28,8 @@ const SettingsInfo = ({ data }) => {
     try {
       let avatar = data.avatar;
       if (watch().avatar.length !== 0) {
-        let formatData = new FormData();
-        formatData.append("file", watch().avatar[0]);
-        console.log(formatData);
-        avatar = await axios
-          .post(`https://api.pinata.cloud/pinning/pinFileToIPFS`, formatData, {
-            headers: {
-              "Content-Type": `multipart/form-data; boundary=${formatData._boundary}`,
-              pinata_api_key: PINATA_API_KEY,
-              pinata_secret_api_key: PINATA_SECRET_KEY,
-            },
-          })
-          .then((result) => result.data.IpfsHash);
+        avatar =`https://gateway.pinata.cloud/ipfs/` + await pinOnIpfs(watch().avatar[0])
+        console.log(avatar)
       } else {
         avatar = avatar === null ? null : data.avatar.split("/").pop();
       }

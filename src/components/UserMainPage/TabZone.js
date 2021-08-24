@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Tab } from "@headlessui/react";
 
 import { Noitems } from "./index";
@@ -46,6 +46,10 @@ export default function TabZone() {
       },
     ],
   });
+
+  useEffect(() => {
+
+  }, [])
 
   return (
     <div className="w-full px-2 py-16 sm:px-0">

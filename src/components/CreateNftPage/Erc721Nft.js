@@ -1,23 +1,19 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useUser } from "../../context/UserContext";
 import { PreviewFile, UploadFile } from ".";
 import { SwitchToggle, TokenPrice } from "../index";
 import classnames from "classnames";
 import { ToastContainer, toast } from "react-toastify";
+import { pinOnIpfs } from "../../ipfs/ipfs"
 import "react-toastify/dist/ReactToastify.css";
 import "../../css/toast.css";
-
-import { ethers } from "ethers";
-import { Web3Context, useContract } from "web3-hooks"; // contract
+import { useContract } from "web3-hooks"; // contract
 import { SRO721Address, SRO721Abi } from "../../contracts/SRO721";
 
 const Erc721Nft = () => {
   const [isToggledPrice, setIsToggledPrice] = useState(false);
   const [isToggled, setIsToggled] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [web3State] = useContext(Web3Context);
-  const { dispatch } = useUser();
   const {
     register,
     watch,
@@ -31,19 +27,21 @@ const Erc721Nft = () => {
   const onSubmit = async (data) => {
     // loading on ?
     setLoading(true);
-    console.log(data);
+    const hash = `https://gateway.pinata.cloud/ipfs/` + await pinOnIpfs(watch().file[0]) 
+    console.log(hash);
     const royalties = data.royalties;
     const title = data.title;
     const description = data.description;
-    // const uri = data.file; // ipfs hash
+    const uri = hash; // ipfs hash
     try {
       const tx = await nft.create(
         royalties,
         title,
         description,
-        "https://sarahro.io/"
+        uri,
       );
-      await tx.wait();
+      const receipt = await tx.wait();
+      console.log(receipt)
       toast.success("Nft minted", {
         position: "top-right",
         autoClose: 5000,

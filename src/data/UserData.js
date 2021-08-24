@@ -16,7 +16,7 @@ export const UserData = () => {
     url: userState.profile.url,
     twitterUsername: userState.profile.twitterUsername,
     portfolio: userState.profile.portfolio,
-    avatar: userState.profile.avatar !== null ? `https://gateway.pinata.cloud/ipfs/${userState.profile.avatar}` : null,
+    avatar: userState.profile.avatar,
   }
   
   return data
