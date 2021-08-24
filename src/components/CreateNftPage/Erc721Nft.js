@@ -15,6 +15,7 @@ import { SRO721Address, SRO721Abi } from "../../contracts/SRO721";
 const Erc721Nft = () => {
   const [isToggledPrice, setIsToggledPrice] = useState(false);
   const [isToggled, setIsToggled] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [web3State] = useContext(Web3Context);
   const { dispatch } = useUser();
   const {
@@ -29,6 +30,7 @@ const Erc721Nft = () => {
 
   const onSubmit = async (data) => {
     // loading on ?
+    setLoading(true);
     console.log(data);
     const royalties = data.royalties;
     const title = data.title;
@@ -62,7 +64,7 @@ const Erc721Nft = () => {
         progress: undefined,
       });
     } finally {
-      // loading off ?
+      setLoading(false);
     }
   };
 
@@ -174,15 +176,19 @@ const Erc721Nft = () => {
                 </p>
               </div>
               <div className="flex items-center justify-center my-8">
-                <input
-                  type="submit"
-                  className={classnames(
-                    "transition duration-300 bg-gradient-to-br rounded-xl hover:opacity-75",
-                    "text-black px-8 py-3 from-primary-200 to-primary-200" ||
-                      "text-white hover:text-primary-200"
-                  )}
-                  value="Update profile"
-                />
+                {loading ? (
+                  <p>Send transaction to create your NFT...</p>
+                ) : (
+                  <input
+                    type="submit"
+                    className={classnames(
+                      "transition duration-300 bg-gradient-to-br rounded-xl hover:opacity-75",
+                      "text-black px-8 py-3 from-primary-200 to-primary-200" ||
+                        "text-white hover:text-primary-200"
+                    )}
+                    value="Create item"
+                  />
+                )}
               </div>
             </div>
           </div>
