@@ -5,16 +5,15 @@ import { useUser } from "../../context/UserContext";
 import { Web3Context } from "web3-hooks";
 import classnames from "classnames";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import "../../css/toast.css";
 const FormData = require("form-data");
 
 require("dotenv").config();
 
 const PINATA_API_KEY = process.env.REACT_APP_PINATA_API_KEY;
 const PINATA_SECRET_KEY = process.env.REACT_APP_PINATA_SECRET_KEY;
-
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import "../../css/toast.css";
 
 // @TODO: toast pour l'update du profil ( dans la fonction "onSubmit()")
 const SettingsInfo = ({ data }) => {
