@@ -12,10 +12,15 @@ require("dotenv").config();
 const PINATA_API_KEY = process.env.REACT_APP_PINATA_API_KEY;
 const PINATA_SECRET_KEY = process.env.REACT_APP_PINATA_SECRET_KEY;
 
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import "../../css/toast.css";
+
 // @TODO: toast pour l'update du profil ( dans la fonction "onSubmit()")
 const SettingsInfo = ({ data }) => {
   const [web3State] = useContext(Web3Context);
   const { dispatch } = useUser();
+
   const {
     register,
     watch,
@@ -58,17 +63,32 @@ const SettingsInfo = ({ data }) => {
           },
         }
       );
-      console.log(result);
-      //toast ici
+      toast.success("Profile Updated", {
+        position: "bottom-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
+      });
       dispatch({ type: "UPDATE_PROFILE", payload: result.data.payload });
     } catch (e) {
-      //toast ici
-      console.error(e);
+      toast.error(e.message, {
+        position: "bottom-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
+      });
     }
   };
 
   return (
-    <div className="mb-20">
+    <div className="mb-20 NotificationCustom">
+      <ToastContainer />
       <div className="">
         <div>
           <h2 className=" text-white text-center font-bold ">Edit Profile</h2>
