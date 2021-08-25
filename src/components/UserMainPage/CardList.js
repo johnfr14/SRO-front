@@ -10,7 +10,7 @@ const cardMediaTest2 =
 const cardMediaTest3 =
   "https://img.rarible.com/prod/image/upload/prod-itemImages/0x3bf2922f4520a8ba0c2efc3d2a1539678dad5e9d:7371";
 
-const data = [
+const defaultData = [
   {
     imgUrl:
       "https://upload.wikimedia.org/wikipedia/en/e/ed/Leonardo_%28Teenage_Mutant_Ninja_Turtles%29.jpg",
@@ -53,34 +53,32 @@ const data = [
   },
 ];
 
-const CardList = () => {
+const CardList = ({ nft }) => {
+  console.log(nft)
   return (
     <>
-      {data[0] ? (
+      {nft && 
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 md:gap-x-10 xl-grid-cols-4 gap-y-5 gap-x-6 ">
-          {data.map((data, index) => (
+          {nft.map((data) => (
             <Card
-              key={data.name + index}
-              imgUrl={data.imgUrl}
-              name={data.name}
-              price={data.price}
-              unity={data.unity}
-              linkToNFT={data.linkToNFT}
-              linkToProfilCollection={data.linkToProfilCollection}
-              linkToProfilCreator={data.linkToProfilCreator}
-              linkToProfilOwner={data.linkToProfilOwner}
-              userIconCollection={data.userIconCollection}
-              userIconCreator={data.userIconCreator}
-              userIconOwner={data.userIconOwner}
-              tipDataAdressCollection={data.tipDataAdressCollection}
-              tipDataAdressCreator={data.tipDataAdressCreator}
-              tipDataAdressOwner={data.tipDataAdressOwner}
+              key={data.id + data.index || defaultData.name + data.index}
+              imgUrl={data.metada.imgUrl || defaultData.imgUrl}
+              name={data.metada.name || defaultData.name}
+              price={data.metada.price || defaultData.price}
+              unity={data.metada.unity || defaultData.unity}
+              linkToNFT={data.metada.linkToNFT || defaultData.linkToNFT}
+              linkToProfilCollection={data.metada.linkToProfilCollection || defaultData.linkToProfilCollection}
+              linkToProfilCreator={data.metada.linkToProfilCreator || defaultData.linkToProfilCreator}
+              linkToProfilOwner={data.metada.linkToProfilOwner || defaultData.linkToProfilOwner}
+              userIconCollection={data.metada.userIconCollection || defaultData.userIconCollection}
+              userIconCreator={data.metada.userIconCreator || defaultData.userIconCreator}
+              userIconOwner={data.metada.userIconOwner || defaultData.userIconOwner}
+              tipDataAdressCollection={data.metada.tipDataAdressCollection || defaultData.tipDataAdressCollection}
+              tipDataAdressCreator={data.metada.tipDataAdressCreator || defaultData.tipDataAdressCreator}
+              tipDataAdressOwner={data.metada.tipDataAdressOwner || defaultData.tipDataAdressOwner}
             />
-          ))}
-        </div>
-      ) : (
-        <Noitems />
-      )}
+          )) || <Noitems />}
+        </div> }
     </>
   );
 };

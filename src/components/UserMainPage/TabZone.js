@@ -17,7 +17,6 @@ export default function TabZone() {
   const isMounted = useRef(useIsMounted())
   const [web3state] = useContext(Web3Context)
   const [nftCreated, setNftCreated] = useState([])
-  console.log(isMounted.current)
 
   let [categories] = useState({
     On_sale: [
@@ -38,23 +37,26 @@ export default function TabZone() {
       {
         id: 1,
         name: "Created",
-        component: nftCreated.length === 0 ? <Noitems /> : <CardList nft={nftCreated} />,
+        component: <CardList nft={nftCreated} />,
       },
     ],
   });
 
   useEffect(() => {
     const getNft = async() => {
-      const nftIds = await sro721.getNftCreatedByAddress(web3state.account);
+      console.log(await sro721.getNftCreatedByAddress(web3state.account).then((result) => result.toString().split(',')))
+      const nftIds = await sro721.getNftCreatedByAddress(web3state.account).then((result) => result.toString().split(','));
       const nfts = [];
-  
-      for(let i = 0; i <= nftIds.length; i++ ) {
-        nfts.push({id: nftIds[i], metadata: await sro721.getNftById(nftIds[i])})
-      };
+      if (nftIds.length > 0) {
+        for(let i = 0; i < nftIds.length; i++ ) {
+          console.log(nftIds[i])
+          nfts.push({id: nftIds[i], metadata: await sro721.getNftById(nftIds[i])})
+        };
+      }
+      console.log(nfts)
       setNftCreated(nfts)
     }
-
-    if (isMounted.current) {
+    if(sro721 !== null) {
       getNft()
     }
   }, [sro721, web3state.account, isMounted])
@@ -94,7 +96,7 @@ export default function TabZone() {
                     className="relative p-3 rounded-md hover:bg-coolGray-100"
                   >
                     <h3 className="text-sm font-medium leading-5">
-                      {post.component}
+                      {post.component || 0}
                     </h3>
                   </li>
                 ))}
