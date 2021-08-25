@@ -7,8 +7,7 @@ import { ToastContainer, toast } from "react-toastify";
 import { pinOnIpfs } from "../../ipfs/ipfs"
 import "react-toastify/dist/ReactToastify.css";
 import "../../css/toast.css";
-import { useContract } from "web3-hooks"; // contract
-import { SRO721Address, SRO721Abi } from "../../contracts/SRO721";
+import { useContracts } from "../../context/ContractContext"; // instance des contracts
 
 const Erc721Nft = () => {
   const [isToggledPrice, setIsToggledPrice] = useState(false);
@@ -22,7 +21,7 @@ const Erc721Nft = () => {
   } = useForm();
 
   // smart contract SRO721
-  const nft = useContract(SRO721Address, SRO721Abi);
+  const { sro721 } = useContracts();
 
   const onSubmit = async (data) => {
     // loading on ?
@@ -34,7 +33,7 @@ const Erc721Nft = () => {
     const description = data.description;
     const uri = hash; // ipfs hash
     try {
-      const tx = await nft.create(
+      const tx = await sro721.create(
         royalties,
         title,
         description,
