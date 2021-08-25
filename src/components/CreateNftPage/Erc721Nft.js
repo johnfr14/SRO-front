@@ -22,6 +22,7 @@ const Erc721Nft = () => {
 
   // smart contract SRO721
   const { sro721 } = useContracts();
+  console.log(sro721)
 
   const onSubmit = async (data) => {
     // loading on ?
