@@ -54,31 +54,56 @@ const defaultData = [
 ];
 
 const CardList = ({ nft }) => {
-  console.log(nft)
+  console.log("cardList" + nft);
   return (
     <>
-      {nft && 
+      {nft && (
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 md:gap-x-10 xl-grid-cols-4 gap-y-5 gap-x-6 ">
-          {nft.map((data) => (
+          {nft.map((data, index) => (
             <Card
-              key={data.id + data.index || defaultData.name + data.index}
-              imgUrl={data.metada.imgUrl || defaultData.imgUrl}
-              name={data.metada.name || defaultData.name}
-              price={data.metada.price || defaultData.price}
-              unity={data.metada.unity || defaultData.unity}
-              linkToNFT={data.metada.linkToNFT || defaultData.linkToNFT}
-              linkToProfilCollection={data.metada.linkToProfilCollection || defaultData.linkToProfilCollection}
-              linkToProfilCreator={data.metada.linkToProfilCreator || defaultData.linkToProfilCreator}
-              linkToProfilOwner={data.metada.linkToProfilOwner || defaultData.linkToProfilOwner}
-              userIconCollection={data.metada.userIconCollection || defaultData.userIconCollection}
-              userIconCreator={data.metada.userIconCreator || defaultData.userIconCreator}
-              userIconOwner={data.metada.userIconOwner || defaultData.userIconOwner}
-              tipDataAdressCollection={data.metada.tipDataAdressCollection || defaultData.tipDataAdressCollection}
-              tipDataAdressCreator={data.metada.tipDataAdressCreator || defaultData.tipDataAdressCreator}
-              tipDataAdressOwner={data.metada.tipDataAdressOwner || defaultData.tipDataAdressOwner}
+              key={data.id + index || defaultData.name + data.index}
+              imgUrl={data.metadata.imgUrl || defaultData.imgUrl}
+              name={data.metadata.name || defaultData.name}
+              price={data.metadata.price || defaultData.price}
+              unity={data.metadata.unity || defaultData.unity}
+              linkToNFT={data.metadata.linkToNFT || defaultData.linkToNFT}
+              linkToProfilCollection={
+                data.metadata.linkToProfilCollection ||
+                defaultData.linkToProfilCollection
+              }
+              linkToProfilCreator={
+                data.metadata.linkToProfilCreator ||
+                defaultData.linkToProfilCreator
+              }
+              linkToProfilOwner={
+                data.metadata.linkToProfilOwner || defaultData.linkToProfilOwner
+              }
+              userIconCollection={
+                data.metadata.userIconCollection ||
+                defaultData.userIconCollection
+              }
+              userIconCreator={
+                data.metadata.userIconCreator || defaultData.userIconCreator
+              }
+              userIconOwner={
+                data.metadata.userIconOwner || defaultData.userIconOwner
+              }
+              tipDataAdressCollection={
+                data.metadata.tipDataAdressCollection ||
+                defaultData.tipDataAdressCollection
+              }
+              tipDataAdressCreator={
+                data.metadata.tipDataAdressCreator ||
+                defaultData.tipDataAdressCreator
+              }
+              tipDataAdressOwner={
+                data.metadata.tipDataAdressOwner ||
+                defaultData.tipDataAdressOwner
+              }
             />
           )) || <Noitems />}
-        </div> }
+        </div>
+      )}
     </>
   );
 };
