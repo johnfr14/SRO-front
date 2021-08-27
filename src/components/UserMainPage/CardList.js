@@ -53,13 +53,13 @@ const defaultData = [
   },
 ];
 
-const CardList = ({ nft }) => {
-  console.log(nft);
+const CardList = ({ idx, data }) => {
+  console.log(`Tab: ${idx === 1 ? 'nftOnSale' : idx === 2 ? 'nft owned' : 'nft created'}`, data)
   return (
     <>
-      {nft && (
+      {data && (
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 md:gap-x-10 xl-grid-cols-4 gap-y-5 gap-x-6 ">
-          {nft.map((data, index) => (
+          {data.map((data, index) => (
             <Card
               key={data.id + index || defaultData.name + data.index}
               imgUrl={data.metadata.imgUrl || defaultData.imgUrl}
@@ -97,7 +97,7 @@ const CardList = ({ nft }) => {
                 defaultData.tipDataAdressCreator
               }
               tipDataAdressOwner={
-                data.metadata.tipDataAdressOwner ||
+                
                 defaultData.tipDataAdressOwner
               }
             />

@@ -61,7 +61,6 @@ export default function TabZone() {
       for(let i = 1; i <= totalSupply; i++) {
         const owner = await sro721.ownerOf(i).then(address => address.toLowerCase())
         if(owner === web3state.account) {
-          console.log(i)
           Owned.push(await sro721.getNftById(i))
         }
       }
@@ -102,15 +101,15 @@ export default function TabZone() {
         <Tab.Panels className="mt-2">
           {nftOnSale &&
           <Tab.Panel>
-            <CardList nft={nftOnSale} />
+            <CardList idx={1} data={nftOnSale} />
           </Tab.Panel>}
           {nftOwned &&
           <Tab.Panel>
-            <CardList nft={nftOwned} />
+            <CardList idx={2} data={nftOwned} />
           </Tab.Panel>}
           {nftCreated &&
           <Tab.Panel>
-            <CardList nft={nftCreated} />
+            <CardList idx={3} data={nftCreated} />
           </Tab.Panel>}
         </Tab.Panels>
       </Tab.Group>
