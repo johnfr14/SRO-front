@@ -64,13 +64,10 @@ const CardList = ({ idx, data }) => {
               key={data.id + index || defaultData.name + data.index}
               imgUrl={data.metadata.imgUrl || defaultData.imgUrl}
               name={data.metadata.name || defaultData.name}
-              price={data.metadata.price || defaultData.price}
-              unity={data.metadata.unity || defaultData.unity}
+              price={null}
+              unity={"eth"}
               linkToNFT={data.metadata.linkToNFT || defaultData.linkToNFT}
-              linkToProfilCollection={
-                data.metadata.linkToProfilCollection ||
-                defaultData.linkToProfilCollection
-              }
+              linkToProfilCollection={"SRO"}
               linkToProfilCreator={
                 data.metadata.linkToProfilCreator ||
                 defaultData.linkToProfilCreator
@@ -78,26 +75,19 @@ const CardList = ({ idx, data }) => {
               linkToProfilOwner={
                 data.metadata.linkToProfilOwner || defaultData.linkToProfilOwner
               }
-              userIconCollection={
-                data.metadata.userIconCollection ||
-                defaultData.userIconCollection
-              }
+              userIconCollection={null}
               userIconCreator={
                 data.metadata.userIconCreator || defaultData.userIconCreator
               }
               userIconOwner={
                 data.metadata.userIconOwner || defaultData.userIconOwner
               }
-              tipDataAdressCollection={
-                data.metadata.tipDataAdressCollection ||
-                defaultData.tipDataAdressCollection
-              }
+              tipDataAdressCollection={"0xa4D174cF992ABf58A0E95D1f5A95443699640A8E"}
               tipDataAdressCreator={
                 data.metadata.tipDataAdressCreator ||
                 defaultData.tipDataAdressCreator
               }
               tipDataAdressOwner={
-                
                 defaultData.tipDataAdressOwner
               }
             />
