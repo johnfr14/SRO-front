@@ -6,6 +6,7 @@ import { CardList } from "./index";
 import "../../css/userTab.css";
 import { useContracts } from "../../context/ContractContext";
 import { Web3Context } from "web3-hooks";
+import { ethers } from "ethers";
 import useIsMounted from '../../hooks/useIsMounted'
 
 function classNames(...classes) {
@@ -16,7 +17,12 @@ export default function TabZone() {
   const { sro721 } = useContracts()
   const isMounted = useRef(useIsMounted())
   const [web3state] = useContext(Web3Context)
-  const [nftCreated, setNftCreated] = useState([])
+  const [nftOnSale, setNftOnSale] = useState(null)
+  const [nftOwned, setNftOwned] = useState(null)
+  const [nftCreated, setNftCreated] = useState(null)
+  
+  console.log('nft created', nftCreated)
+  console.log('nft owned',nftOwned)
 
   let [categories] = useState({
     On_sale: [
@@ -43,21 +49,34 @@ export default function TabZone() {
   });
 
   useEffect(() => {
-    const getNft = async() => {
-      console.log(await sro721.getNftCreatedByAddress(web3state.account).then((result) => result.toString().split(',')))
+    // nftCreated
+    const getNftCreated = async() => {
       const nftIds = await sro721.getNftCreatedByAddress(web3state.account).then((result) => result.toString().split(','));
       const nfts = [];
       if (nftIds.length > 0) {
         for(let i = 0; i < nftIds.length; i++ ) {
-          console.log(nftIds[i])
           nfts.push({id: nftIds[i], metadata: await sro721.getNftById(nftIds[i])})
         };
       }
-      console.log(nfts)
       setNftCreated(nfts)
     }
+    // nftOwned
+    const getNftOwned = async() => {
+      const totalSupply = await sro721.totalSupply()
+      const Owned = []
+      for(let i = 1; i <= totalSupply; i++) {
+        const owner = await sro721.ownerOf(i).then(address => address.toLowerCase())
+        if(owner === web3state.account) {
+          console.log(i)
+          Owned.push(await sro721.getNftById(i))
+        }
+      }
+      setNftOwned(Owned)
+    }
+
     if(sro721 !== null) {
-      getNft()
+      getNftCreated()
+      getNftOwned()
     }
   }, [sro721, web3state.account, isMounted])
 
@@ -87,22 +106,15 @@ export default function TabZone() {
         </div>
 
         <Tab.Panels className="mt-2">
-          {Object.values(categories).map((posts, idx) => (
-            <Tab.Panel key={idx} className={classNames("text-white")}>
-              <ul>
-                {posts.map((post) => (
-                  <li
-                    key={post.id}
-                    className="relative p-3 rounded-md hover:bg-coolGray-100"
-                  >
-                    <h3 className="text-sm font-medium leading-5">
-                      {post.component || 0}
-                    </h3>
-                  </li>
-                ))}
-              </ul>
-            </Tab.Panel>
-          ))}
+          {nftOnSale && <Tab.Panel>
+            <CardList nft={nftOnSale} />
+          </Tab.Panel>}
+          {nftOwned && <Tab.Panel>
+            <CardList nft={nftOwned} />
+          </Tab.Panel>}
+          {nftCreated && <Tab.Panel>
+            <CardList nft={nftCreated} />
+          </Tab.Panel>}
         </Tab.Panels>
       </Tab.Group>
     </div>

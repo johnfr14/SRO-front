@@ -54,7 +54,7 @@ const defaultData = [
 ];
 
 const CardList = ({ nft }) => {
-  console.log("cardList" + nft);
+  console.log(nft);
   return (
     <>
       {nft && (
