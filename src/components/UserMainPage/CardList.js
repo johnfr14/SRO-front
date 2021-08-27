@@ -62,34 +62,20 @@ const CardList = ({ idx, data }) => {
           {data.map((data, index) => (
             <Card
               key={data.id + index || defaultData.name + data.index}
-              imgUrl={data.metadata.imgUrl || defaultData.imgUrl}
-              name={data.metadata.name || defaultData.name}
+              imgUrl={data.metadata.url || defaultData.imgUrl}
+              name={data.metadata.title || defaultData.name}
               price={null}
               unity={"eth"}
-              linkToNFT={data.metadata.linkToNFT || defaultData.linkToNFT}
+              linkToNFT={defaultData.linkToNFT}
               linkToProfilCollection={"SRO"}
-              linkToProfilCreator={
-                data.metadata.linkToProfilCreator ||
-                defaultData.linkToProfilCreator
-              }
-              linkToProfilOwner={
-                data.metadata.linkToProfilOwner || defaultData.linkToProfilOwner
-              }
+              linkToProfilCreator={<a href={`https://sarahro.io/user/${data.metadata.author}`}>{data.metadata.author}</a>}
+              linkToProfilOwner={<a href={`https://sarahro.io/user/${data.owner}`}>{data.owner}</a>}
               userIconCollection={null}
-              userIconCreator={
-                data.metadata.userIconCreator || defaultData.userIconCreator
-              }
-              userIconOwner={
-                data.metadata.userIconOwner || defaultData.userIconOwner
-              }
+              userIconCreator={data.userIconCreator.avatar}
+              userIconOwner={data.owner.avatar}
               tipDataAdressCollection={"0xa4D174cF992ABf58A0E95D1f5A95443699640A8E"}
-              tipDataAdressCreator={
-                data.metadata.tipDataAdressCreator ||
-                defaultData.tipDataAdressCreator
-              }
-              tipDataAdressOwner={
-                defaultData.tipDataAdressOwner
-              }
+              tipDataAdressCreator={data.creator.address}
+              tipDataAdressOwner={data.owner.address}
             />
           )) || <Noitems />}
         </div>

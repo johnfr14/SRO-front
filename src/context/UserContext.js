@@ -28,12 +28,13 @@ export const UserContextProvider = ({children}) => {
   const [userState, dispatch] = useReducer(userReducer, initialState)
   const [ipfs, setIpfs] = useState(null)
   const [pinata, setPinata] = useState(null)
-
+  
   useEffect(() => {
     const getAccount = async () => {
-        try {
-          const result = await axios.get(`https://bdd-sro.herokuapp.com/user/${web3State.account}`)
-          const data = UserData(result.data.payload, web3State.account)
+      try {
+        const result = await axios.get(`https://bdd-sro.herokuapp.com/user/${web3State.account}`)
+        const data = UserData(result.data.payload, web3State.account)
+        console.log(data)
           dispatch({type: 'FETCH_SUCCESS', payload: data})
           const ipfs = await IPFS.create()
           const pinata = pinataSDK("2afeb39d3fc1e2b6aa90", "c5d937bf0715a2905136b9ca3b1d7f01839a40ee6f747fd6f1a092c432bcda24");
