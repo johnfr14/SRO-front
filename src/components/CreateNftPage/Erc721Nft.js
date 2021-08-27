@@ -22,13 +22,11 @@ const Erc721Nft = () => {
 
   // smart contract SRO721
   const { sro721 } = useContracts();
-  console.log(sro721)
 
   const onSubmit = async (data) => {
     // loading on ?
     setLoading(true);
     const hash = `https://gateway.pinata.cloud/ipfs/` + await pinOnIpfs(watch().file[0]) 
-    console.log(hash);
     const royalties = data.royalties;
     const title = data.title;
     const description = data.description;
