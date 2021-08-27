@@ -2,17 +2,15 @@ import axios from "axios";
 import {createContext, useContext, useEffect, useReducer, useState} from "react"
 import { Web3Context } from "web3-hooks";
 import { userReducer } from "../reducers/userReducer"
+import { UserData } from "../data/UserData";
 import IPFS from "ipfs-core";
 const pinataSDK = require('@pinata/sdk');
 
 
 export const UserContext = createContext()
 
-const initialState = {
-  user: {
-    address: ""
-  },  
-  profile: {
+const initialState = { 
+  data: {
     address: null,
     name: null,
     bio: null,
@@ -34,8 +32,9 @@ export const UserContextProvider = ({children}) => {
   useEffect(() => {
     const getAccount = async () => {
         try {
-          const result = await axios.get(`https://bdd-sro.herokuapp.com/user_by_address/${web3State.account}`)
-          dispatch({type: 'FETCH_SUCCESS', payload: result.data.payload})
+          const result = await axios.get(`https://bdd-sro.herokuapp.com/user/${web3State.account}`)
+          const data = UserData(result.data.payload, web3State.account)
+          dispatch({type: 'FETCH_SUCCESS', payload: data})
           const ipfs = await IPFS.create()
           const pinata = pinataSDK("2afeb39d3fc1e2b6aa90", "c5d937bf0715a2905136b9ca3b1d7f01839a40ee6f747fd6f1a092c432bcda24");
           

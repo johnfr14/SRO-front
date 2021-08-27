@@ -1,22 +1,14 @@
-import { useContext } from 'react';
-import { useUser } from '../context/UserContext';
-import { Web3Context } from "web3-hooks";
-
-
-
-export const UserData = () => {
-  const [ web3State ] = useContext(Web3Context);
-  const { userState } = useUser();
-
+export const UserData = (user, address) => {
+ 
   const data = {
-    address: web3State.account.substr(0, 6) + "..." + web3State.account.substr(-4),
-    id: userState.profile.id,
-    username: userState.profile.username,
-    bio: userState.profile.bio,
-    url: userState.profile.url,
-    twitterUsername: userState.profile.twitterUsername,
-    portfolio: userState.profile.portfolio,
-    avatar: userState.profile.avatar,
+     address: address.substr(0, 6) + "..." + address.substr(-4),
+    id: user.profile.id,
+    username: user.profile.username,
+    bio: user.profile.bio,
+    url: user.profile.url,
+    twitterUsername: user.profile.twitterUsername,
+    portfolio: user.profile.portfolio,
+    avatar: user.profile.avatar,
   }
   
   return data

@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useEffect, useState, useContext } from "react";
 import { Tab } from "@headlessui/react";
 
@@ -23,8 +24,8 @@ const defaultData = {
     linkToProfilCreator: "/",
     linkToProfilOwner: "/",
 
-    userIconCollection: userTest,
-    userIconCreator: cardMediaTest,
+    // userIconCollection: userTest,
+    // userIconCreator: cardMediaTest,
     //userIconOwner: "",
 
     tipDataAdressCollection: "SRO",
@@ -37,8 +38,6 @@ export default function TabZone() {
   const [web3state] = useContext(Web3Context)
   const [nft, setNft] = useState(defaultData)
 
-  console.log('nft owned', nftOwned)
-  console.log('nft created', nftCreated)
 
 
   let [categories] = useState({
@@ -72,21 +71,24 @@ export default function TabZone() {
       const nfts = [];
       if (nftIds[0] !== '') {
         for(let i = 0; i < nftIds.length; i++ ) {
-          nfts.push({id: nftIds[i], metadata: await sro721.getNftById(nftIds[i]),  })
+          const ownerOf = await sro721.ownerOf(i).then(address => address.toLowerCase())
+          const owner = await axios.get(`https://bdd-sro.herokuapp.com/user_by_address/${ownerOf}`)
+          nfts.push({id: nftIds[i], metadata: await sro721.getNftById(nftIds[i]), owner: owner})
         };
       }
-      setNft({nftOwned: nftOwned, nftCreated: nftCreated, user: userState})
+      return nfts 
     }
+
     const getNftOwned = async() => {
       const totalSupply = await sro721.totalSupply()
-      const Owned = []
+      const owned = []
       for(let i = 1; i <= totalSupply; i++) {
         const owner = await sro721.ownerOf(i).then(address => address.toLowerCase())
         if(owner === web3state.account) {
-          Owned.push(await sro721.getNftById(i))
+          owned.push({id: i, metada: await sro721.getNftById(i), owner: web3state.account})
         }
       }
-      setNftOwned(Owned)
+      return owned
     }
 
     if(sro721 !== null) {

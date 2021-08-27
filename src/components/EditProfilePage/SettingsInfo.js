@@ -1,7 +1,6 @@
 import { useContext } from "react";
 import { AvatarSettings } from "./index";
 import { useForm } from "react-hook-form";
-import { useUser } from "../../context/UserContext";
 import { Web3Context } from "web3-hooks";
 import classnames from "classnames";
 import axios from "axios";
@@ -13,9 +12,8 @@ import {pinOnIpfs} from "../../ipfs/ipfs"
 require("dotenv").config();
 
 // @TODO: toast pour l'update du profil ( dans la fonction "onSubmit()")
-const SettingsInfo = ({ data }) => {
+const SettingsInfo = ({ data, dispatch }) => {
   const [web3State] = useContext(Web3Context);
-  const { dispatch } = useUser();
 
   const {
     register,
@@ -85,7 +83,7 @@ const SettingsInfo = ({ data }) => {
         </div>
         <div className="">
           <form onSubmit={handleSubmit(onSubmit)} className="">
-            {data.id && (
+            {data.address && (
               <div className="flex flex-col md:flex-row justify-center">
                 <AvatarSettings
                   register={register}
