@@ -36,3 +36,17 @@
 .bvMJFo {
   transition: opacity 0.33s ease-in-out 0s;
 }
+
+.cvuikC > :not(:first-child) {
+  margin-left: -10px;
+}
+
+.bgKYbJ {
+  position: relative;
+  object-fit: cover;
+  width: 34px;
+  height: 34px;
+  border-radius: 100%;
+  background: rgb(41, 41, 41);
+  border: 2px solid rgb(18, 18, 18);
+}
