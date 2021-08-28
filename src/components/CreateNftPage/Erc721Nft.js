@@ -19,11 +19,13 @@ const Erc721Nft = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
+  console.log(errors)
 
   // smart contract SRO721
   const { sro721 } = useContracts();
 
   const onSubmit = async (data) => {
+    console.log('coucou')
     // loading on ?
     setLoading(true);
     const hash = `https://gateway.pinata.cloud/ipfs/` + await pinOnIpfs(watch().file[0]) 
@@ -163,8 +165,10 @@ const Erc721Nft = () => {
                   <input
                     className="appearance-none block w-full bg-gray-900  border border-gray-400 shadow-inner rounded-md py-3 px-4  leading-tight focus:outline-none  focus:border-gray-500"
                     type="number"
+                    min="0"
+                    max="50"
                     placeholder="10 %"
-                    {...register("royalties", { min: 0 })}
+                    {...register("royalties")}
                   />
                 </div>
                 <p className="block tracking-wide text-xs mb-2 mt-2">

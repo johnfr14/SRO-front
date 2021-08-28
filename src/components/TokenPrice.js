@@ -18,6 +18,7 @@ const TokenPrice = ({ register, errors }) => {
         </select>
         <input
           type="number"
+          min="0"
           className="flex-shrink flex-grow flex-auto leading-normal w-px bg-gray-900  border border-gray-400 shadow-inner rounded-md py-3 px-4 focus:outline-none  focus:border-gray-500"
           placeholder="Enter price for one piece"
           {...register("price", {min: 0})}

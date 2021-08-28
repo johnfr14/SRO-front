@@ -42,7 +42,11 @@ const UploadFile = ({ register, watch, errors }) => {
                   >
                 Input File
               </label>
-              {errors && <p>{errors.message}</p>}
+              {errors &&(
+                <p className="text-xs text-red-500 mt-2">
+                  "File" is required
+                </p>
+              )}
             </div>
           </div>
         </div>
