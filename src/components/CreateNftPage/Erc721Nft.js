@@ -10,6 +10,7 @@ import "../../css/toast.css";
 import { useContracts } from "../../context/ContractContext"; // instance des contracts
 
 const Erc721Nft = () => {
+  const { sro721 } = useContracts();
   const [isToggledPrice, setIsToggledPrice] = useState(false);
   const [isToggled, setIsToggled] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -20,15 +21,12 @@ const Erc721Nft = () => {
     formState: { errors },
   } = useForm();
 
-  // smart contract SRO721
-  const { sro721 } = useContracts();
-
   const onSubmit = async (data) => {
     // loading on ?
     setLoading(true);
     try {
     const uriHash = `https://gateway.pinata.cloud/ipfs/` + await pinOnIpfs(watch().file[0]) 
-    const royalties = data.royalties;
+    const royalties = data.royalties || 0;
     const title = data.title;
     const description = data.description;
     const tx = await sro721.create(royalties, title, description, uriHash);
