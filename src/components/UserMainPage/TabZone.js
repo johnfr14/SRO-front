@@ -1,4 +1,3 @@
-import axios from "axios";
 import { useEffect, useState, useContext } from "react";
 import { Tab } from "@headlessui/react";
 
@@ -6,7 +5,7 @@ import { CardList } from "./index";
 
 import "../../css/userTab.css";
 import { useContracts } from "../../context/ContractContext";
-import { UserData, getNftCreated, getNftOnSale, getNftOwned } from "../../data/fetchData"
+import { getNftCreated, getNftOnSale, getNftOwned } from "../../data/fetchData"
 import { Web3Context } from "web3-hooks";
 
 function classNames(...classes) {

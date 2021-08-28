@@ -19,7 +19,6 @@ const Erc721Nft = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
-  console.log(errors)
 
   // smart contract SRO721
   const { sro721 } = useContracts();
