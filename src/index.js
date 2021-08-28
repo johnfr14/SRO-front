@@ -4,7 +4,7 @@ import { Web3Provider } from "web3-hooks";
 import { BrowserRouter as Router } from "react-router-dom";
 import App from "./App";
 import "./index.css";
-import { UserContextProvider } from "./context/UserContext"
+import { UserContextProvider } from "./context/UserContext";
 
 ReactDOM.render(
   <React.StrictMode>
