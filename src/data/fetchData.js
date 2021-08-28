@@ -6,11 +6,11 @@ export const getNftCreated = async(user, sro721) => {
   const nfts = [];
   if (nftIds[0] !== '') {
     for(let i = 0; i < nftIds.length; i++) {
-      const ownerOf = await sro721.ownerOf(i + 1).then(address => address.toLowerCase())
+      const ownerOf = await sro721.ownerOf(nftIds[i]).then(address => address.toLowerCase())
       const profileOfOwner = await axios.get(`https://bdd-sro.herokuapp.com/user/${ownerOf}`)
       const owner = UserData(profileOfOwner.data.payload, ownerOf)
-      const metadata = await sro721.getNftById(i)
-      const url = await sro721.tokenURI(i + 1)
+      const metadata = await sro721.getNftById(nftIds[i])
+      const url = await sro721.tokenURI(nftIds[i])
       nfts.push({id: nftIds[i], metadata: {...metadata, url: url}, owner: owner, creator: user})
     };
   }
