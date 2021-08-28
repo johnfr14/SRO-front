@@ -6,7 +6,7 @@ import { CardList } from "./index";
 
 import "../../css/userTab.css";
 import { useContracts } from "../../context/ContractContext";
-import { UserData } from "../../data/UserData"
+import { UserData, getNftCreated, getNftOnSale, getNftOwned } from "../../data/fetchData"
 import { Web3Context } from "web3-hooks";
 
 function classNames(...classes) {
@@ -64,48 +64,11 @@ export default function TabZone({ user }) {
   });
   
   useEffect(() => {
-    // nft created
-    const getNftCreated = async() => {
-      const nftIds = await sro721.getNftCreatedByAddress(web3State.account).then((result) => result.toString().split(','));
-      const nfts = [];
-      if (nftIds[0] !== '') {
-        for(let i = 0; i < nftIds.length; i++ ) {
-          const ownerOf = await sro721.ownerOf(i + 1 ).then(address => address.toLowerCase())
-          const profileOfOwner = await axios.get(`https://bdd-sro.herokuapp.com/user/${ownerOf}`)
-          const owner = UserData(profileOfOwner.data.payload, ownerOf)
-          const metadata = await sro721.getNftById(i)
-          const url = await sro721.tokenURI(i + 1)
-          nfts.push({id: nftIds[i], metadata: {...metadata, url: url}, owner: owner, creator: user})
-        };
-      }
-      return nfts 
-    }
-    // nft owned
-    const getNftOwned = async() => {
-      const totalSupply = await sro721.totalSupply()
-      const owned = []
-      for(let i = 1; i <= totalSupply; i++) {
-        const owner = await sro721.ownerOf(i).then(address => address.toLowerCase())
-        if(owner === web3State.account) {
-          const metadata = await sro721.getNftById(i)
-          const result = await axios.get(`https://bdd-sro.herokuapp.com/user/${metadata.author}`)
-          const data = UserData(result.data.payload, metadata.author)
-          const url = await sro721.tokenURI(i)
-          owned.push({id: i, metada: {...metadata, url: url}, owner: user, creator: data })
-        }
-      }
-      return owned
-    }
-    // nft on sale (soon)
-    const getNftOnSale = async() => {
-      const OnSale = null;
-      return OnSale
-    }
-    
-    const fetchNft = async() => {
-      const nftOnSale = await getNftOnSale()
-      const nftOwned = await getNftOwned()
-      const nftCreated = await getNftCreated()
+      const fetchNft = async() => {
+      const nftOnSale = await getNftOnSale( )
+      const nftOwned = await getNftOwned(web3State.account, sro721, user)
+      const nftCreated = await getNftCreated(web3State.account, sro721, user)
+      console.log(nftOwned)
       setNft({onSale: nftOnSale, owned: nftOwned, created: nftCreated})
     }
     
@@ -139,21 +102,21 @@ export default function TabZone({ user }) {
           </Tab.List>
         </div>
 
-        {Object.keys(nft.created).length === 3 && <Tab.Panels className="mt-2">
+        <Tab.Panels className="mt-2">
       
           <Tab.Panel>
-            <CardList idx={1} data={nft.onSale} />
+            {nft.onSale && <CardList idx={1} data={nft.onSale} />}
           </Tab.Panel>
        
           <Tab.Panel>
-            <CardList idx={2} data={nft.owned} />
+            {nft.owned && <CardList idx={2} data={nft.owned} />}
           </Tab.Panel>
          
           <Tab.Panel>
-            <CardList idx={3} data={nft.created}  />
+            {nft.created && <CardList idx={3} data={nft.created} />}
           </Tab.Panel>
           
-        </Tab.Panels>}
+        </Tab.Panels>
       </Tab.Group>
     </div>
   );

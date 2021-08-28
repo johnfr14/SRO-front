@@ -2,7 +2,7 @@ import axios from "axios";
 import {createContext, useContext, useEffect, useReducer, useState} from "react"
 import { Web3Context } from "web3-hooks";
 import { userReducer } from "../reducers/userReducer"
-import { UserData } from "../data/UserData";
+import { UserData } from "../data/fetchData";
 import IPFS from "ipfs-core";
 const pinataSDK = require('@pinata/sdk');
 
