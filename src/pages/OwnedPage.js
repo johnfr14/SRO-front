@@ -8,7 +8,7 @@ function OwnedPage() {
     <>
       <Layout>
         <Container children={<BannerInfos data={userState.data} />} />
-        <Container children={<TabZone user={userState.data}/>} />
+        {userState.data.address && <Container children={<TabZone user={userState.data}/>} />}
       </Layout>
     </>
   );

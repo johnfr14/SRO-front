@@ -64,7 +64,7 @@ const CardList = ({ idx, data }) => {
               key={data.id + index || defaultData.name + data.index}
               imgUrl={data.metadata.url || defaultData.imgUrl}
               name={data.metadata.title || defaultData.name}
-              price={null}
+              price={''}
               unity={"eth"}
               linkToNFT={defaultData.linkToNFT}
               linkToProfilCollection={"SRO"}

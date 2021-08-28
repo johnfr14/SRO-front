@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState} from "react";
 import { Tab } from "@headlessui/react";
 
 import { CardList } from "./index";
@@ -6,7 +6,6 @@ import { CardList } from "./index";
 import "../../css/userTab.css";
 import { useContracts } from "../../context/ContractContext";
 import { getNftCreated, getNftOnSale, getNftOwned } from "../../data/fetchData"
-import { Web3Context } from "web3-hooks";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -35,7 +34,6 @@ function classNames(...classes) {
 
 export default function TabZone({ user }) {
   const { sro721 } = useContracts()
-  const [web3State] = useContext(Web3Context);
   const [nft, setNft] = useState({created: {}})
 
   let [categories] = useState({
@@ -65,16 +63,15 @@ export default function TabZone({ user }) {
   useEffect(() => {
       const fetchNft = async() => {
       const nftOnSale = await getNftOnSale( )
-      const nftOwned = await getNftOwned(web3State.account, sro721, user)
-      const nftCreated = await getNftCreated(web3State.account, sro721, user)
-      console.log(nftOwned)
+      const nftOwned = await getNftOwned(user, sro721)
+      const nftCreated = await getNftCreated(user, sro721)
       setNft({onSale: nftOnSale, owned: nftOwned, created: nftCreated})
     }
     
     if(sro721 !== null) {
       fetchNft()
     }
-  }, [sro721, user, web3State.account])
+  }, [sro721, user])
 
   return (
     <div className="w-full px-2 py-16 sm:px-0">

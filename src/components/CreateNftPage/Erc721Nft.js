@@ -24,32 +24,24 @@ const Erc721Nft = () => {
   const { sro721 } = useContracts();
 
   const onSubmit = async (data) => {
-    console.log('coucou')
     // loading on ?
     setLoading(true);
-    const hash = `https://gateway.pinata.cloud/ipfs/` + await pinOnIpfs(watch().file[0]) 
+    try {
+    const uriHash = `https://gateway.pinata.cloud/ipfs/` + await pinOnIpfs(watch().file[0]) 
     const royalties = data.royalties;
     const title = data.title;
     const description = data.description;
-    const uri = hash; // ipfs hash
-    try {
-      const tx = await sro721.create(
-        royalties,
-        title,
-        description,
-        uri,
-      );
-      const receipt = await tx.wait();
-      console.log(receipt)
-      toast.success("Nft minted", {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: false,
-        draggable: true,
-        progress: undefined,
-      });
+    const tx = await sro721.create(royalties, title, description, uriHash);
+    await tx.wait();
+    toast.success(`Nft minted \n`, {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: false,
+      draggable: true,
+      progress: undefined,
+    });
     } catch (e) {
       toast.error(e.message, {
         position: "top-right",
