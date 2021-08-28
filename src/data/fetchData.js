@@ -38,6 +38,11 @@ export const getNftOnSale = async() => {
   return OnSale
 }
 
+export const getLikedNft = async(user, id, sro721) => {
+  const isLiked = await sro721.hasLiked(user, id)
+  return isLiked
+}
+
 
 export const UserData = (user, address) => {
  

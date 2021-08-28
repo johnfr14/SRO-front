@@ -1,4 +1,4 @@
-export const SRO721Address = "0xf6a37592A38f779DAA436897f88Ad6D086756253";
+export const SRO721Address = "0xe1802beC39709877bf4CE40f54A84e0D5de26C00";
 
 export const SRO721Abi = [
 	{
@@ -261,6 +261,30 @@ export const SRO721Abi = [
 				"internalType": "uint256[]",
 				"name": "",
 				"type": "uint256[]"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "account",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "id",
+				"type": "uint256"
+			}
+		],
+		"name": "hasLiked",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
 			}
 		],
 		"stateMutability": "view",

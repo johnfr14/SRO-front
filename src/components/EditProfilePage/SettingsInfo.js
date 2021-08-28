@@ -32,8 +32,6 @@ const SettingsInfo = ({ data, dispatch }) => {
         avatar = avatar === null ? null : data.avatar.split("/").pop();
       }
 
-      console.log(avatar);
-
       const result = await axios.post(
         `https://bdd-sro.herokuapp.com/edit_profile/${web3State.account}`,
         {
