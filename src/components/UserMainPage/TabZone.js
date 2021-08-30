@@ -1,7 +1,7 @@
 import { useEffect, useState} from "react";
 import { Tab } from "@headlessui/react";
 
-import { CardList } from "./index";
+import { CardList, Noitems } from "./index";
 
 import "../../css/userTab.css";
 import { useContracts } from "../../context/ContractContext";
@@ -101,7 +101,7 @@ export default function TabZone({ user }) {
         <Tab.Panels className="mt-2">
       
           <Tab.Panel>
-            {nft.onSale && <CardList idx={1} data={nft.onSale} />}
+            {nft.onSale ? <CardList idx={1} data={nft.onSale} /> : <Noitems />}
           </Tab.Panel>
        
           <Tab.Panel>
