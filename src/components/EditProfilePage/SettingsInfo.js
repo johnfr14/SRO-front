@@ -1,4 +1,5 @@
 import { useContext } from "react";
+import { useHistory } from 'react-router-dom';
 import { AvatarSettings } from "./index";
 import { useForm } from "react-hook-form";
 import { Web3Context } from "web3-hooks";
@@ -14,6 +15,7 @@ require("dotenv").config();
 // @TODO: toast pour l'update du profil ( dans la fonction "onSubmit()")
 const SettingsInfo = ({ data, dispatch }) => {
   const [web3State] = useContext(Web3Context);
+  let history = useHistory();
 
   const {
     register,
@@ -32,8 +34,7 @@ const SettingsInfo = ({ data, dispatch }) => {
         avatar = avatar === null ? null : data.avatar.split("/").pop();
       }
 
-      const result = await axios.post(
-        `https://bdd-sro.herokuapp.com/edit_profile/${web3State.account}`,
+      const result = await axios.post(`https://bdd-sro.herokuapp.com/edit_profile/${web3State.account}`,
         {
           data: {
             username: watch().username || null,
@@ -45,6 +46,9 @@ const SettingsInfo = ({ data, dispatch }) => {
           },
         }
       );
+      
+      dispatch({ type: "UPDATE_PROFILE", payload: result.data.payload });
+
       toast.success("Profile Updated", {
         position: "bottom-right",
         autoClose: 5000,
@@ -53,8 +57,9 @@ const SettingsInfo = ({ data, dispatch }) => {
         pauseOnHover: false,
         draggable: true,
         progress: undefined,
-      });
-      dispatch({ type: "UPDATE_PROFILE", payload: result.data.payload });
+      })
+      //after updating data it redirect to the dashboard
+      setTimeout(() => { history.push('/user') }, 5000);
     } catch (e) {
       toast.error(e.message, {
         position: "bottom-right",
@@ -64,8 +69,8 @@ const SettingsInfo = ({ data, dispatch }) => {
         pauseOnHover: false,
         draggable: true,
         progress: undefined,
-      });
-    }
+      })
+    } 
   };
 
   return (
