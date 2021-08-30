@@ -5,6 +5,7 @@ import { Divider } from "../index";
 import { XpBar } from "./index";
 
 import { userDefault } from "../../images/";
+import { useUser } from "../../context/UserContext"
 
 const profile = [
   {
@@ -30,6 +31,8 @@ function classNames(...classes) {
 }
 
 export default function LogUser() {
+const { userState } = useUser()
+
   return (
     <div>
       <>
@@ -42,7 +45,7 @@ export default function LogUser() {
                   <span className="sr-only">Open user menu</span>
                   <img
                     className="h-8 w-8 rounded-full"
-                    src={userDefault}
+                    src={ userState.data.avatar || userDefault}
                     alt=""
                   />
                 </Menu.Button>
