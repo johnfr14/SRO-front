@@ -1,5 +1,4 @@
 import { useContext } from "react";
-import { useHistory } from 'react-router-dom';
 import { useForm } from "react-hook-form";
 import { UserData } from "../../data/fetchData";
 import { Web3Context } from "web3-hooks";
@@ -16,7 +15,6 @@ require("dotenv").config();
 // @TODO: toast pour l'update du profil ( dans la fonction "onSubmit()")
 const SettingsInfo = ({ data, dispatch }) => {
   const [web3State] = useContext(Web3Context);
-  let history = useHistory();
   const {
     register,
     watch,
@@ -60,7 +58,6 @@ const SettingsInfo = ({ data, dispatch }) => {
         progress: undefined,
       })
       //after updating data it redirect to the dashboard
-      setTimeout(() => { history.push('/user') }, 2000);
     } catch (e) {
       toast.error(e.message, {
         position: "bottom-right",

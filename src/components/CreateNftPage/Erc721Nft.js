@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useHistory } from 'react-router-dom';
 import { PreviewFile, UploadFile } from ".";
 import { SwitchToggle, TokenPrice } from "../index";
 import classnames from "classnames";
@@ -20,6 +21,7 @@ const Erc721Nft = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
+  let history = useHistory();
 
   const onSubmit = async (data) => {
     // loading on ?
@@ -40,6 +42,7 @@ const Erc721Nft = () => {
       draggable: true,
       progress: undefined,
     });
+    setTimeout(() => { history.push('/user') }, 2000);
     } catch (e) {
       toast.error(e.message, {
         position: "top-right",
