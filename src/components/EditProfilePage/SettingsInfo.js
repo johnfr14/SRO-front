@@ -41,7 +41,7 @@ const SettingsInfo = ({ data, dispatch }) => {
             url: watch().url || null,
             twitterUsername: watch().twitterUsername || null,
             portfolio: watch().portfolio || null,
-            avatar: avatar,
+            avatar: `https://gateway.pinata.cloud/ipfs/${avatar}`,
           },
         }
       );
