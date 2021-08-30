@@ -1,14 +1,15 @@
 import { useContext } from "react";
 import { useHistory } from 'react-router-dom';
-import { AvatarSettings } from "./index";
 import { useForm } from "react-hook-form";
+import { UserData } from "../../data/fetchData";
 import { Web3Context } from "web3-hooks";
-import classnames from "classnames";
-import axios from "axios";
+import { AvatarSettings } from "./index";
 import { ToastContainer, toast } from "react-toastify";
+import {pinOnIpfs} from "../../ipfs/ipfs"
+import axios from "axios";
+import classnames from "classnames";
 import "react-toastify/dist/ReactToastify.css";
 import "../../css/toast.css";
-import {pinOnIpfs} from "../../ipfs/ipfs"
 
 require("dotenv").config();
 
@@ -16,7 +17,6 @@ require("dotenv").config();
 const SettingsInfo = ({ data, dispatch }) => {
   const [web3State] = useContext(Web3Context);
   let history = useHistory();
-
   const {
     register,
     watch,
@@ -24,6 +24,7 @@ const SettingsInfo = ({ data, dispatch }) => {
     formState: { errors },
   } = useForm();
 
+  
   const onSubmit = async () => {
     try {
       let avatar = data.avatar;
@@ -33,21 +34,21 @@ const SettingsInfo = ({ data, dispatch }) => {
       } else {
         avatar = avatar === null ? null : data.avatar.split("/").pop();
       }
-
+      dispatch({type: 'FETCH_INIT'})
       const result = await axios.post(`https://bdd-sro.herokuapp.com/edit_profile/${web3State.account}`,
-        {
-          data: {
-            username: watch().username || null,
-            bio: watch().bio || null,
-            url: watch().url || null,
-            twitterUsername: watch().twitterUsername || null,
-            portfolio: watch().portfolio || null,
-            avatar: `https://gateway.pinata.cloud/ipfs/${avatar}`,
-          },
-        }
+      {
+        data: {
+          username: watch().username || null,
+          bio: watch().bio || null,
+          url: watch().url || null,
+          twitterUsername: watch().twitterUsername || null,
+          portfolio: watch().portfolio || null,
+          avatar: `https://gateway.pinata.cloud/ipfs/${avatar}`,
+        },
+      }
       );
-      
-      dispatch({ type: "UPDATE_PROFILE", payload: result.data.payload });
+      const newData = UserData({profile: result.data.payload}, web3State.account)
+      dispatch({ type: "UPDATE_PROFILE", payload: newData });
 
       toast.success("Profile Updated", {
         position: "bottom-right",
@@ -86,7 +87,7 @@ const SettingsInfo = ({ data, dispatch }) => {
         </div>
         <div className="">
           <form onSubmit={handleSubmit(onSubmit)} className="">
-            {data.address && (
+            {data.fullAddress && (
               <div className="flex flex-col md:flex-row justify-center">
                 <AvatarSettings
                   register={register}
