@@ -77,7 +77,7 @@ const CardList = ({ idx, data }) => {
                 amountLike={data.metadata.likes}
                 price={""}
                 unity={""}
-                linkToNFT={defaultData.linkToNFT}
+                linkToNFT={"/0xa4D174cF992ABf58A0E95D1f5A95443699640A8E:14"}
                 linkToProfilCollection={"SRO"}
                 linkToProfilCreator={
                   <a href={`https://sarahro.io/user/${data.metadata.author}`}>

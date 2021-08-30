@@ -16,7 +16,7 @@ function App() {
         <Route exact path="/user" component={OwnedPage} />
         <Route exact path="/settings" component={EditProfile} />
         <Route exact path="/create/erc721" component={CreateErc721} />
-        <Route exact path="/token/action" component={NftPage} />
+        <Route exact path="/:adresse:id" component={NftPage} />
         <Redirect to="/" />
       </Switch>
     </>
