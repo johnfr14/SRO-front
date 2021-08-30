@@ -58,11 +58,7 @@ const defaultData = [
 ];
 
 const CardList = ({ idx, data }) => {
-  console.log(
-    `Tab: ${idx === 1 ? "nftOnSale" : idx === 2 ? "nft owned" : "nft created"}`,
-    data
-  );
-  console.log(data.length > 0);
+  console.log(`Tab: ${idx === 1 ? "nftOnSale" : idx === 2 ? "nft owned" : "nft created"}`, data);
   return (
     <>
       <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 md:gap-x-10 xl-grid-cols-4 gap-y-5 gap-x-6 ">
