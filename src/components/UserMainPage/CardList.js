@@ -76,7 +76,7 @@ const CardList = ({ idx, data }) => {
                 name={data.metadata.title || defaultData.name}
                 amountLike={data.metadata.likes}
                 price={""}
-                unity={"eth"}
+                unity={""}
                 linkToNFT={defaultData.linkToNFT}
                 linkToProfilCollection={"SRO"}
                 linkToProfilCreator={
