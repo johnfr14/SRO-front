@@ -1,7 +1,7 @@
 import React from "react";
-import { Button } from "../index";
+import classnames from "classnames";
 
-const UploadFile = () => {
+const UploadFile = ({ register, watch, errors }) => {  
   return (
     <div>
       <div className="container mx-auto max-w-screen-lg h-full text-white">
@@ -13,15 +13,41 @@ const UploadFile = () => {
             <h1 className="text-2xl  font-semibold text-center pt-1 pb-4">
               Upload File
             </h1>
-            <div className="border-dashed border-2 border-gray-400 py-10 px-5 flex flex-col justify-center items-center">
-              <p className="mb-3 font-semibold  flex flex-wrap justify-center">
-                PNG, GIF, WEBP, MP4 or MP3. Max 100mb.
-              </p>
-              <Button target={<input type="file" />} buttonStyle>
-                Upload a file
-              </Button>
+             <div className="border-dashed border-2 border-gray-400 py-10 px-5 flex flex-col justify-center items-center">
+              {watch && 
+                <>
+                  {(watch.length > 0 && <p>{watch[0].name}</p>) 
+                  || 
+                  <p className="mb-3 font-semibold  flex flex-wrap justify-center">
+                    PNG, GIF, WEBP, MP4 or MP3. Max 100mb.
+                  </p>}
+                </>
+              }
+              <input
+                style={{ display: "none" }}
+                type="file"
+                id="file"
+                name="file"
+                accept="image/png, image/jpeg"
+                {...register("file", {required: true})}
+              />
+              <label
+                className={classnames(
+                  "transition duration-300 bg-gradient-to-br rounded-xl hover:opacity-75",
+                  "text-black px-8 py-3 from-primary-200 to-primary-200" ||
+                  "text-white hover:text-primary-200"
+                  )}
+                  style={{ cursor: "pointer" }}
+                  htmlFor="file"
+                  >
+                Input File
+              </label>
+              {errors &&(
+                <p className="text-xs text-red-500 mt-2">
+                  "File" is required
+                </p>
+              )}
             </div>
-            <p className="text-xs text-red-500 mt-2">"File" is required</p>
           </div>
         </div>
       </div>

@@ -1,28 +1,41 @@
-import { useState } from "react";
+import { useEffect, useState} from "react";
 import { Tab } from "@headlessui/react";
 
-import { Noitems } from "./index";
-import { Card } from "../index";
+import { CardList, Noitems } from "./index";
 
 import "../../css/userTab.css";
+import { useContracts } from "../../context/ContractContext";
+import { getNftCreated, getNftOnSale, getNftOwned } from "../../data/fetchData"
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export function CardList() {
-  return (
-    <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 md:gap-x-10 xl-grid-cols-4 gap-y-5 gap-x-6 ">
-      <Card />
-      <Card />
-      <Card />
-      <Card />
-      <Card />
-    </div>
-  );
-}
+// const defaultData = {
+//     imgUrl:
+//       "https://upload.wikimedia.org/wikipedia/en/e/ed/Leonardo_%28Teenage_Mutant_Ninja_Turtles%29.jpg",
+//     name: "Leonardo",
+//     price: "0.05",
+//     unity: "ETH",
+//     linkToNFT: "/",
 
-export default function TabZone() {
+//     linkToProfilCollection: "/",
+//     linkToProfilCreator: "/",
+//     linkToProfilOwner: "/",
+
+//     // userIconCollection: userTest,
+//     // userIconCreator: cardMediaTest,
+//     //userIconOwner: "",
+
+//     tipDataAdressCollection: "SRO",
+//     tipDataAdressCreator: "0x0000000000000000000000000000000000000000",
+//     tipDataAdressOwner: "0x0000000000000000000000000000000000000000",
+//   }
+
+export default function TabZone({ user }) {
+  const { sro721 } = useContracts()
+  const [nft, setNft] = useState({created: {}})
+
   let [categories] = useState({
     On_sale: [
       {
@@ -35,17 +48,30 @@ export default function TabZone() {
       {
         id: 1,
         name: "Owned",
-        component: "",
+        component: <CardList />,
       },
     ],
     Created: [
       {
         id: 1,
         name: "Created",
-        component: <Noitems />,
+        component: <CardList />,
       },
     ],
   });
+  
+  useEffect(() => {
+      const fetchNft = async() => {
+      const nftOnSale = await getNftOnSale( )
+      const nftOwned = await getNftOwned(user, sro721)
+      const nftCreated = await getNftCreated(user, sro721)
+      setNft({onSale: nftOnSale, owned: nftOwned, created: nftCreated})
+    }
+    
+    if(sro721 !== null) {
+      fetchNft()
+    }
+  }, [sro721, user])
 
   return (
     <div className="w-full px-2 py-16 sm:px-0">
@@ -73,22 +99,19 @@ export default function TabZone() {
         </div>
 
         <Tab.Panels className="mt-2">
-          {Object.values(categories).map((posts, idx) => (
-            <Tab.Panel key={idx} className={classNames("text-white")}>
-              <ul>
-                {posts.map((post) => (
-                  <li
-                    key={post.id}
-                    className="relative p-3 rounded-md hover:bg-coolGray-100"
-                  >
-                    <h3 className="text-sm font-medium leading-5">
-                      {post.component}
-                    </h3>
-                  </li>
-                ))}
-              </ul>
-            </Tab.Panel>
-          ))}
+      
+          <Tab.Panel>
+            {nft.onSale ? <CardList idx={1} data={nft.onSale} /> : <Noitems />}
+          </Tab.Panel>
+       
+          <Tab.Panel>
+            {nft.owned && <CardList idx={2} data={nft.owned} />}
+          </Tab.Panel>
+         
+          <Tab.Panel>
+            {nft.created && <CardList idx={3} data={nft.created} />}
+          </Tab.Panel>
+          
         </Tab.Panels>
       </Tab.Group>
     </div>

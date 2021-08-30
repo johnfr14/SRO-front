@@ -2,17 +2,17 @@ import { Link } from "react-router-dom";
 
 import "../../css/mediaCard.css";
 
-const MediaCard = ({ linkTo, mediaURL }) => {
+const MediaCard = ({ linkTo, mediaURL, altName }) => {
   return (
     <>
       {mediaURL ? (
-        <Link to={linkTo} className="p-1">
-          <img
-            src={mediaURL}
-            alt=""
-            className="w-full object-fill rounded-2xl "
-          />
-        </Link>
+        <div className="flex mt-4 jCiuZr">
+          <div className="flex relative dxFZky">
+            <Link to={linkTo} className="bzdSnS">
+              <img src={mediaURL} alt={altName} className="gnBPmJ bvMJFo" />
+            </Link>
+          </div>
+        </div>
       ) : (
         <Link to={linkTo} className="flex">
           <div className="flex erAkNO">

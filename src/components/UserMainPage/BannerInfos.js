@@ -35,7 +35,7 @@ const BannerInfos = ({ data }) => {
             <div className="ml-3">
               <p className="font-bold text-lg">{data.username}</p>
               <p className=" ">{data.address}</p>
-              <p className="text-gray-500">@{data.username}</p>
+              <p className="text-gray-500">@{data.twitterUsername}</p>
             </div>
 
             <div className="px-3 mt-3">

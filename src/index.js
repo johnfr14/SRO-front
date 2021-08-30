@@ -5,14 +5,17 @@ import { BrowserRouter as Router } from "react-router-dom";
 import App from "./App";
 import "./index.css";
 import { UserContextProvider } from "./context/UserContext"
+import { ContractContextProvider } from "./context/ContractContext"
 
 ReactDOM.render(
   <React.StrictMode>
     <Router>
       <Web3Provider>
-        <UserContextProvider>
-          <App />
-        </UserContextProvider>
+        <ContractContextProvider>
+          <UserContextProvider>
+            <App />
+          </UserContextProvider>
+        </ContractContextProvider>
       </Web3Provider>
     </Router>
   </React.StrictMode>,

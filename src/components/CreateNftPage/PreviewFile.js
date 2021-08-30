@@ -1,7 +1,14 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import { previewDefault } from "../../images";
 
-const PreviewFile = () => {
+const PreviewFile = ({watch}) => {
+  const [preview, setPreview] = useState(null);
+
+  useEffect(() => {
+    if (watch.length > 0) {
+      setPreview(URL.createObjectURL(watch[0]));
+    }
+  }, [watch]);
   return (
     // Add Card pour le Previews
     <>
@@ -12,7 +19,7 @@ const PreviewFile = () => {
         <div className="flex flex-col items-center ">
           <img
             className="flex justify-center px-4 py-5 w-48 "
-            src={previewDefault}
+            src={preview || previewDefault}
             alt="NFT Upload"
           />
         </div>

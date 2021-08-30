@@ -1,25 +1,20 @@
 import { useContext } from "react";
-import { AvatarSettings } from "./index";
 import { useForm } from "react-hook-form";
-import { useUser } from "../../context/UserContext";
+import { UserData } from "../../data/fetchData";
 import { Web3Context } from "web3-hooks";
-import classnames from "classnames";
-import axios from "axios";
+import { AvatarSettings } from "./index";
 import { ToastContainer, toast } from "react-toastify";
+import {pinOnIpfs} from "../../ipfs/ipfs"
+import axios from "axios";
+import classnames from "classnames";
 import "react-toastify/dist/ReactToastify.css";
 import "../../css/toast.css";
-const FormData = require("form-data");
 
 require("dotenv").config();
 
-const PINATA_API_KEY = process.env.REACT_APP_PINATA_API_KEY;
-const PINATA_SECRET_KEY = process.env.REACT_APP_PINATA_SECRET_KEY;
-
 // @TODO: toast pour l'update du profil ( dans la fonction "onSubmit()")
-const SettingsInfo = ({ data }) => {
+const SettingsInfo = ({ data, dispatch }) => {
   const [web3State] = useContext(Web3Context);
-  const { dispatch } = useUser();
-
   const {
     register,
     watch,
@@ -27,51 +22,42 @@ const SettingsInfo = ({ data }) => {
     formState: { errors },
   } = useForm();
 
+  
   const onSubmit = async () => {
     try {
       let avatar = data.avatar;
       if (watch().avatar.length !== 0) {
-        let formatData = new FormData();
-        formatData.append("file", watch().avatar[0]);
-        console.log(formatData);
-        avatar = await axios
-          .post(`https://api.pinata.cloud/pinning/pinFileToIPFS`, formatData, {
-            headers: {
-              "Content-Type": `multipart/form-data; boundary=${formatData._boundary}`,
-              pinata_api_key: PINATA_API_KEY,
-              pinata_secret_api_key: PINATA_SECRET_KEY,
-            },
-          })
-          .then((result) => result.data.IpfsHash);
+        avatar = await pinOnIpfs(watch().avatar[0])
+        console.log(avatar)
       } else {
         avatar = avatar === null ? null : data.avatar.split("/").pop();
       }
-
-      console.log(avatar);
-
-      const result = await axios.post(
-        `https://bdd-sro.herokuapp.com/edit_profile/${web3State.account}`,
-        {
-          data: {
-            username: watch().username || null,
-            bio: watch().bio || null,
-            url: watch().url || null,
-            twitterUsername: watch().twitterUsername || null,
-            portfolio: watch().portfolio || null,
-            avatar: avatar,
-          },
-        }
+      dispatch({type: 'FETCH_INIT'})
+      const result = await axios.post(`https://bdd-sro.herokuapp.com/edit_profile/${web3State.account}`,
+      {
+        data: {
+          username: watch().username || null,
+          bio: watch().bio || null,
+          url: watch().url || null,
+          twitterUsername: watch().twitterUsername || null,
+          portfolio: watch().portfolio || null,
+          avatar: `https://gateway.pinata.cloud/ipfs/${avatar}`,
+        },
+      }
       );
+      const newData = UserData({profile: result.data.payload}, web3State.account)
+      dispatch({ type: "UPDATE_PROFILE", payload: newData });
+
       toast.success("Profile Updated", {
         position: "bottom-right",
-        autoClose: 5000,
+        autoClose: 2000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: false,
         draggable: true,
         progress: undefined,
-      });
-      dispatch({ type: "UPDATE_PROFILE", payload: result.data.payload });
+      })
+      //after updating data it redirect to the dashboard
     } catch (e) {
       toast.error(e.message, {
         position: "bottom-right",
@@ -81,8 +67,8 @@ const SettingsInfo = ({ data }) => {
         pauseOnHover: false,
         draggable: true,
         progress: undefined,
-      });
-    }
+      })
+    } 
   };
 
   return (
@@ -98,7 +84,7 @@ const SettingsInfo = ({ data }) => {
         </div>
         <div className="">
           <form onSubmit={handleSubmit(onSubmit)} className="">
-            {data.id && (
+            {data.fullAddress && (
               <div className="flex flex-col md:flex-row justify-center">
                 <AvatarSettings
                   register={register}

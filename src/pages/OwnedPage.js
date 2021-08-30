@@ -1,14 +1,14 @@
 import Layout from "../components/Layout";
 import { Container, BannerInfos, TabZone } from "../components/index";
-import {UserData} from "../data/UserData"
+import { useUser } from "../context/UserContext"
 
 function OwnedPage() {
-  const data = UserData()
+  const { userState } = useUser()
   return (
     <>
       <Layout>
-        <Container children={<BannerInfos data={data} />} />
-        <Container children={<TabZone />} />
+        <Container children={<BannerInfos data={userState.data} />} />
+        {userState.data.address && <Container children={<TabZone user={userState.data}/>} />}
       </Layout>
     </>
   );
