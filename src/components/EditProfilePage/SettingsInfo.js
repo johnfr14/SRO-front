@@ -51,7 +51,7 @@ const SettingsInfo = ({ data, dispatch }) => {
 
       toast.success("Profile Updated", {
         position: "bottom-right",
-        autoClose: 5000,
+        autoClose: 2000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: false,
@@ -59,7 +59,7 @@ const SettingsInfo = ({ data, dispatch }) => {
         progress: undefined,
       })
       //after updating data it redirect to the dashboard
-      setTimeout(() => { history.push('/user') }, 5000);
+      setTimeout(() => { history.push('/user') }, 2000);
     } catch (e) {
       toast.error(e.message, {
         position: "bottom-right",
