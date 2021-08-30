@@ -72,7 +72,7 @@ const CardList = ({ idx, data }) => {
               linkToProfilCollection={"SRO"}
               linkToProfilCreator={<a href={`https://sarahro.io/user/${data.metadata.author}`}>{data.metadata.author}</a>}
               linkToProfilOwner={<a href={`https://sarahro.io/user/${data.owner}`}>{data.owner}</a>}
-              userIconCollection={null}
+              userIconCollection={defaultData.imgUrl}
               userIconCreator={data.creator.avatar}
               userIconOwner={data.owner.avatar}
               tipDataAdressCollection={"0xa4D174cF992ABf58A0E95D1f5A95443699640A8E"}
