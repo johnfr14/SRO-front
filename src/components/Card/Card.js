@@ -29,7 +29,6 @@ const Card = ({
   const { sro721 } = useContracts()
   const { userState } = useUser()
   const [likeState, setLikeState] = useState({isLiked: false, amountLike: ''})
-  console.log(likeState)
 
   const handleLikeButton = async () => {
     try {
