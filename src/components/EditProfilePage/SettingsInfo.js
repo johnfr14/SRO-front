@@ -26,7 +26,7 @@ const SettingsInfo = ({ data, dispatch }) => {
     try {
       let avatar = data.avatar;
       if (watch().avatar.length !== 0) {
-        avatar =`https://gateway.pinata.cloud/ipfs/` + await pinOnIpfs(watch().avatar[0])
+        avatar = await pinOnIpfs(watch().avatar[0])
         console.log(avatar)
       } else {
         avatar = avatar === null ? null : data.avatar.split("/").pop();
