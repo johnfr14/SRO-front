@@ -35,7 +35,7 @@ const Erc721Nft = () => {
     await tx.wait();
     toast.success(`Nft minted \n`, {
       position: "top-right",
-      autoClose: 5000,
+      autoClose: 2000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: false,
