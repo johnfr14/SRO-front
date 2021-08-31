@@ -13,8 +13,7 @@ function OwnedPage() {
   useEffect(() => {
     const fetch = async() => {
       const address = match.params.address.length === 42 ? match.params.address : web3State.account
-      console.log(address)
-      setData(await userData(address))
+      setData(await userData(address.toLowerCase()))
     }
 
     if (data === undefined || (data.address !== match.params.address && match.params.address === 42)) {
