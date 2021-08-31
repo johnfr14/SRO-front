@@ -68,10 +68,10 @@ export default function TabZone({ user }) {
       setNft({ onSale: nftOnSale, owned: nftOwned, created: nftCreated });
     };
 
-    if (sro721 !== null) {
+    if (Object.keys(nft).length !== 3 && sro721 !== null) {
       fetchNft();
     }
-  }, [sro721, user]);
+  }, [sro721, user, nft]);
 
   return (
     <div className="w-full px-2 py-16 sm:px-0">
