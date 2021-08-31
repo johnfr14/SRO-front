@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Tab } from "@headlessui/react";
 
-import { CardList, Noitems } from "./index";
+import { CardList } from "./index";
 
 import "../../css/userTab.css";
 import { useContracts } from "../../context/ContractContext";

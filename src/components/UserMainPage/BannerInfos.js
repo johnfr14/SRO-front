@@ -18,7 +18,11 @@ const BannerInfos = ({ data }) => {
           <div className="bYqeUY left-5">
             <div className="dWVFoH">
               <div className="cNAXjx">
-                <img alt="" className="kffNNE" src={data.avatar || userDefault} />
+                <img
+                  alt=""
+                  className="kffNNE"
+                  src={data.avatar || userDefault}
+                />
               </div>
             </div>
           </div>
@@ -50,7 +54,7 @@ const BannerInfos = ({ data }) => {
                     className="from-primary-200 hover:underline"
                     target="_blank"
                     rel="noopener"
-                    href="#"
+                    to="#"
                   >
                     {data.twitterUsername}
                   </Link>
@@ -60,7 +64,7 @@ const BannerInfos = ({ data }) => {
                     className="from-primary-200 hover:underline"
                     target="_blank"
                     rel="noopener"
-                    href="#"
+                    to="#"
                   >
                     {data.portfolio}
                   </Link>
