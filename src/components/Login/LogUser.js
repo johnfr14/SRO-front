@@ -1,37 +1,40 @@
-import { Fragment } from "react";
-import { Menu, Transition } from "@headlessui/react";
+import { Fragment, useContext } from "react";
 import { NavLink } from "react-router-dom";
+import { Menu, Transition } from "@headlessui/react";
+import { Web3Context } from "web3-hooks";
+
 import { Divider } from "../index";
 import { XpBar } from "./index";
 
 import { userDefault } from "../../images/";
-import { useUser } from "../../context/UserContext"
-
-const profile = [
-  {
-    name: "My items",
-    url: "/user",
-  },
-  {
-    name: "Edit profile",
-    url: "/settings",
-  },
-  {
-    name: "Dark Themes",
-    url: "/",
-  },
-  {
-    name: "Disconnect",
-    url: "/",
-  },
-];
+import { useUser } from "../../context/UserContext";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
 export default function LogUser() {
-const { userState } = useUser()
+  const { userState } = useUser();
+  const [web3State] = useContext(Web3Context);
+
+  const profile = [
+    {
+      name: "My items",
+      url: `/user/${web3State.account}`,
+    },
+    {
+      name: "Edit profile",
+      url: "/settings",
+    },
+    {
+      name: "Dark Themes",
+      url: "/",
+    },
+    {
+      name: "Disconnect",
+      url: "/",
+    },
+  ];
 
   return (
     <div>
@@ -45,7 +48,7 @@ const { userState } = useUser()
                   <span className="sr-only">Open user menu</span>
                   <img
                     className="h-8 w-8 rounded-full"
-                    src={ userState.data.avatar || userDefault}
+                    src={userState.data.avatar || userDefault}
                     alt=""
                   />
                 </Menu.Button>
