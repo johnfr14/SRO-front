@@ -1,7 +1,7 @@
 import {createContext, useContext, useEffect, useReducer, useState} from "react"
 import { Web3Context } from "web3-hooks";
 import { userReducer } from "../reducers/userReducer"
-import { UserData } from "../data/fetchData";
+import { userData } from "../data/fetchData";
 import IPFS from "ipfs-core";
 const pinataSDK = require('@pinata/sdk');
 
@@ -32,7 +32,7 @@ export const UserContextProvider = ({children}) => {
     const getAccount = async () => {
       try {
         dispatch({type: 'FETCH_INIT'})
-        const data = UserData(web3State.account)
+        const data = await userData(web3State.account)
         dispatch({type: 'FETCH_SUCCESS', payload: data})
         const ipfs = await IPFS.create()
         const pinata = pinataSDK(process.env.REACT_APP_PINATA_API_KEY, process.env.REACT_APP_PINATA_SECRET_KEY);

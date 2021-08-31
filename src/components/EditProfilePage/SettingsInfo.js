@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { useForm } from "react-hook-form";
-import { UserData } from "../../data/fetchData";
+import { userData } from "../../data/fetchData";
 import { Web3Context } from "web3-hooks";
 import { AvatarSettings } from "./index";
 import { ToastContainer, toast } from "react-toastify";
@@ -33,7 +33,7 @@ const SettingsInfo = ({ data, dispatch }) => {
         avatar = avatar === null ? null : data.avatar.split("/").pop();
       }
       dispatch({type: 'FETCH_INIT'})
-      const result = await axios.post(`https://bdd-sro.herokuapp.com/edit_profile/${web3State.account}`,
+      await axios.post(`https://bdd-sro.herokuapp.com/edit_profile/${web3State.account}`,
       {
         data: {
           username: watch().username || null,
@@ -45,7 +45,7 @@ const SettingsInfo = ({ data, dispatch }) => {
         },
       }
       );
-      const newData = UserData({profile: result.data.payload}, web3State.account)
+      const newData = userData(web3State.account)
       dispatch({ type: "UPDATE_PROFILE", payload: newData });
 
       toast.success("Profile Updated", {
