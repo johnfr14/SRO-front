@@ -1,11 +1,11 @@
-import { useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import { Tab } from "@headlessui/react";
 
 import { CardList, Noitems } from "./index";
 
 import "../../css/userTab.css";
 import { useContracts } from "../../context/ContractContext";
-import { getNftCreated, getNftOnSale, getNftOwned } from "../../data/fetchData"
+import { getNftCreated, getNftOnSale, getNftOwned } from "../../data/fetchData";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -33,8 +33,8 @@ function classNames(...classes) {
 //   }
 
 export default function TabZone({ user }) {
-  const { sro721 } = useContracts()
-  const [nft, setNft] = useState({created: {}})
+  const { sro721 } = useContracts();
+  const [nft, setNft] = useState({ created: {} });
 
   let [categories] = useState({
     On_sale: [
@@ -59,19 +59,19 @@ export default function TabZone({ user }) {
       },
     ],
   });
-  
+
   useEffect(() => {
-      const fetchNft = async() => {
-      const nftOnSale = await getNftOnSale( )
-      const nftOwned = await getNftOwned(user, sro721)
-      const nftCreated = await getNftCreated(user, sro721)
-      setNft({onSale: nftOnSale, owned: nftOwned, created: nftCreated})
+    const fetchNft = async () => {
+      const nftOnSale = await getNftOnSale();
+      const nftOwned = await getNftOwned(user, sro721);
+      const nftCreated = await getNftCreated(user, sro721);
+      setNft({ onSale: nftOnSale, owned: nftOwned, created: nftCreated });
+    };
+
+    if (sro721 !== null) {
+      fetchNft();
     }
-    
-    if(sro721 !== null) {
-      fetchNft()
-    }
-  }, [sro721, user])
+  }, [sro721, user]);
 
   return (
     <div className="w-full px-2 py-16 sm:px-0">
@@ -99,19 +99,17 @@ export default function TabZone({ user }) {
         </div>
 
         <Tab.Panels className="mt-2">
-      
           <Tab.Panel>
-            {nft.onSale ? <CardList idx={1} data={nft.onSale} /> : <Noitems />}
+            {nft.onSale && <CardList idx={1} data={nft.onSale} />}
           </Tab.Panel>
-       
+
           <Tab.Panel>
             {nft.owned && <CardList idx={2} data={nft.owned} />}
           </Tab.Panel>
-         
+
           <Tab.Panel>
             {nft.created && <CardList idx={3} data={nft.created} />}
           </Tab.Panel>
-          
         </Tab.Panels>
       </Tab.Group>
     </div>
