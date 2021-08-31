@@ -37,7 +37,7 @@ export const UserContextProvider = ({children}) => {
         const data = UserData(result.data.payload, web3State.account)
         dispatch({type: 'FETCH_SUCCESS', payload: data})
         const ipfs = await IPFS.create()
-        const pinata = pinataSDK("2afeb39d3fc1e2b6aa90", "c5d937bf0715a2905136b9ca3b1d7f01839a40ee6f747fd6f1a092c432bcda24");
+        const pinata = pinataSDK(process.env.REACT_APP_PINATA_API_KEY, process.env.REACT_APP_PINATA_SECRET_KEY);
         
         setPinata(pinata)
         setIpfs(ipfs)
