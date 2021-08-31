@@ -1,4 +1,3 @@
-import axios from "axios";
 import {createContext, useContext, useEffect, useReducer, useState} from "react"
 import { Web3Context } from "web3-hooks";
 import { userReducer } from "../reducers/userReducer"
@@ -33,8 +32,7 @@ export const UserContextProvider = ({children}) => {
     const getAccount = async () => {
       try {
         dispatch({type: 'FETCH_INIT'})
-        const result = await axios.get(`https://bdd-sro.herokuapp.com/user/${web3State.account}`)
-        const data = UserData(result.data.payload, web3State.account)
+        const data = UserData(web3State.account)
         dispatch({type: 'FETCH_SUCCESS', payload: data})
         const ipfs = await IPFS.create()
         const pinata = pinataSDK(process.env.REACT_APP_PINATA_API_KEY, process.env.REACT_APP_PINATA_SECRET_KEY);
