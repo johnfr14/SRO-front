@@ -1,4 +1,6 @@
 import { Link } from "react-router-dom";
+import ProgressiveImage from "react-progressive-image-loading";
+import { brokenLink } from "../../images/";
 
 import "../../css/mediaCard.css";
 
@@ -9,7 +11,15 @@ const MediaCard = ({ linkTo, mediaURL, altName }) => {
         <div className="flex mt-4 jCiuZr">
           <div className="flex relative dxFZky">
             <Link to={linkTo} className="bzdSnS">
-              <img src={mediaURL} alt={altName} className="gnBPmJ bvMJFo" />
+              <ProgressiveImage
+                preview={brokenLink}
+                src={mediaURL}
+                transitionTime={500}
+                transitionFunction="ease"
+                render={(src) => (
+                  <img src={src} className="gnBPmJ bvMJFo" alt={altName} />
+                )}
+              />
             </Link>
           </div>
         </div>
