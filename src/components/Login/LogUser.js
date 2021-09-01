@@ -40,7 +40,7 @@ export default function LogUser() {
     <div>
       <>
         {/* Profile dropdown */}
-        <Menu as="div" className="ml-3 relative z-50">
+        <Menu as="div" className="ml-3 relative z-10">
           {({ open }) => (
             <>
               <div>
