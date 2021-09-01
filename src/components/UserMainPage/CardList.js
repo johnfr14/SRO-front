@@ -75,18 +75,10 @@ const CardList = ({ idx, data }) => {
               amountLike={data.metadata.likes}
               price={""}
               unity={""}
-              linkToNFT={"/0xa4D174cF992ABf58A0E95D1f5A95443699640A8E:14"}
+              linkToNFT={`/0xe1802beC39709877bf4CE40f54A84e0D5de26C00/${data.id}`}
               linkToProfilCollection={"SRO"}
-              linkToProfilCreator={
-                <a href={`https://sarahro.io/user/${data.metadata.author}`}>
-                  {data.metadata.author}
-                </a>
-              }
-              linkToProfilOwner={
-                <a href={`https://sarahro.io/user/${data.owner}`}>
-                  {data.owner}
-                </a>
-              }
+              linkToProfilCreator={data.creator.fullAddress}
+              linkToProfilOwner={data.owner.fullAddress}
               userIconCollection={defaultData.imgUrl}
               userIconCreator={data.creator.avatar}
               userIconOwner={data.owner.avatar}

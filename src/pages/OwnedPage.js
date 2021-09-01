@@ -9,17 +9,17 @@ function OwnedPage() {
   const [web3State] = useContext(Web3Context); 
   const [data, setData] = useState()
   const match = useRouteMatch("/user/:address");
+  console.log(match)
 
   useEffect(() => {
     const fetch = async() => {
       const address = match.params.address.length === 42 ? match.params.address : web3State.account
       setData(await userData(address.toLowerCase()))
     }
-
-    if (data === undefined || (data.address !== match.params.address && match.params.address === 42)) {
+    if (data === undefined || (data.address !== match.params.address && match.params.address.length === 41)) {
       fetch()
     }
-  }, [match, data, web3State])
+  }, [match.params.address, data, web3State])
   
   return (
     <>
