@@ -10,13 +10,13 @@ export const UserContext = createContext()
 
 const initialState = { 
   data: {
-    address: null,
-    name: null,
-    bio: null,
-    url: null,
-    twitterName: null,
-    portfolio: null,
-    avatar: null,
+    address: '',
+    name: '',
+    bio: '',
+    url: '',
+    twitterName: '',
+    portfolio: '',
+    avatar: '',
   },
   loading: false,
   error: "",
@@ -33,7 +33,7 @@ export const UserContextProvider = ({children}) => {
       try {
         dispatch({type: 'FETCH_INIT'})
         const data = await userData(web3State.account)
-        dispatch({type: 'FETCH_SUCCESS', payload: data})
+        dispatch({type: 'UPDATE_PROFILE', payload: data})
         const ipfs = await IPFS.create()
         const pinata = pinataSDK(process.env.REACT_APP_PINATA_API_KEY, process.env.REACT_APP_PINATA_SECRET_KEY);
         
