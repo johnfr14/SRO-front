@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useHistory } from 'react-router-dom';
+import { useUser } from "../../context/UserContext"
 import { PreviewFile, UploadFile } from ".";
 import { SwitchToggle, TokenPrice } from "../index";
 import classnames from "classnames";
@@ -12,6 +13,7 @@ import { useContracts } from "../../context/ContractContext"; // instance des co
 
 const Erc721Nft = () => {
   const { sro721 } = useContracts();
+  const { userState } = useUser() 
   const [isToggledPrice, setIsToggledPrice] = useState(false);
   const [isToggled, setIsToggled] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -42,7 +44,7 @@ const Erc721Nft = () => {
       draggable: true,
       progress: undefined,
     });
-    setTimeout(() => { history.push('/user') }, 2000);
+    setTimeout(() => { history.push(`/user/${userState.data.fullAddress}`) }, 2000);
     } catch (e) {
       toast.error(e.message, {
         position: "top-right",
