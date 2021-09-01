@@ -17,6 +17,9 @@ export default function LogUser() {
   const { userState } = useUser();
   const [web3State] = useContext(Web3Context);
 
+  let balance = web3State.balance;
+  let balanceRounded = Math.round(balance * 10000) / 10000;
+
   const profile = [
     {
       name: "My items",
@@ -72,7 +75,9 @@ export default function LogUser() {
                     <p className="ml-4 mb-1 text-lg leading-6 font-medium text-gray-900 text-left">
                       User
                     </p>
-                    <p className="ml-4 text-left">Balance : xx ETH</p>
+                    <p className="ml-4 text-left">
+                      Balance : {balanceRounded} ETH
+                    </p>
                     <p className="ml-4 text-left">Balance : xx SRO</p>
                     <p className="ml-4 text-left">Balance : xx XSRO</p>
                   </div>

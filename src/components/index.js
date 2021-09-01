@@ -19,6 +19,8 @@ import { Login } from "./Login";
 import { MarketPlace } from "./HomePage";
 import { Nft, NftViewBuy, TabZoneBuyNft } from "./NftPage/";
 import TokenPrice from "./TokenPrice";
+import SubstrAdress from "./SubstrAdress/SubstrAdress";
+
 import SwitchToggle from "./SwitchToggle";
 
 export {
@@ -53,4 +55,5 @@ export {
   SwitchToggle,
   TabZone,
   UploadFile,
+  SubstrAdress,
 };
