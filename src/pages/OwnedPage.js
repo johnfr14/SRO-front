@@ -9,7 +9,6 @@ function OwnedPage() {
   const { userState } = useUser() 
   const [data, setData] = useState({address: null})
   const match = useRouteMatch("/user/:address");
-  console.log(userState.data.fullAddress)
 
   useEffect(() => {
     const fetch = async() => {
