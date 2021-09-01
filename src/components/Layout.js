@@ -1,10 +1,14 @@
+import React, { Suspense, lazy } from "react";
 import { Header, Footer, Container } from "./";
-import { ModWrongNetwork } from "./Modal/";
+
+const ModWrongNetwork = lazy(() => import("./Modal/ModWrongNetwork"));
 
 function Layout({ children }) {
   return (
     <>
-      <ModWrongNetwork />
+      <Suspense fallback={<span>Loading...</span>}>
+        <ModWrongNetwork />
+      </Suspense>
       <Header />
       {children}
       <Container children={<Footer />} className="mt-8 pb-16" />

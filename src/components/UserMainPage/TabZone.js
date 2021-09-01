@@ -1,11 +1,12 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense, lazy } from "react";
 import { Tab } from "@headlessui/react";
 
-import { CardList } from "./index";
-
-import "../../css/userTab.css";
 import { useContracts } from "../../context/ContractContext";
 import { getNftCreated, getNftOnSale, getNftOwned } from "../../data/fetchData";
+
+import "../../css/userTab.css";
+
+const CardList = lazy(() => import("./CardList"));
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -100,15 +101,21 @@ export default function TabZone({ user }) {
 
         <Tab.Panels className="mt-2">
           <Tab.Panel>
-            {nft.onSale && <CardList idx={1} data={nft.onSale} />}
+            <Suspense fallback={<span>Loading...</span>}>
+              {nft.onSale && <CardList idx={1} data={nft.onSale} />}
+            </Suspense>
           </Tab.Panel>
 
           <Tab.Panel>
-            {nft.owned && <CardList idx={2} data={nft.owned} />}
+            <Suspense fallback={<span>Loading...</span>}>
+              {nft.owned && <CardList idx={2} data={nft.owned} />}
+            </Suspense>
           </Tab.Panel>
 
           <Tab.Panel>
-            {nft.created && <CardList idx={3} data={nft.created} />}
+            <Suspense fallback={<span>Loading...</span>}>
+              {nft.created && <CardList idx={3} data={nft.created} />}
+            </Suspense>
           </Tab.Panel>
         </Tab.Panels>
       </Tab.Group>
