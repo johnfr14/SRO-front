@@ -10,13 +10,13 @@ export const UserContext = createContext()
 
 const initialState = { 
   data: {
-    address: '',
-    name: '',
-    bio: '',
-    url: '',
-    twitterName: '',
-    portfolio: '',
-    avatar: '',
+    address: null,
+    name: null,
+    bio: null,
+    url: null,
+    twitterName: null,
+    portfolio: null,
+    avatar: null,
   },
   loading: false,
   error: "",
