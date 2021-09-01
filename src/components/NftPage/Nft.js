@@ -3,11 +3,11 @@ import { NftViewBuy, TabZoneBuyNft } from "./index";
 import { Button } from "../index";
 import { NameTag } from "../Tags";
 
-import { userTest } from "../../images";
+// import { userTest } from "../../images";
 
-const linkToNameTag1 = "/user";
-const userIcon1 = userTest;
-const NameTagTitle1 = "Owner";
+// const linkToNameTag1 = "/user";
+// const userIcon1 = userTest;
+// const NameTagTitle1 = "Owner";
 
 const linkToNameTag2 = "/";
 
@@ -23,6 +23,7 @@ const Nft = ({
   priceNft,
   SymboleNft,
   Royalties,
+  owner,
 }) => {
   return (
     <div className="container mx-auto">
@@ -60,9 +61,9 @@ const Nft = ({
             <div className="flex flex-col md:flex-row items-center justify-around mx-2">
               <div className="mb-3 md:mb-0 m-2">
                 <NameTag
-                  linkToNameTag={linkToNameTag1}
-                  userIcon={userIcon1}
-                  NameTagTitle={NameTagTitle1}
+                  linkToNameTag={owner.fullAddress}
+                  userIcon={owner.avatar}
+                  NameTagTitle={owner.username}
                 />
               </div>
               <div className="mb-3 md:mb-0 m-2">
