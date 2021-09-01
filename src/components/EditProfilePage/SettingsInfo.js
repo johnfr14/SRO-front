@@ -4,7 +4,7 @@ import { userData } from "../../data/fetchData";
 import { Web3Context } from "web3-hooks";
 import { AvatarSettings } from "./index";
 import { ToastContainer, toast } from "react-toastify";
-import {pinOnIpfs} from "../../ipfs/ipfs"
+import { pinOnIpfs } from "../../ipfs/ipfs"
 import axios from "axios";
 import classnames from "classnames";
 import "react-toastify/dist/ReactToastify.css";
@@ -14,7 +14,7 @@ require("dotenv").config();
 
 // @TODO: toast pour l'update du profil ( dans la fonction "onSubmit()")
 const SettingsInfo = ({ data, dispatch }) => {
-  const [web3State] = useContext(Web3Context);
+  const [ web3State ] = useContext(Web3Context);
   const {
     register,
     watch,
@@ -46,7 +46,7 @@ const SettingsInfo = ({ data, dispatch }) => {
       }
       );
       const newData = userData(web3State.account)
-      dispatch({ type: "UPDATE_PROFILE", payload: newData });
+      dispatch({ type: "FETCH_SUCCESS", payload: newData });
 
       toast.success("Profile Updated", {
         position: "bottom-right",
