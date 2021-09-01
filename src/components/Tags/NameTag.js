@@ -12,7 +12,7 @@ const NameTag = ({
       <div className="bg-gray-900 flex justify-center items-center">
         <div className="flex bg-gray-700 rounded-lg">
           <div className=" py-1 px-2 flex w-52 rounded-lg">
-            <Link to={linkToNameTag}>
+            <Link to={`../user/${linkToNameTag}`}>
               <img
                 className="avatar h-10 w-10 rounded-full border-2 border-opacity-40 border-black"
                 src={userIcon}
@@ -20,7 +20,7 @@ const NameTag = ({
               />
             </Link>
             <p className="flex pl-2 justify-center items-center text-center text-white ">
-              <Link to={linkToNameTag}>{NameTagTitle}</Link>
+              <Link to={`../user/${linkToNameTag}`}>{NameTagTitle}</Link>
             </p>
           </div>
         </div>
