@@ -45,7 +45,7 @@ const SettingsInfo = ({ data, dispatch }) => {
         },
       }
       );
-      const newData = userData(web3State.account)
+      const newData = await userData(web3State.account)
       dispatch({ type: "UPDATE_PROFILE", payload: newData });
 
       toast.success("Profile Updated", {
