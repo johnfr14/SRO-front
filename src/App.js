@@ -6,6 +6,8 @@ import {
   Redirect,
 } from "react-router-dom";
 
+import ModWrongNetwork from "./components/Modal/ModWrongNetwork";
+
 import "./App.css";
 
 const HomePage = lazy(() => import("./pages/Home"));
@@ -16,18 +18,21 @@ const NftPage = lazy(() => import("./pages/NftPage"));
 
 function App() {
   return (
-    <Router>
-      <Suspense fallback={<div>Loading...</div>}>
-        <Switch>
-          <Route exact path="/" component={HomePage} />
-          <Route exact path="/user/:address" component={OwnedPage} />
-          <Route exact path="/settings" component={EditProfile} />
-          <Route exact path="/create/erc721" component={CreateErc721} />
-          <Route exact path="/:adresse/:id" component={NftPage} />
-          <Redirect to="/" />
-        </Switch>
-      </Suspense>
-    </Router>
+    <>
+      <ModWrongNetwork />
+      <Router>
+        <Suspense fallback={<div>Loading...</div>}>
+          <Switch>
+            <Route exact path="/" component={HomePage} />
+            <Route exact path="/user/:address" component={OwnedPage} />
+            <Route exact path="/settings" component={EditProfile} />
+            <Route exact path="/create/erc721" component={CreateErc721} />
+            <Route exact path="/:adresse/:id" component={NftPage} />
+            <Redirect to="/" />
+          </Switch>
+        </Suspense>
+      </Router>
+    </>
   );
 }
 
