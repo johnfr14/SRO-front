@@ -64,9 +64,9 @@ export default function ModFixedPrice({isOpen, setOpen, setNextStep, isNextStep}
                       </div>
                       <div className="flex items-center justify-center pt-4 pb-3 pr-5 ">
                         <div className="pt-5 pl-5">
-                          <button onClick={() => setNextStep(!isNextStep)} buttonStyle>
+                          <ButtonOnClick onClick={() => setNextStep(!isNextStep)} buttonStyle>
                             Next step
-                          </button>
+                          </ButtonOnClick>
                         </div>
                       </div>
                       <div className="flex items-center justify-center pt-3 pb-3">
