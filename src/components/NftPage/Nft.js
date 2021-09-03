@@ -2,7 +2,7 @@ import React from "react";
 import { NftViewBuy, TabZoneBuyNft } from "./index";
 import { Button } from "../index";
 import { NameTag } from "../Tags";
-import { ModalPutOnSale } from "./modals/modal";
+// import { }
 
 // import { userTest } from "../../images";
 
@@ -95,7 +95,6 @@ const Nft = ({
               </Button>
             </div>
             <div className="flex items-center justify-center mb-5 mt-8 space-x-10">
-              <ModalPutOnSale />
               {owner.fullAddress.toLowerCase() === user.fullAddress ?
                 <>
                   
