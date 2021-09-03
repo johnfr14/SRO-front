@@ -6,12 +6,10 @@ import App from "./App";
 import "./index.css";
 import { UserContextProvider } from "./context/UserContext"
 import { ContractContextProvider } from "./context/ContractContext"
-import { ChakraProvider } from "@chakra-ui/react"
 
 ReactDOM.render(
   <React.StrictMode>
     <Router>
-       <ChakraProvider>
         <Web3Provider>
           <ContractContextProvider>
             <UserContextProvider>
@@ -19,7 +17,6 @@ ReactDOM.render(
             </UserContextProvider>
           </ContractContextProvider>
         </Web3Provider>
-       </ChakraProvider>
     </Router>
   </React.StrictMode>,
   document.getElementById("root")

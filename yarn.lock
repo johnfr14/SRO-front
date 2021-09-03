@@ -14472,11 +14472,6 @@ react-toastify@^7.0.4:
   dependencies:
     clsx "^1.1.1"
 
-react-use-disclosure@^3.2.0:
-  version "3.2.0"
-  resolved "https://registry.yarnpkg.com/react-use-disclosure/-/react-use-disclosure-3.2.0.tgz#966369a2d371139c77ba0ae5dff53fe730e0636b"
-  integrity sha512-4Q4KTX30Eowrvp165v8r6kJufX2ZS/1+keBPJjNkDVfBpXB1bRMZpH3sMeIvwIvCqvNWzdQnhWTLD6Xam7FXMg==
-
 react@^17.0.2:
   version "17.0.2"
   resolved "https://registry.yarnpkg.com/react/-/react-17.0.2.tgz#d0b5cc516d29eb3eee383f75b62864cfb6800037"

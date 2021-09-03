@@ -2,7 +2,6 @@ import React from "react";
 import { NftViewBuy, TabZoneBuyNft } from "./index";
 import { Button } from "../index";
 import { NameTag } from "../Tags";
-import { useDisclosure } from "@chakra-ui/react"
 import { ModalPutOnSale } from "./modals/modal";
 
 // import { userTest } from "../../images";
