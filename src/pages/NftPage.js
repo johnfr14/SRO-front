@@ -24,7 +24,6 @@ const BuyNft = () => {
   const { sro721 } = useContracts();
   const [nft, setNft] = useState()
   const match = useRouteMatch("/:address/:id");
-  console.log(nft)
 
   useEffect(() => {
     const fetch = async() => {
@@ -55,6 +54,7 @@ const BuyNft = () => {
               SymboleNft={SymboleNft}
               Royalties={nft.data.royalties}
               owner={nft.owner}
+              user={userState.data}
             />
           }
         />}

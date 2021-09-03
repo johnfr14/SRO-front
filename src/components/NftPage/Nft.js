@@ -2,6 +2,8 @@ import React from "react";
 import { NftViewBuy, TabZoneBuyNft } from "./index";
 import { Button } from "../index";
 import { NameTag } from "../Tags";
+import { useDisclosure } from "@chakra-ui/react"
+import { ModalPutOnSale } from "./modals/modal";
 
 // import { userTest } from "../../images";
 
@@ -24,7 +26,11 @@ const Nft = ({
   SymboleNft,
   Royalties,
   owner,
+  user,
 }) => {
+  console.log(owner.fullAddress)
+  console.log(user)
+
   return (
     <div className="container mx-auto">
       <div className="flex flex-col md:flex-row">
@@ -90,12 +96,25 @@ const Nft = ({
               </Button>
             </div>
             <div className="flex items-center justify-center mb-5 mt-8 space-x-10">
-              <Button target={""} buttonStyle>
-                Put on sale
-              </Button>
-              <Button target={""} buttonStyle>
-                Start Auction(Coming Soon)
-              </Button>
+              <ModalPutOnSale />
+              {owner.fullAddress.toLowerCase() === user.fullAddress ?
+                <>
+                  
+                    
+                  <Button target={""} buttonStyle>
+                    Start Auction(Coming Soon)
+                  </Button>
+                </>
+              :
+                <>
+                  <Button target={""} buttonStyle>
+                    Place a bid
+                  </Button>
+                  <Button target={""} buttonStyle>
+                    Cancel
+                  </Button>
+                </>
+              }
             </div>
           </div>
         </div>
