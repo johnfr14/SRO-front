@@ -1,9 +1,8 @@
-import React from "react";
+import React, {useState} from "react";
 import { NftViewBuy, TabZoneBuyNft } from "./index";
-import { Button } from "../index";
+import { Button } from "..";
 import { NameTag } from "../Tags";
 import { ModCheckout, ModFixedPrice, ModFollowStep } from "../Modal";
-// import { }
 
 // import { userTest } from "../../images";
 
@@ -28,12 +27,13 @@ const Nft = ({
   owner,
   user,
 }) => {
-  console.log(owner.fullAddress);
-  console.log(user);
+  const [open, setOpen] = useState(false);
+  const [nextStep, setNextStep] = useState(false);
 
   return (
     <>
-      <ModFollowStep />
+      <ModFixedPrice isOpen={open} setOpen={setOpen}/>
+      <ModFixedPrice isNextStep={nextStep} setNextStep={setNextStep} />
       <div className="container mx-auto">
         <div className="flex flex-col md:flex-row">
           <div className=" flex content-center items-center justify-center mx-auto max-w-screen-lg px-8">
@@ -90,9 +90,15 @@ const Nft = ({
                 <TabZoneBuyNft />
               </div>
               <div className="flex items-center justify-center mb-5 mt-8 space-x-10">
-                <Button target={""} buttonStyle>
-                  Buy for {priceNft} {SymboleNft}
-                </Button>
+                {owner.fullAddress.toLowerCase() === user.fullAddress ? (
+                  <button onClick={() => setOpen(!open)} target={""} buttonStyle>
+                    Put on sale
+                  </button>
+                ) : (
+                  <Button target={""} buttonStyle>
+                    Buy for {priceNft} {SymboleNft}
+                  </Button>
+                )}
                 <Button target={""} buttonStyle>
                   Coming Soon
                 </Button>

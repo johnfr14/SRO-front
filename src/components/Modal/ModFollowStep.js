@@ -4,13 +4,12 @@ import { Dialog, Transition } from "@headlessui/react";
 import { Button, LoaderIcon } from "..";
 import { deleteIcon, checkmarkIcon } from "../../images";
 
-export default function ModCheckout() {
-  const [open, setOpen] = useState(true);
+export default function ModCheckout({isOpen, setOpen}) {
 
   const cancelButtonRef = useRef(null);
 
   return (
-    <Transition.Root show={open} as={Fragment}>
+    <Transition.Root show={isOpen} as={Fragment}>
       <Dialog
         as="div"
         className="fixed z-10 inset-0 overflow-y-auto"
@@ -109,12 +108,11 @@ export default function ModCheckout() {
                         </div>
                       </div>
                       <div className="flex items-center justify-center pt-3 pb-3">
-                        <a
-                          href="#fs-create"
+                        <button onClick={() => setOpen(!isOpen)}
                           className="  px-5 py-3 text-center bg-gray-400 text-white hover:bg-gray-200 hover:text-black font-bold rounded-lg text-sm"
                         >
                           Cancel
-                        </a>
+                        </button>
                       </div>
                     </div>
                   </div>

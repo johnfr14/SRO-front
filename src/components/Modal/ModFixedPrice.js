@@ -3,13 +3,11 @@ import { Dialog, Transition } from "@headlessui/react";
 
 import { Button, TokenPrice } from "..";
 
-export default function ModCheckout() {
-  const [open, setOpen] = useState(true);
-
+export default function ModFixedPrice({isOpen, setOpen}) {
   const cancelButtonRef = useRef(null);
 
   return (
-    <Transition.Root show={open} as={Fragment}>
+    <Transition.Root show={isOpen} as={Fragment}>
       <Dialog
         as="div"
         className="fixed z-10 inset-0 overflow-y-auto"
@@ -65,9 +63,9 @@ export default function ModCheckout() {
                       </div>
                       <div className="flex items-center justify-center pt-4 pb-3 pr-5 ">
                         <div className="pt-5 pl-5">
-                          <Button target={""} buttonStyle>
+                          <button onClick={() => setisNextStep(!isNextStep)} buttonStyle>
                             Next step
-                          </Button>
+                          </button>
                         </div>
                       </div>
                       <div className="flex items-center justify-center pt-3 pb-3">
