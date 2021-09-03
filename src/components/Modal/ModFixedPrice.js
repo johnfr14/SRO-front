@@ -9,7 +9,7 @@ export default function ModFixedPrice({isOpen, setOpen, setNextStep, nextStep}) 
   const cancelButtonRef = useRef(null);
 
   const handlePriceButton = () => {
-    setNextStep({price: price, nextStep: !nextStep})
+    setNextStep({price: price, nextStep: !nextStep.nextStep})
     setOpen(!isOpen)
   }
 

@@ -33,7 +33,7 @@ const Nft = ({
   return (
     <>
       <ModFixedPrice isOpen={open} setOpen={setOpen} setNextStep={setNextStep} nextStep={nextStep}/>
-      <ModFollowStep nextStep={nextStep} setNextStep={setNextStep} />
+      <ModFollowStep nextStep={nextStep.nextStep} setNextStep={setNextStep} />
       <div className="container mx-auto">
         <div className="flex flex-col md:flex-row">
           <div className=" flex content-center items-center justify-center mx-auto max-w-screen-lg px-8">
