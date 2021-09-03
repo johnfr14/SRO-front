@@ -1,7 +1,8 @@
 import { Fragment, useRef, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 
-import { Button, TokenPrice } from "..";
+import { Button, LoaderIcon } from "..";
+import { deleteIcon, checkmarkIcon } from "../../images";
 
 export default function ModCheckout() {
   const [open, setOpen] = useState(true);
@@ -52,27 +53,64 @@ export default function ModCheckout() {
                       <div className="">
                         <div className="text-white text-center">
                           <h2 className="text-5xl font-bold py-4">
-                            Fixed price
+                            Follow steps
                           </h2>
-                          <p className="text-sm font-bold">
-                            Enter new price. Your NFT will be pushed in top of
-                            marketplace
+                          <h3 className="text-3xl font-bold">Mint</h3>
+                          <p className="text-xs">
+                            Send transaction to create your NFT
                           </p>
                         </div>
                       </div>
-                      <div className="pt-7 px-7">
-                        <TokenPrice />
+                      <div className="flex items-center justify-center pt-4 pb-3 pr-5 ">
+                        <div className=" pr-5 ">
+                          <img alt="" className="w-7 " src={deleteIcon} />
+                        </div>
+                        <div className="pr-5">
+                          <Button target={""} buttonStyle>
+                            Try again
+                          </Button>
+                        </div>
+                      </div>
+                      <div className="">
+                        <div className="text-white text-center">
+                          <h3 className="text-3xl font-bold">Approve</h3>
+                          <p className="text-xs">
+                            This transaction is conducted only once per
+                            collection
+                          </p>
+                        </div>
                       </div>
                       <div className="flex items-center justify-center pt-4 pb-3 pr-5 ">
-                        <div className="pt-5 pl-5">
+                        <div className=" pr-5 ">
+                          <img alt="" className="w-7 " src={checkmarkIcon} />
+                        </div>
+                        <div className="pr-5">
                           <Button target={""} buttonStyle>
-                            Next step
+                            Start
+                          </Button>
+                        </div>
+                      </div>
+                      <div className="">
+                        <div className="text-white text-center">
+                          <h3 className="text-3xl font-bold">
+                            Set fixed price
+                          </h3>
+                          <p className="text-xs">
+                            Sign message to set fixed price
+                          </p>
+                        </div>
+                      </div>
+                      <div className="flex items-center justify-center pt-4 pb-3 pr-5 ">
+                        <LoaderIcon />
+                        <div className="pr-5">
+                          <Button target={""} buttonStyle>
+                            In-progress
                           </Button>
                         </div>
                       </div>
                       <div className="flex items-center justify-center pt-3 pb-3">
                         <a
-                          href="#fs-sale"
+                          href="#fs-create"
                           className="  px-5 py-3 text-center bg-gray-400 text-white hover:bg-gray-200 hover:text-black font-bold rounded-lg text-sm"
                         >
                           Cancel

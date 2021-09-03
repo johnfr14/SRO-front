@@ -8,8 +8,7 @@ import { Erc721Nft, PreviewFile, UploadFile } from "./CreateNftPage";
 import {
   ModCheckout,
   ModFixedPrice,
-  ModFollowStepCreate,
-  ModFollowStepSale,
+  ModFollowStep,
   ModPurchase,
 } from "./Modal";
 import Footer from "./Footer";
@@ -41,8 +40,6 @@ export {
   MediaCard,
   ModCheckout,
   ModFixedPrice,
-  ModFollowStepCreate,
-  ModFollowStepSale,
   ModPurchase,
   Nft,
   NftViewBuy,
@@ -56,4 +53,5 @@ export {
   TabZone,
   UploadFile,
   SubstrAdress,
+  ModFollowStep,
 };

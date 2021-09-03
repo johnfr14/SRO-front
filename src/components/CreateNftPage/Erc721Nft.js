@@ -1,19 +1,19 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useHistory } from 'react-router-dom';
-import { useUser } from "../../context/UserContext"
+import { useHistory } from "react-router-dom";
+import { useUser } from "../../context/UserContext";
 import { PreviewFile, UploadFile } from ".";
-import { SwitchToggle, TokenPrice } from "../index";
+import { SwitchToggle, TokenPrice } from "../";
 import classnames from "classnames";
 import { ToastContainer, toast } from "react-toastify";
-import { pinOnIpfs } from "../../ipfs/ipfs"
+import { pinOnIpfs } from "../../ipfs/ipfs";
 import "react-toastify/dist/ReactToastify.css";
 import "../../css/toast.css";
 import { useContracts } from "../../context/ContractContext"; // instance des contracts
 
 const Erc721Nft = () => {
   const { sro721 } = useContracts();
-  const { userState } = useUser() 
+  const { userState } = useUser();
   const [isToggledPrice, setIsToggledPrice] = useState(false);
   const [isToggled, setIsToggled] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -29,22 +29,26 @@ const Erc721Nft = () => {
     // loading on ?
     setLoading(true);
     try {
-    const uriHash = `https://gateway.pinata.cloud/ipfs/` + await pinOnIpfs(watch().file[0]) 
-    const royalties = data.royalties || 0;
-    const title = data.title;
-    const description = data.description;
-    const tx = await sro721.create(royalties, title, description, uriHash);
-    await tx.wait();
-    toast.success(`Nft minted \n`, {
-      position: "top-right",
-      autoClose: 2000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: false,
-      draggable: true,
-      progress: undefined,
-    });
-    setTimeout(() => { history.push(`/user/${userState.data.fullAddress}`) }, 2000);
+      const uriHash =
+        `https://gateway.pinata.cloud/ipfs/` +
+        (await pinOnIpfs(watch().file[0]));
+      const royalties = data.royalties || 0;
+      const title = data.title;
+      const description = data.description;
+      const tx = await sro721.create(royalties, title, description, uriHash);
+      await tx.wait();
+      toast.success(`Nft minted \n`, {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
+      });
+      setTimeout(() => {
+        history.push(`/user/${userState.data.fullAddress}`);
+      }, 2000);
     } catch (e) {
       toast.error(e.message, {
         position: "top-right",
