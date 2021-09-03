@@ -12,7 +12,7 @@ export default function ModCheckout({nextStep, setNextStep}) {
   const cancelButtonRef = useRef(null);
 
   return (
-    <Transition.Root show={nextStep} as={Fragment}>
+    <Transition.Root show={nextStep.nextStep} as={Fragment}>
       <Dialog
         as="div"
         className="fixed z-10 inset-0 overflow-y-auto"
