@@ -7,6 +7,11 @@ import { ButtonOnClick } from "../Button";
 export default function ModFixedPrice({isOpen, setOpen, setNextStep, isNextStep}) {
   const cancelButtonRef = useRef(null);
 
+  const handlePriceButton = () => {
+    setNextStep(!isNextStep)
+    setOpen(!isOpen)
+  }
+
   return (
     <Transition.Root show={isOpen} as={Fragment}>
       <Dialog
@@ -64,7 +69,7 @@ export default function ModFixedPrice({isOpen, setOpen, setNextStep, isNextStep}
                       </div>
                       <div className="flex items-center justify-center pt-4 pb-3 pr-5 ">
                         <div className="pt-5 pl-5">
-                          <ButtonOnClick onClick={() => setNextStep(!isNextStep)} buttonStyle>
+                          <ButtonOnClick onClick={handlePriceButton} buttonStyle>
                             Next step
                           </ButtonOnClick>
                         </div>
