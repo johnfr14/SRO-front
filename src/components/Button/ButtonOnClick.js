@@ -1,10 +1,9 @@
-import { Button } from "react";
 import classnames from "classnames";
 
 function ButtonOnClick({ children, className, onClick, buttonStyle }) {
   return (
     <>
-      <Button
+      <button
         onClick={onClick}
         className={classnames(
           " transition duration-300 bg-gradient-to-br rounded-xl hover:opacity-75",
@@ -15,7 +14,7 @@ function ButtonOnClick({ children, className, onClick, buttonStyle }) {
         )}
       >
         {children}
-      </Button>
+      </button>
     </>
   );
 }
