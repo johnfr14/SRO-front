@@ -1,7 +1,8 @@
 import { Fragment, useRef } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 
-import { Button, TokenPrice } from "..";
+import { TokenPrice } from "..";
+import { ButtonOnClick } from "../Button";
 
 export default function ModFixedPrice({isOpen, setOpen, setNextStep, isNextStep}) {
   const cancelButtonRef = useRef(null);

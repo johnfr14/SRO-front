@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import { NftViewBuy, TabZoneBuyNft } from "./index";
-import { Button, ButtonOnClick } from "..";
+import { Button, ButtonOnClick } from "../Button";
 import { NameTag } from "../Tags";
 import { ModCheckout, ModFixedPrice, ModFollowStep } from "../Modal";
 
