@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import { NftViewBuy, TabZoneBuyNft } from "./index";
-import { Button } from "..";
+import { Button, ButtonOnClick } from "..";
 import { NameTag } from "../Tags";
 import { ModCheckout, ModFixedPrice, ModFollowStep } from "../Modal";
 
@@ -91,9 +91,9 @@ const Nft = ({
               </div>
               <div className="flex items-center justify-center mb-5 mt-8 space-x-10">
                 {owner.fullAddress.toLowerCase() === user.fullAddress ? (
-                  <button onClick={() => setOpen(!open)} target={""} buttonStyle>
+                  <ButtonOnClick onClick={() => setOpen(!open)} target={""} buttonStyle>
                     Put on sale
-                  </button>
+                  </ButtonOnClick>
                 ) : (
                   <Button target={""} buttonStyle>
                     Buy for {priceNft} {SymboleNft}
