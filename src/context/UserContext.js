@@ -1,7 +1,7 @@
 import {createContext, useContext, useEffect, useReducer, useState} from "react"
 import { Web3Context } from "web3-hooks";
 import { userReducer } from "../reducers/userReducer"
-import { userData } from "../data/fetchData";
+import { userData } from "../dataFunctions/fetchData";
 import IPFS from "ipfs-core";
 const pinataSDK = require('@pinata/sdk');
 

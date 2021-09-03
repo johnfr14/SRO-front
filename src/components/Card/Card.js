@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import { ProfilList, DotMenu } from "./";
 import { useContracts } from "../../context/ContractContext";
 import { useUser } from "../../context/UserContext";
-import { getLikedNft } from "../../data/fetchData";
+import { getLikedNft } from "../../dataFunctions/fetchData";
 import "../../css/card.css";
 import "../../css/toast.css";
 

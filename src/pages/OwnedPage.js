@@ -1,6 +1,6 @@
 import Layout from "../components/Layout";
 import { Container, BannerInfos, TabZone } from "../components/index";
-import { userData } from "../data/fetchData"
+import { userData } from "../dataFunctions/fetchData"
 import { useUser } from "../context/UserContext"
 import { useRouteMatch } from "react-router-dom";
 import { useState, useEffect } from "react";

@@ -1,14 +1,15 @@
-import { Fragment, useRef } from "react";
+import { Fragment, useRef, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 
 import { TokenPrice } from "..";
 import { ButtonOnClick } from "../Button";
 
-export default function ModFixedPrice({isOpen, setOpen, setNextStep, isNextStep}) {
+export default function ModFixedPrice({isOpen, setOpen, setNextStep, nextStep}) {
+  const [price, setPrice] = useState()
   const cancelButtonRef = useRef(null);
 
   const handlePriceButton = () => {
-    setNextStep(!isNextStep)
+    setNextStep({price: price, nextStep: !nextStep})
     setOpen(!isOpen)
   }
 
@@ -65,7 +66,7 @@ export default function ModFixedPrice({isOpen, setOpen, setNextStep, isNextStep}
                         </div>
                       </div>
                       <div className="pt-7 px-7">
-                        <TokenPrice />
+                        <TokenPrice setPrice={setPrice} />
                       </div>
                       <div className="flex items-center justify-center pt-4 pb-3 pr-5 ">
                         <div className="pt-5 pl-5">

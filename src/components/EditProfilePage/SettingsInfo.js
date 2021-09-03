@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { useForm } from "react-hook-form";
-import { userData } from "../../data/fetchData";
+import { userData } from "../../dataFunctions/fetchData";
 import { Web3Context } from "web3-hooks";
 import { AvatarSettings } from "./index";
 import { ToastContainer, toast } from "react-toastify";

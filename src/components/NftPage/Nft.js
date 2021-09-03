@@ -28,12 +28,12 @@ const Nft = ({
   user,
 }) => {
   const [open, setOpen] = useState(false);
-  const [nextStep, setNextStep] = useState(false);
+  const [nextStep, setNextStep] = useState({price: null, nextStep: false});
 
   return (
     <>
-      <ModFixedPrice isOpen={open} setOpen={setOpen} setNextStep={setNextStep} isNextStep={nextStep}/>
-      <ModFollowStep isNextStep={nextStep} setNextStep={setNextStep} />
+      <ModFixedPrice isOpen={open} setOpen={setOpen} setNextStep={setNextStep} nextStep={nextStep}/>
+      <ModFollowStep nextStep={nextStep} setNextStep={setNextStep} />
       <div className="container mx-auto">
         <div className="flex flex-col md:flex-row">
           <div className=" flex content-center items-center justify-center mx-auto max-w-screen-lg px-8">
@@ -95,9 +95,9 @@ const Nft = ({
                     Put on sale
                   </ButtonOnClick>
                 ) : (
-                  <Button target={""} buttonStyle>
+                  <ButtonOnClick buttonStyle>
                     Buy for {priceNft} {SymboleNft}
-                  </Button>
+                  </ButtonOnClick>
                 )}
                 <Button target={""} buttonStyle>
                   Coming Soon

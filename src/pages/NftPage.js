@@ -5,7 +5,7 @@ import { useRouteMatch } from "react-router-dom";
 import { Container, Nft } from "../components/index";
 import { useContracts } from "../context/ContractContext";
 import { useUser } from '../context/UserContext'
-import { userData } from '../data/fetchData'
+import { userData } from '../dataFunctions/fetchData'
 
 const MediaDemo =
   "https://img.rarible.com/prod/image/upload/t_preview/prod-itemImages/0xd07dc4262bcdbf85190c01c996b4c06a461d2430:8207";

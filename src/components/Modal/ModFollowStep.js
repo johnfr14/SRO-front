@@ -1,20 +1,23 @@
 import { Fragment, useRef, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
+import { useContracts } from "../../context/ContractContext";
 
 import { Button, LoaderIcon } from "..";
 import { deleteIcon, checkmarkIcon } from "../../images";
 
-export default function ModCheckout({isNextStep, setNextStep}) {
+export default function ModCheckout({nextStep, setNextStep}) {
+  const { marketplace, xsro, sro721 } = useContracts()
+  const [loading, setLoading] = useState(false)
 
   const cancelButtonRef = useRef(null);
 
   return (
-    <Transition.Root show={isNextStep} as={Fragment}>
+    <Transition.Root show={nextStep} as={Fragment}>
       <Dialog
         as="div"
         className="fixed z-10 inset-0 overflow-y-auto"
         initialFocus={cancelButtonRef}
-        onClose={() => setNextStep(!isNextStep)}
+        onClose={() => setNextStep(!nextStep)}
       >
         <div className="flex justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
           <Transition.Child
@@ -108,7 +111,7 @@ export default function ModCheckout({isNextStep, setNextStep}) {
                         </div>
                       </div>
                       <div className="flex items-center justify-center pt-3 pb-3">
-                        <button onClick={() => setNextStep(!isNextStep)}
+                        <button onClick={() => setNextStep(!nextStep)}
                           className="  px-5 py-3 text-center bg-gray-400 text-white hover:bg-gray-200 hover:text-black font-bold rounded-lg text-sm"
                         >
                           Cancel

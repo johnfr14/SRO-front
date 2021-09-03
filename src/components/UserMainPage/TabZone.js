@@ -2,7 +2,7 @@ import { useEffect, useState, Suspense, lazy } from "react";
 import { Tab } from "@headlessui/react";
 
 import { useContracts } from "../../context/ContractContext";
-import { getNftCreated, getNftOnSale, getNftOwned } from "../../data/fetchData";
+import { getNftCreated, getNftOnSale, getNftOwned } from "../../dataFunctions/fetchData";
 
 import "../../css/userTab.css";
 
