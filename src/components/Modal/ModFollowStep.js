@@ -4,17 +4,17 @@ import { Dialog, Transition } from "@headlessui/react";
 import { Button, LoaderIcon } from "..";
 import { deleteIcon, checkmarkIcon } from "../../images";
 
-export default function ModCheckout({isOpen, setOpen}) {
+export default function ModCheckout({isNextStep, setNextStep}) {
 
   const cancelButtonRef = useRef(null);
 
   return (
-    <Transition.Root show={isOpen} as={Fragment}>
+    <Transition.Root show={isNextStep} as={Fragment}>
       <Dialog
         as="div"
         className="fixed z-10 inset-0 overflow-y-auto"
         initialFocus={cancelButtonRef}
-        onClose={setOpen}
+        onClose={() => setNextStep(!isNextStep)}
       >
         <div className="flex justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
           <Transition.Child
@@ -108,7 +108,7 @@ export default function ModCheckout({isOpen, setOpen}) {
                         </div>
                       </div>
                       <div className="flex items-center justify-center pt-3 pb-3">
-                        <button onClick={() => setOpen(!isOpen)}
+                        <button onClick={() => setNextStep(!isNextStep)}
                           className="  px-5 py-3 text-center bg-gray-400 text-white hover:bg-gray-200 hover:text-black font-bold rounded-lg text-sm"
                         >
                           Cancel

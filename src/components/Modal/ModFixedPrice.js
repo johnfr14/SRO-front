@@ -1,9 +1,9 @@
-import { Fragment, useRef, useState } from "react";
+import { Fragment, useRef } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 
 import { Button, TokenPrice } from "..";
 
-export default function ModFixedPrice({isOpen, setOpen}) {
+export default function ModFixedPrice({isOpen, setOpen, setNextStep, isNextStep}) {
   const cancelButtonRef = useRef(null);
 
   return (
@@ -12,7 +12,7 @@ export default function ModFixedPrice({isOpen, setOpen}) {
         as="div"
         className="fixed z-10 inset-0 overflow-y-auto"
         initialFocus={cancelButtonRef}
-        onClose={setOpen}
+        onClose={() => setOpen(!isOpen)}
       >
         <div className="flex justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
           <Transition.Child
@@ -63,18 +63,18 @@ export default function ModFixedPrice({isOpen, setOpen}) {
                       </div>
                       <div className="flex items-center justify-center pt-4 pb-3 pr-5 ">
                         <div className="pt-5 pl-5">
-                          <button onClick={() => setisNextStep(!isNextStep)} buttonStyle>
+                          <button onClick={() => setNextStep(!isNextStep)} buttonStyle>
                             Next step
                           </button>
                         </div>
                       </div>
                       <div className="flex items-center justify-center pt-3 pb-3">
-                        <a
-                          href="#fs-sale"
+                        <button 
+                          onClick={() => setOpen(!isOpen)}
                           className="  px-5 py-3 text-center bg-gray-400 text-white hover:bg-gray-200 hover:text-black font-bold rounded-lg text-sm"
                         >
                           Cancel
-                        </a>
+                        </button>
                       </div>
                     </div>
                   </div>
