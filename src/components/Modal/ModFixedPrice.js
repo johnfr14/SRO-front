@@ -1,15 +1,21 @@
 import { Fragment, useRef, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
+import { useForm } from "react-hook-form";
 
 import { TokenPrice } from "..";
 import { ButtonOnClick } from "../Button";
 
-export default function ModFixedPrice({isOpen, setOpen, setNextStep, nextStep}) {
-  const [price, setPrice] = useState()
+export default function ModFixedPrice({isOpen, setOpen, setNextStep}) {
   const cancelButtonRef = useRef(null);
+  const {
+    register,
+    watch,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
-  const handlePriceButton = () => {
-    setNextStep({price: price, nextStep: !nextStep.nextStep})
+  const handlePriceButton = (data) => {
+    setNextStep({price: data.price, isNext: true, isMinted: true})
     setOpen(!isOpen)
   }
 
@@ -65,24 +71,26 @@ export default function ModFixedPrice({isOpen, setOpen, setNextStep, nextStep}) 
                           </p>
                         </div>
                       </div>
-                      <div className="pt-7 px-7">
-                        <TokenPrice setPrice={setPrice} />
-                      </div>
-                      <div className="flex items-center justify-center pt-4 pb-3 pr-5 ">
-                        <div className="pt-5 pl-5">
-                          <ButtonOnClick onClick={handlePriceButton} buttonStyle>
-                            Next step
-                          </ButtonOnClick>
+                      <form onSubmit={handleSubmit(handlePriceButton)}>
+                        <div className="pt-7 px-7">
+                          <TokenPrice register={register} errors={errors} watch={watch} />
                         </div>
-                      </div>
-                      <div className="flex items-center justify-center pt-3 pb-3">
-                        <button 
-                          onClick={() => setOpen(!isOpen)}
-                          className="  px-5 py-3 text-center bg-gray-400 text-white hover:bg-gray-200 hover:text-black font-bold rounded-lg text-sm"
-                        >
-                          Cancel
-                        </button>
-                      </div>
+                        <div className="flex items-center justify-center pt-4 pb-3 pr-5 ">
+                          <div className="pt-5 pl-5">
+                            <ButtonOnClick onClick={handlePriceButton} buttonStyle>
+                              Next step
+                            </ButtonOnClick>
+                          </div>
+                        </div>
+                      </form>
+                        <div className="flex items-center justify-center pt-3 pb-3">
+                          <button 
+                            onClick={() => setOpen(!isOpen)}
+                            className="  px-5 py-3 text-center bg-gray-400 text-white hover:bg-gray-200 hover:text-black font-bold rounded-lg text-sm"
+                          >
+                            Cancel
+                          </button>
+                        </div>
                     </div>
                   </div>
                 </div>

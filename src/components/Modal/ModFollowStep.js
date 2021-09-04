@@ -4,20 +4,22 @@ import { useContracts } from "../../context/ContractContext";
 
 import { Button, LoaderIcon } from "..";
 import { deleteIcon, checkmarkIcon } from "../../images";
+import { ButtonOnClick } from "../Button";
 
-export default function ModCheckout({nextStep, setNextStep}) {
+export default function ModFollowStep({nextStep, setNextStep}) {
+  console.log(nextStep)
   const { marketplace, xsro, sro721 } = useContracts()
   const [loading, setLoading] = useState(false)
 
   const cancelButtonRef = useRef(null);
 
   return (
-    <Transition.Root show={nextStep} as={Fragment}>
+    <Transition.Root show={nextStep.isNext} as={Fragment}>
       <Dialog
         as="div"
         className="fixed z-10 inset-0 overflow-y-auto"
         initialFocus={cancelButtonRef}
-        onClose={() => setNextStep(!nextStep)}
+        onClose={() => setNextStep(false)}
       >
         <div className="flex justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
           <Transition.Child
@@ -57,21 +59,24 @@ export default function ModCheckout({nextStep, setNextStep}) {
                           <h2 className="text-5xl font-bold py-4">
                             Follow steps
                           </h2>
+                          {nextStep.isMinted ? '' :<>
                           <h3 className="text-3xl font-bold">Mint</h3>
                           <p className="text-xs">
                             Send transaction to create your NFT
                           </p>
+                          </>
+                          }
                         </div>
                       </div>
                       <div className="flex items-center justify-center pt-4 pb-3 pr-5 ">
                         <div className=" pr-5 ">
                           <img alt="" className="w-7 " src={deleteIcon} />
-                        </div>
-                        <div className="pr-5">
-                          <Button target={""} buttonStyle>
-                            Try again
-                          </Button>
-                        </div>
+                        </div>                       
+                         <div className="pr-5">
+                            <ButtonOnClick buttonStyle>
+                              Try again
+                            </ButtonOnClick>
+                          </div> 
                       </div>
                       <div className="">
                         <div className="text-white text-center">
@@ -111,7 +116,7 @@ export default function ModCheckout({nextStep, setNextStep}) {
                         </div>
                       </div>
                       <div className="flex items-center justify-center pt-3 pb-3">
-                        <button onClick={() => setNextStep(!nextStep)}
+                        <button onClick={() => setNextStep({isNext: false})}
                           className="  px-5 py-3 text-center bg-gray-400 text-white hover:bg-gray-200 hover:text-black font-bold rounded-lg text-sm"
                         >
                           Cancel
