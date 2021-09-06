@@ -65,7 +65,6 @@ const CardList = ({ idx, data }) => {
     `Tab: ${idx === 1 ? "nftOnSale" : idx === 2 ? "nft owned" : "nft created"}`,
     data
   );
-  console.log(data[0].sale.price)
   return (
     <>
       {data.length > 0 ? (
