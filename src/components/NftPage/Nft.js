@@ -4,6 +4,7 @@ import { Button, ButtonOnClick } from "../Button";
 import { NameTag } from "../Tags";
 import { ModFixedPrice, ModCreateSale } from "../Modal";
 import { SRO721Address } from "../../contracts/SRO721";
+import { ToastContainer } from "react-toastify";
 
 // import { userTest } from "../../images";
 
@@ -33,6 +34,7 @@ const Nft = ({
 
   return (
     <>
+      <ToastContainer />
       <ModFixedPrice isOpen={open} setOpen={setOpen} setNextStep={setNextStep} nextStep={nextStep}/>
       <ModCreateSale nextStep={nextStep} setNextStep={setNextStep} />
       <div className="container mx-auto">

@@ -8,6 +8,7 @@ import classnames from "classnames";
 import { deleteIcon, checkmarkIcon } from "../../images";
 import { ButtonOnClick } from "../Button";
 import { toast } from "react-toastify";
+import { ethers } from "ethers";
 
 export default function ModCheckout({nextStep, setNextStep}) {
   const { marketplace, sro721 } = useContracts()
@@ -52,7 +53,7 @@ export default function ModCheckout({nextStep, setNextStep}) {
   const handleCreateSaleButton = async() => {
     try {
         setLoading(true)
-        const tx = await marketplace.createSale(nextStep.collection, nextStep.nftId, nextStep.price)
+        const tx = await marketplace.createSale(nextStep.collection, nextStep.nftId, ethers.utils.parseEther(nextStep.price))
         await tx.wait()
         setLoading(false)
         setIsOnSale(true)
