@@ -3,6 +3,7 @@ import { NftViewBuy, TabZoneBuyNft } from "./index";
 import { Button, ButtonOnClick } from "../Button";
 import { NameTag } from "../Tags";
 import { ModFixedPrice, ModCreateSale } from "../Modal";
+import { SRO721Address } from "../../contracts/SRO721";
 
 // import { userTest } from "../../images";
 
@@ -16,7 +17,7 @@ const NameTagTitle2 = "Collection: SRO";
 
 const Nft = ({
   mediaURL,
-  nftNumber,
+  nftId,
   nftName,
   nftTitle,
   nftNumberOfCopie,
@@ -28,12 +29,12 @@ const Nft = ({
   user,
 }) => {
   const [open, setOpen] = useState(false);
-  const [nextStep, setNextStep] = useState({price: null, nextStep: false});
+  const [nextStep, setNextStep] = useState({nftId: nftId, collection: SRO721Address, token: 'ETH', price: null, isNext: false});
 
   return (
     <>
       <ModFixedPrice isOpen={open} setOpen={setOpen} setNextStep={setNextStep} nextStep={nextStep}/>
-      <ModCreateSale nextStep={nextStep.nextStep} setNextStep={setNextStep} />
+      <ModCreateSale nextStep={nextStep} setNextStep={setNextStep} />
       <div className="container mx-auto">
         <div className="flex flex-col md:flex-row">
           <div className=" flex content-center items-center justify-center mx-auto max-w-screen-lg px-8">
@@ -47,7 +48,7 @@ const Nft = ({
                 </h1>
                 <div className="flex ">
                   <h3 className="text-yellow-300 font-bold ">Number : </h3>
-                  <p className="pl-4 text-gray-300">{nftNumber}</p>
+                  <p className="pl-4 text-gray-300">{nftId}</p>
                 </div>
                 <div className="flex text-left">
                   <h3 className="text-yellow-300 font-bold">Name : </h3>
