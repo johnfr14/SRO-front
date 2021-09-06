@@ -14,6 +14,7 @@ export default function ModCheckout({nextStep, setNextStep}) {
   const [error, setError] = useState(false)
   const [loading, setLoading] = useState(false)
   const [isApproved, setIsApproved] = useState(false)
+  const [isOnSale, setIsOnSale] = useState(false)
   const cancelButtonRef = useRef(null);
 
   //Function to approve
@@ -54,6 +55,7 @@ export default function ModCheckout({nextStep, setNextStep}) {
         const tx = await marketplace.createSale(nextStep.collection, nextStep.nftId, nextStep.price)
         await tx.wait()
         setLoading(false)
+        setIsOnSale(true)
         toast.success(`Sale created sucessfully`, {
             position: "top-right",
             autoClose: 2000,
@@ -185,7 +187,17 @@ export default function ModCheckout({nextStep, setNextStep}) {
                         </div>
                       </div>
                       <div className="flex items-center justify-center pt-4 pb-3 pr-5 ">
-                      {isApproved ? loading ?
+                      {isApproved ? isOnSale ?
+                      <>
+                        <div className=" pr-5 ">
+                        <img alt="" className="w-7 " src={checkmarkIcon} />
+                        </div>
+                        <div className="pr-5">
+                        <button disabled={true} className={classnames("bg-green-100 rounded-xl", "text-black px-8 py-3")} >
+                            Created !
+                        </button>
+                        </div>
+                      </> : loading ?
                         <div className="flex items-center justify-center pt-4 pb-3 pr-5 ">
                             <LoaderIcon />
                             <div className="pr-5">
