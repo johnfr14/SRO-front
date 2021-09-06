@@ -3,14 +3,19 @@ import { Dialog, Transition } from "@headlessui/react";
 
 import { TokenPrice } from "..";
 import { ButtonOnClick } from "../Button";
+import { useForm } from "react-hook-form"
 
 export default function ModFixedPrice({isOpen, setOpen, setNextStep, nextStep}) {
-  const [price, setPrice] = useState()
   const cancelButtonRef = useRef(null);
+  const {
+    register,
+    watch,
+    formState: { errors },
+  } = useForm();
 
   const handlePriceButton = () => {
-    setNextStep({price: price, nextStep: !nextStep.nextStep})
-    setOpen(!isOpen)
+    setNextStep({...nextStep, token: watch().token, price: watch().price, isNext: true })
+    setOpen(false)
   }
 
   return (
@@ -66,7 +71,7 @@ export default function ModFixedPrice({isOpen, setOpen, setNextStep, nextStep}) 
                         </div>
                       </div>
                       <div className="pt-7 px-7">
-                        <TokenPrice setPrice={setPrice} />
+                        <TokenPrice register={register} watch={watch} errors={errors} />
                       </div>
                       <div className="flex items-center justify-center pt-4 pb-3 pr-5 ">
                         <div className="pt-5 pl-5">
