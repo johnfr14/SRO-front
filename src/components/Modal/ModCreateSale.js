@@ -15,6 +15,7 @@ export default function ModCheckout({nextStep, setNextStep}) {
   const [loading, setLoading] = useState(false)
   const [isApproved, setIsApproved] = useState(false)
   const cancelButtonRef = useRef(null);
+  console.log(nextStep)
 
   //Function to approve
   const handleApproveNft = async() => {
@@ -51,7 +52,7 @@ export default function ModCheckout({nextStep, setNextStep}) {
   const handleCreateSaleButton = async() => {
     try {
         setLoading(true)
-        const tx = await marketplace.createSale(nextStep.collectionAddress, nextStep.nftId, nextStep.price)
+        const tx = await marketplace.createSale(nextStep.collection, nextStep.nftId, nextStep.price)
         await tx.wait()
         setLoading(false)
         toast.success(`Sale created sucessfully`, {
