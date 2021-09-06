@@ -45,7 +45,7 @@ const BuyNft = () => {
           children={
             <Nft
               mediaURL={nft.data.url || MediaDemo}
-              nftNumber={match.params.id}
+              nftId={match.params.id}
               nftName={nft.owner.username}
               nftTitle={nft.data.title}
               nftNumberOfCopie={nftNumberOfCopie}
