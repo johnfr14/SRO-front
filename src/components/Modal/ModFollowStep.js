@@ -1,13 +1,10 @@
-import { Fragment, useRef, useState } from "react";
+import { Fragment, useRef } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import { useContracts } from "../../context/ContractContext";
 
 import { Button, LoaderIcon } from "..";
 import { deleteIcon, checkmarkIcon } from "../../images";
 
 export default function ModCheckout({nextStep, setNextStep}) {
-  const { marketplace, xsro, sro721 } = useContracts()
-  const [loading, setLoading] = useState(false)
 
   const cancelButtonRef = useRef(null);
 
