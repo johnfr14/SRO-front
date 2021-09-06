@@ -34,7 +34,7 @@ function classNames(...classes) {
 //   }
 
 export default function TabZone({ user }) {
-  const { sro721 } = useContracts();
+  const { sro721, marketplace } = useContracts();
   const [nft, setNft] = useState({ created: {} });
 
   let [categories] = useState({
@@ -63,7 +63,7 @@ export default function TabZone({ user }) {
 
   useEffect(() => {
     const fetchNft = async () => {
-      const nftOnSale = await getNftOnSale();
+      const nftOnSale = await getNftOnSale(marketplace, sro721);
       const nftOwned = await getNftOwned(user, sro721);
       const nftCreated = await getNftCreated(user, sro721);
       setNft({ onSale: nftOnSale, owned: nftOwned, created: nftCreated });
@@ -72,7 +72,7 @@ export default function TabZone({ user }) {
     if (Object.keys(nft).length !== 3 && sro721 !== null) {
       fetchNft();
     }
-  }, [sro721, user, nft]);
+  }, [sro721, marketplace, user, nft]);
 
   return (
     <div className="w-full px-2 py-16 sm:px-0">

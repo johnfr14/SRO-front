@@ -21,6 +21,7 @@ export const getNftCreated = async (user, sro721) => {
       created.push({
         id: nfts[i],
         metadata: { ...metadata, url: url },
+        sale: {price: null},
         owner: owner,
         creator: user,
       });
@@ -40,6 +41,7 @@ export const getNftOwned = async (user, sro721) => {
     owned.push({
       id: nftId,
       metadata: { ...metadata, url: url },
+      sale: {price: null},
       owner: user,
       creator: data,
     })
@@ -47,9 +49,26 @@ export const getNftOwned = async (user, sro721) => {
   return owned;
 };
 
-export const getNftOnSale = async () => {
-  const OnSale = [];
-  return OnSale;
+export const getNftOnSale = async (marketplace, sro721) => {
+  const onSale = [];
+  const totalSales = await marketplace.totalSale()
+  for (let i = 1; i <= totalSales; i++) {
+    const sale = await marketplace.getSale(i)
+    if(sale.status === 1){
+      const metadata = await sro721.getNftById(sale.nftId)
+      const url = await sro721.tokenURI(sale.nftId);
+      const dataCreator = await userData(metadata.author.toLowerCase());
+      const dataOwner = await userData(sale.seller.toLowerCase());
+      onSale.push({
+        id: sale.nftId,
+        metadata: { ...metadata, url: url },
+        sale: sale,
+        owner: dataOwner,
+        creator: dataCreator,
+      })
+    }
+  }
+  return onSale;
 };
 
 export const getLikedNft = async (user, id, sro721) => {

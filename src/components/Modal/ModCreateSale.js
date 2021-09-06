@@ -15,7 +15,6 @@ export default function ModCheckout({nextStep, setNextStep}) {
   const [loading, setLoading] = useState(false)
   const [isApproved, setIsApproved] = useState(false)
   const cancelButtonRef = useRef(null);
-  console.log(nextStep)
 
   //Function to approve
   const handleApproveNft = async() => {
