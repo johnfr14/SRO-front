@@ -5,7 +5,7 @@ import { TokenPrice } from "..";
 import { ButtonOnClick } from "../Button";
 import { useForm } from "react-hook-form"
 
-export default function ModFixedPrice({isOpen, setOpen, setNextStep, nextStep}) {
+export default function ModFixedPrice({open, setOpen, setNextStep, nextStep}) {
   const cancelButtonRef = useRef(null);
   const {
     register,
@@ -15,16 +15,16 @@ export default function ModFixedPrice({isOpen, setOpen, setNextStep, nextStep}) 
 
   const handlePriceButton = () => {
     setNextStep({...nextStep, token: watch().token, price: watch().price, isNext: true })
-    setOpen(false)
+    setOpen({...open, createSale: false})
   }
 
   return (
-    <Transition.Root show={isOpen} as={Fragment}>
+    <Transition.Root show={open.createSale} as={Fragment}>
       <Dialog
         as="div"
         className="fixed z-10 inset-0 overflow-y-auto"
         initialFocus={cancelButtonRef}
-        onClose={() => setOpen(!isOpen)}
+        onClose={() => setOpen({...open, createSale: false})}
       >
         <div className="flex justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
           <Transition.Child
@@ -82,7 +82,7 @@ export default function ModFixedPrice({isOpen, setOpen, setNextStep, nextStep}) 
                       </div>
                       <div className="flex items-center justify-center pt-3 pb-3">
                         <button 
-                          onClick={() => setOpen(!isOpen)}
+                          onClick={() => setOpen({...open, createSale: false})}
                           className="  px-5 py-3 text-center bg-gray-400 text-white hover:bg-gray-200 hover:text-black font-bold rounded-lg text-sm"
                         >
                           Cancel
