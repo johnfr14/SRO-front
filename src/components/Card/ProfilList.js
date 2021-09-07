@@ -1,5 +1,4 @@
 import { TipProfil } from "./index";
-import SubstrAdress from "../SubstrAdress/SubstrAdress";
 import "../../css/card.css";
 
 const ProfilList = ({
@@ -13,12 +12,11 @@ const ProfilList = ({
   userIconOwner,
   linkToProfilOwner,
 }) => {
+  console.log(tipDataAdressCreator);
   const tip_DataAdress_Collection = "Collection: " + tipDataAdressCollection;
-  const tip_DataAdress_Creator =
-    "Creator:" + <SubstrAdress dataAdress={tipDataAdressCreator} />;
+  const tip_DataAdress_Creator = "Creator:" + tipDataAdressCreator;
 
-  const tip_DataAdress_Owner =
-    "Owner:" + <SubstrAdress dataAdress={tipDataAdressCreator} />;
+  const tip_DataAdress_Owner = "Owner:" + tipDataAdressOwner;
 
   return (
     <>

@@ -10,88 +10,92 @@ import { ButtonOnClick } from "../Button";
 import { toast } from "react-toastify";
 import { ethers } from "ethers";
 
-export default function ModCheckout({nextStep, setNextStep}) {
-  const { marketplace, sro721 } = useContracts()
-  const [error, setError] = useState(false)
-  const [loading, setLoading] = useState(false)
-  const [isApproved, setIsApproved] = useState(false)
-  const [isOnSale, setIsOnSale] = useState(false)
+export default function ModCheckout({ nextStep, setNextStep }) {
+  const { marketplace, sro721 } = useContracts();
+  const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [isApproved, setIsApproved] = useState(false);
+  const [isOnSale, setIsOnSale] = useState(false);
   const cancelButtonRef = useRef(null);
 
   //Function to approve
-  const handleApproveNft = async() => {
+  const handleApproveNft = async () => {
     try {
-        setLoading(true)
-        const tx = await sro721.approve(MarketplaceAddress, nextStep.nftId)
-        await tx.wait()
-        setLoading(false)
-        setIsApproved(true)
-        toast.success(`Nft minted \n`, {
-            position: "top-right",
-            autoClose: 2000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: false,
-            draggable: true,
-            progress: undefined,
-        });
+      setLoading(true);
+      const tx = await sro721.approve(MarketplaceAddress, nextStep.nftId);
+      await tx.wait();
+      setLoading(false);
+      setIsApproved(true);
+      toast.success(`Nft minted \n`, {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
+      });
     } catch (e) {
-        setLoading(false)
-        setError(true)
-        toast.error(e.message, {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: false,
-            draggable: true,
-            progress: undefined,
-        });
+      setLoading(false);
+      setError(true);
+      toast.error(e.message, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
+      });
     }
-  }
+  };
   //Function to create
-  const handleCreateSaleButton = async() => {
+  const handleCreateSaleButton = async () => {
     try {
-        setLoading(true)
-        const tx = await marketplace.createSale(nextStep.collection, nextStep.nftId, ethers.utils.parseEther(nextStep.price))
-        await tx.wait()
-        setLoading(false)
-        setIsOnSale(true)
-        toast.success(`Sale created sucessfully`, {
-            position: "top-right",
-            autoClose: 2000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: false,
-            draggable: true,
-            progress: undefined,
-        });
-        setTimeout(() => {
-          setNextStep({...nextStep, isNext: false})
-        }, 2000);
+      setLoading(true);
+      const tx = await marketplace.createSale(
+        nextStep.collection,
+        nextStep.nftId,
+        ethers.utils.parseEther(nextStep.price)
+      );
+      await tx.wait();
+      setLoading(false);
+      setIsOnSale(true);
+      toast.success(`Sale created sucessfully`, {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
+      });
+      setTimeout(() => {
+        setNextStep({ ...nextStep, isNext: false });
+      }, 2000);
     } catch (e) {
-        console.log(e.message)
-        setError(true)
-        setLoading(false)
-        toast.error(e.message, {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: false,
-            draggable: true,
-            progress: undefined,
-        });
+      console.log(e.message);
+      setError(true);
+      setLoading(false);
+      toast.error(e.message, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
+      });
     }
-}
+  };
 
   useEffect(() => {
-      const fetchApprovedNft = async() => {
-        const address = await sro721.getApproved(nextStep.nftId)
-        setIsApproved(address === MarketplaceAddress)  
-      }
-      fetchApprovedNft()
-  }, [nextStep.nftId, sro721])
+    const fetchApprovedNft = async () => {
+      const address = await sro721.getApproved(nextStep.nftId);
+      setIsApproved(address === MarketplaceAddress);
+    };
+    fetchApprovedNft();
+  }, [nextStep.nftId, sro721]);
 
   return (
     <Transition.Root show={nextStep.isNext} as={Fragment}>
@@ -99,7 +103,7 @@ export default function ModCheckout({nextStep, setNextStep}) {
         as="div"
         className="fixed z-10 inset-0 overflow-y-auto"
         initialFocus={cancelButtonRef}
-        onClose={() => setNextStep({...nextStep, isNext: false})}
+        onClose={() => setNextStep({ ...nextStep, isNext: false })}
       >
         <div className="flex justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
           <Transition.Child
@@ -148,36 +152,65 @@ export default function ModCheckout({nextStep, setNextStep}) {
                       </div>
 
                       <div className="flex items-center justify-center pt-4 pb-3 pr-5 ">
-                       {isApproved ?
-                       <>
+                        {isApproved ? (
+                          <>
                             <div className=" pr-5 ">
-                            <img alt="" className="w-7 " src={checkmarkIcon} />
+                              <img
+                                alt=""
+                                className="w-7 "
+                                src={checkmarkIcon}
+                              />
                             </div>
                             <div className="pr-5">
-                            <button disabled={true} className={classnames("bg-green-100 rounded-xl", "text-black px-8 py-3")} >
+                              <button
+                                disabled={true}
+                                className={classnames(
+                                  "bg-green-100 rounded-xl",
+                                  "text-black px-8 py-3"
+                                )}
+                              >
                                 Appoved
-                            </button>
+                              </button>
                             </div>
-                        </> : loading ?
-                        <div className="flex items-center justify-center pt-4 pb-3 pr-5 ">
+                          </>
+                        ) : loading ? (
+                          <div className="flex items-center justify-center pt-4 pb-3 pr-5 ">
                             <LoaderIcon />
                             <div className="pr-5">
-                            <button disabled={true} className={classnames("transition duration-300 bg-gradient-to-br rounded-xl hover:opacity-75",
-                                                                        "text-black px-8 py-3 from-primary-200 to-primary-200" ||
-                                                                        "text-white hover:text-primary-200")} >
-                              In progress...
-                            </button>
+                              <button
+                                disabled={true}
+                                className={classnames(
+                                  "transition duration-300 bg-gradient-to-br rounded-xl hover:opacity-75",
+                                  "text-black px-8 py-3 from-primary-200 to-primary-200" ||
+                                    "text-white hover:text-primary-200"
+                                )}
+                              >
+                                In progress...
+                              </button>
                             </div>
-                        </div> : 
-                        <>
-                            {error && <div className=" pr-5 "> <img alt="" className="w-7 " src={deleteIcon} /> </div>}
+                          </div>
+                        ) : (
+                          <>
+                            {error && (
+                              <div className=" pr-5 ">
+                                {" "}
+                                <img
+                                  alt=""
+                                  className="w-7 "
+                                  src={deleteIcon}
+                                />{" "}
+                              </div>
+                            )}
                             <div className="pr-5">
-                                <ButtonOnClick onClick={handleApproveNft} buttonStyle>
-                                    Start
-                                </ButtonOnClick>
+                              <ButtonOnClick
+                                onClick={handleApproveNft}
+                                buttonStyle
+                              >
+                                Start
+                              </ButtonOnClick>
                             </div>
-                        </>  
-                        }
+                          </>
+                        )}
                       </div>
 
                       <div className="">
@@ -191,44 +224,85 @@ export default function ModCheckout({nextStep, setNextStep}) {
                         </div>
                       </div>
                       <div className="flex items-center justify-center pt-4 pb-3 pr-5 ">
-                      {isApproved ? isOnSale ?
-                      <>
-                        <div className=" pr-5 ">
-                        <img alt="" className="w-7 " src={checkmarkIcon} />
-                        </div>
-                        <div className="pr-5">
-                        <button disabled={true} className={classnames("bg-green-100 rounded-xl", "text-black px-8 py-3")} >
-                            Created !
-                        </button>
-                        </div>
-                      </> : loading ?
-                        <div className="flex items-center justify-center pt-4 pb-3 pr-5 ">
-                            <LoaderIcon />
-                            <div className="pr-5">
-                            <button disabled={true} className={classnames("transition duration-300 bg-gradient-to-br rounded-xl hover:opacity-75",
-                                                                        "text-black px-8 py-3 from-primary-200 to-primary-200" ||
-                                                                        "text-white hover:text-primary-200")} >
-                              In progress...
-                            </button>
+                        {isApproved ? (
+                          isOnSale ? (
+                            <>
+                              <div className=" pr-5 ">
+                                <img
+                                  alt=""
+                                  className="w-7 "
+                                  src={checkmarkIcon}
+                                />
+                              </div>
+                              <div className="pr-5">
+                                <button
+                                  disabled={true}
+                                  className={classnames(
+                                    "bg-green-100 rounded-xl",
+                                    "text-black px-8 py-3"
+                                  )}
+                                >
+                                  Created !
+                                </button>
+                              </div>
+                            </>
+                          ) : loading ? (
+                            <div className="flex items-center justify-center pt-4 pb-3 pr-5 ">
+                              <LoaderIcon />
+                              <div className="pr-5">
+                                <button
+                                  disabled={true}
+                                  className={classnames(
+                                    "transition duration-300 bg-gradient-to-br rounded-xl hover:opacity-75",
+                                    "text-black px-8 py-3 from-primary-200 to-primary-200" ||
+                                      "text-white hover:text-primary-200"
+                                  )}
+                                >
+                                  In progress...
+                                </button>
+                              </div>
                             </div>
-                        </div> :
-                        <>
-                            {error && <div className=" pr-5 "> <img alt="" className="w-7 " src={deleteIcon} /> </div>}
-                            <div className=" pr-5 ">
-                                <ButtonOnClick onClick={handleCreateSaleButton} buttonStyle>
-                                    Create Sale
+                          ) : (
+                            <>
+                              {error && (
+                                <div className=" pr-5 ">
+                                  {" "}
+                                  <img
+                                    alt=""
+                                    className="w-7 "
+                                    src={deleteIcon}
+                                  />{" "}
+                                </div>
+                              )}
+                              <div className=" pr-5 ">
+                                <ButtonOnClick
+                                  onClick={handleCreateSaleButton}
+                                  buttonStyle
+                                >
+                                  Create Sale
                                 </ButtonOnClick>
-                            </div>
-                        </>
-                        : 
-                        <div className="pr-5">
-                            <button disabled={true} className={classnames("bg-gray-200 rounded-xl", "text-black px-8 py-3 from-primary-200 to-primary-200")} >
-                                Create Sale
+                              </div>
+                            </>
+                          )
+                        ) : (
+                          <div className="pr-5">
+                            <button
+                              disabled={true}
+                              className={classnames(
+                                "bg-gray-200 rounded-xl",
+                                "text-black px-8 py-3 from-primary-200 to-primary-200"
+                              )}
+                            >
+                              Create Sale
                             </button>
-                        </div>}
+                          </div>
+                        )}
                       </div>
                       <div className="flex items-center justify-center pt-3 pb-3">
-                        <button onClick={() => setNextStep({...nextStep, isNext: false})}
+                        <button
+                          onClick={() =>
+                            setNextStep({ ...nextStep, isNext: false })
+                          }
                           className="  px-5 py-3 text-center bg-gray-400 text-white hover:bg-gray-200 hover:text-black font-bold rounded-lg text-sm"
                         >
                           Cancel

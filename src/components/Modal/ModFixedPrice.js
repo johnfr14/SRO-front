@@ -3,9 +3,14 @@ import { Dialog, Transition } from "@headlessui/react";
 
 import { TokenPrice } from "..";
 import { ButtonOnClick } from "../Button";
-import { useForm } from "react-hook-form"
+import { useForm } from "react-hook-form";
 
-export default function ModFixedPrice({isOpen, setOpen, setNextStep, nextStep}) {
+export default function ModFixedPrice({
+  isOpen,
+  setOpen,
+  setNextStep,
+  nextStep,
+}) {
   const cancelButtonRef = useRef(null);
   const {
     register,
@@ -14,9 +19,14 @@ export default function ModFixedPrice({isOpen, setOpen, setNextStep, nextStep}) 
   } = useForm();
 
   const handlePriceButton = () => {
-    setNextStep({...nextStep, token: watch().token, price: watch().price, isNext: true })
-    setOpen(false)
-  }
+    setNextStep({
+      ...nextStep,
+      token: watch().token,
+      price: watch().price,
+      isNext: true,
+    });
+    setOpen(false);
+  };
 
   return (
     <Transition.Root show={isOpen} as={Fragment}>
@@ -61,7 +71,7 @@ export default function ModFixedPrice({isOpen, setOpen, setNextStep, nextStep}) 
                     <div className="">
                       <div className="">
                         <div className="text-white text-center">
-                          <h2 className="text-5xl font-bold py-4">
+                          <h2 className="text-xl font-bold py-4">
                             Fixed price
                           </h2>
                           <p className="text-sm font-bold">
@@ -71,17 +81,24 @@ export default function ModFixedPrice({isOpen, setOpen, setNextStep, nextStep}) 
                         </div>
                       </div>
                       <div className="pt-7 px-7">
-                        <TokenPrice register={register} watch={watch} errors={errors} />
+                        <TokenPrice
+                          register={register}
+                          watch={watch}
+                          errors={errors}
+                        />
                       </div>
                       <div className="flex items-center justify-center pt-4 pb-3 pr-5 ">
                         <div className="pt-5 pl-5">
-                          <ButtonOnClick onClick={handlePriceButton} buttonStyle>
+                          <ButtonOnClick
+                            onClick={handlePriceButton}
+                            buttonStyle
+                          >
                             Next step
                           </ButtonOnClick>
                         </div>
                       </div>
                       <div className="flex items-center justify-center pt-3 pb-3">
-                        <button 
+                        <button
                           onClick={() => setOpen(!isOpen)}
                           className="  px-5 py-3 text-center bg-gray-400 text-white hover:bg-gray-200 hover:text-black font-bold rounded-lg text-sm"
                         >
