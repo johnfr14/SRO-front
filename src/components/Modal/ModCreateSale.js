@@ -66,6 +66,9 @@ export default function ModCheckout({nextStep, setNextStep}) {
             draggable: true,
             progress: undefined,
         });
+        setTimeout(() => {
+          setNextStep({...nextStep, isNext: false})
+        }, 2000);
     } catch (e) {
         console.log(e.message)
         setError(true)
