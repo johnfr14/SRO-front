@@ -5,7 +5,12 @@ import { TokenPrice } from "..";
 import { ButtonOnClick } from "../Button";
 import { useForm } from "react-hook-form";
 
-export default function ModFixedPrice({open, setOpen, setNextStep, nextStep}) {
+export default function ModFixedPrice({
+  open,
+  setOpen,
+  setNextStep,
+  nextStep,
+}) {
   const cancelButtonRef = useRef(null);
   const {
     register,
@@ -14,9 +19,14 @@ export default function ModFixedPrice({open, setOpen, setNextStep, nextStep}) {
   } = useForm();
 
   const handlePriceButton = () => {
-    setNextStep({...nextStep, token: watch().token, price: watch().price, isNext: true })
-    setOpen({...open, createSale: false})
-  }
+    setNextStep({
+      ...nextStep,
+      token: watch().token,
+      price: watch().price,
+      isNext: true,
+    });
+    setOpen({ ...open, createSale: false });
+  };
 
   return (
     <Transition.Root show={open.createSale} as={Fragment}>
@@ -24,7 +34,7 @@ export default function ModFixedPrice({open, setOpen, setNextStep, nextStep}) {
         as="div"
         className="fixed z-10 inset-0 overflow-y-auto"
         initialFocus={cancelButtonRef}
-        onClose={() => setOpen({...open, createSale: false})}
+        onClose={() => setOpen({ ...open, createSale: false })}
       >
         <div className="flex justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
           <Transition.Child
@@ -55,7 +65,7 @@ export default function ModFixedPrice({open, setOpen, setNextStep, nextStep}) {
             leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
           >
             <div className="inline-block align-bottom bg-gray-900 rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-sm sm:w-full border border-gray-600">
-              <div className="bg-black bg-opacity-90 px-4 sm:p-6 ">
+              <div className="px-4 sm:p-6 ">
                 <div className="bg-gradient-to-b  flex justify-center items-center py-5">
                   <div className=" rounded-lg">
                     <div className="">
@@ -70,15 +80,15 @@ export default function ModFixedPrice({open, setOpen, setNextStep, nextStep}) {
                           </p>
                         </div>
                       </div>
-                      <div className="pt-7 px-7">
+                      <div className="pt-7">
                         <TokenPrice
                           register={register}
                           watch={watch}
                           errors={errors}
                         />
                       </div>
-                      <div className="flex items-center justify-center pt-4 pb-3 pr-5 ">
-                        <div className="pt-5 pl-5">
+                      <div className="flex items-center justify-center">
+                        <div className="py-5 ">
                           <ButtonOnClick
                             onClick={handlePriceButton}
                             buttonStyle
@@ -87,10 +97,12 @@ export default function ModFixedPrice({open, setOpen, setNextStep, nextStep}) {
                           </ButtonOnClick>
                         </div>
                       </div>
-                      <div className="flex items-center justify-center pt-3 pb-3">
-                        <button 
-                          onClick={() => setOpen({...open, createSale: false})}
-                          className="  px-5 py-3 text-center bg-gray-400 text-white hover:bg-gray-200 hover:text-black font-bold rounded-lg text-sm"
+                      <div className="flex items-center justify-center">
+                        <button
+                          onClick={() =>
+                            setOpen({ ...open, createSale: false })
+                          }
+                          className="px-5 py-3 text-center bg-gray-400 text-black hover:bg-gray-200 hover:text-black font-bold rounded-lg text-sm"
                         >
                           Cancel
                         </button>

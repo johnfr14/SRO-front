@@ -134,16 +134,16 @@ export default function ModCheckout({ nextStep, setNextStep }) {
             leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
           >
             <div className="inline-block align-bottom bg-gray-900 rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-sm sm:w-full border border-gray-600">
-              <div className="bg-black bg-opacity-90 px-4 sm:p-6 ">
+              <div className=" px-4 sm:p-6 ">
                 <div className="bg-gradient-to-b  flex justify-center items-center py-5">
                   <div className=" rounded-lg">
                     <div className="">
-                      <h2 className="text-white text-5xl font-bold py-4">
+                      <h2 className="text-white text-2xl text-center font-bold py-4">
                         Follow steps
                       </h2>
                       <div className="">
                         <div className="text-white text-center">
-                          <h3 className="text-3xl font-bold">Approve</h3>
+                          <h3 className="text-3xl mb-2 font-bold">Approve</h3>
                           <p className="text-xs">
                             This transaction is conducted only once per
                             collection
@@ -151,13 +151,13 @@ export default function ModCheckout({ nextStep, setNextStep }) {
                         </div>
                       </div>
 
-                      <div className="flex items-center justify-center pt-4 pb-3 pr-5 ">
+                      <div className="flex items-center justify-center pt-4 pb-3">
                         {isApproved ? (
                           <>
-                            <div className=" pr-5 ">
+                            <div className=" mr-2 ">
                               <img
                                 alt=""
-                                className="w-7 "
+                                className="w-5 "
                                 src={checkmarkIcon}
                               />
                             </div>
@@ -174,7 +174,7 @@ export default function ModCheckout({ nextStep, setNextStep }) {
                             </div>
                           </>
                         ) : loading ? (
-                          <div className="flex items-center justify-center pt-4 pb-3 pr-5 ">
+                          <div className="flex ">
                             <LoaderIcon />
                             <div className="pr-5">
                               <button
@@ -192,16 +192,16 @@ export default function ModCheckout({ nextStep, setNextStep }) {
                         ) : (
                           <>
                             {error && (
-                              <div className=" pr-5 ">
+                              <div className="  ">
                                 {" "}
                                 <img
                                   alt=""
-                                  className="w-7 "
+                                  className="w-4 mr-2"
                                   src={deleteIcon}
                                 />{" "}
                               </div>
                             )}
-                            <div className="pr-5">
+                            <div className="">
                               <ButtonOnClick
                                 onClick={handleApproveNft}
                                 buttonStyle
@@ -215,7 +215,7 @@ export default function ModCheckout({ nextStep, setNextStep }) {
 
                       <div className="">
                         <div className="text-white text-center">
-                          <h3 className="text-3xl font-bold">
+                          <h3 className="text-2xl font-bold">
                             Set fixed price
                           </h3>
                           <p className="text-xs">
@@ -223,7 +223,7 @@ export default function ModCheckout({ nextStep, setNextStep }) {
                           </p>
                         </div>
                       </div>
-                      <div className="flex items-center justify-center pt-4 pb-3 pr-5 ">
+                      <div className="flex items-center justify-center pt-4 pb-3">
                         {isApproved ? (
                           isOnSale ? (
                             <>
@@ -247,9 +247,9 @@ export default function ModCheckout({ nextStep, setNextStep }) {
                               </div>
                             </>
                           ) : loading ? (
-                            <div className="flex items-center justify-center pt-4 pb-3 pr-5 ">
+                            <div className="flex items-center justify-center pt-4 pb-3">
                               <LoaderIcon />
-                              <div className="pr-5">
+                              <div className="">
                                 <button
                                   disabled={true}
                                   className={classnames(
@@ -265,7 +265,7 @@ export default function ModCheckout({ nextStep, setNextStep }) {
                           ) : (
                             <>
                               {error && (
-                                <div className=" pr-5 ">
+                                <div className="mr-2">
                                   {" "}
                                   <img
                                     alt=""
@@ -274,7 +274,7 @@ export default function ModCheckout({ nextStep, setNextStep }) {
                                   />{" "}
                                 </div>
                               )}
-                              <div className=" pr-5 ">
+                              <div className=" ">
                                 <ButtonOnClick
                                   onClick={handleCreateSaleButton}
                                   buttonStyle
@@ -285,7 +285,7 @@ export default function ModCheckout({ nextStep, setNextStep }) {
                             </>
                           )
                         ) : (
-                          <div className="pr-5">
+                          <div className="">
                             <button
                               disabled={true}
                               className={classnames(
