@@ -1,5 +1,6 @@
 import { Suspense, lazy } from "react";
 import { userTest } from "../../images/";
+import { ethers } from "ethers"
 
 const Card = lazy(() => import("../Card/Card"));
 const Noitems = lazy(() => import("../UserMainPage/Noitems"));
@@ -77,8 +78,8 @@ const CardList = ({ idx, data }) => {
                 imgUrl={data.metadata.url || defaultData.imgUrl}
                 name={data.metadata.title || defaultData.name}
                 amountLike={data.metadata.likes}
-                price={""}
-                unity={""}
+                price={data.sale.price !== null ? ethers.utils.formatEther(data.sale.price) : 'not on sale'}
+                unity={data.sale.price > 0 ? "ETH" : ''}
                 linkToNFT={`/0xe1802beC39709877bf4CE40f54A84e0D5de26C00/${data.id}`}
                 linkToProfilCollection={"SRO"}
                 linkToProfilCreator={data.creator.fullAddress}

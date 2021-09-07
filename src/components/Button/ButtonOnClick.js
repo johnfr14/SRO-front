@@ -1,10 +1,11 @@
 import classnames from "classnames";
 
-function ButtonOnClick({ children, className, onClick, buttonStyle }) {
+function ButtonOnClick({ loading, children, className, onClick, buttonStyle }) {
   return (
     <>
       <button
         onClick={onClick}
+        disabled={loading}
         className={classnames(
           " transition duration-300 bg-gradient-to-br rounded-xl hover:opacity-75",
           className,

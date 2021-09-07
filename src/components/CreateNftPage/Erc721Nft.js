@@ -99,7 +99,7 @@ const Erc721Nft = () => {
                   <p className="block tracking-wide text-xs mb-2 mt-2">
                     Put your new NFT on XSRO marketplace
                   </p>
-                  <TokenPrice register={register} errors={errors.price} />
+                  <TokenPrice register={register} watch={watch} errors={errors} />
                 </div>
                 <div className="">
                   <h2 className="text-2xl font-semibold pt-4 pb-1">

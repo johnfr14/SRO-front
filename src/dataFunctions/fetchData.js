@@ -1,59 +1,69 @@
 import axios from "axios";
+import { SRO721Address } from "../contracts/SRO721";
 
 // nft created
 export const getNftCreated = async (user, sro721) => {
-  const nftIds = await sro721
-    .getNftCreatedByAddress(user.fullAddress)
-    .then((result) => result.toString().split(","));
   const nfts = [];
-  if (nftIds[0] !== "") {
-    for (let i = 0; i < nftIds.length; i++) {
+  await sro721.getNftByAuthorTotal(user.fullAddress).then( async(result) => {
+    for (let i = 0; i < result; i++) {
+      const nft = await sro721.getNftByAuthorAt(user.fullAddress, i).then((result) => result.toString())
+      nfts.push(nft);
+    }
+  })
+  const created = []
+  if (nfts[0] !== "") {
+    for (let i = 0; i < nfts.length; i++) {
       const ownerOf = await sro721
-        .ownerOf(nftIds[i])
+        .ownerOf(nfts[i])
         .then((address) => address.toLowerCase());
       const owner = await userData(ownerOf);
-      const metadata = await sro721.getNftById(nftIds[i]);
-      const url = await sro721.tokenURI(nftIds[i]);
-      nfts.push({
-        id: nftIds[i],
+      const metadata = await sro721.getNftById(nfts[i]);
+      const url = await sro721.tokenURI(nfts[i]);
+      created.push({
+        id: nfts[i],
         metadata: { ...metadata, url: url },
+        sale: {price: null},
         owner: owner,
         creator: user,
       });
     }
+    return created;
   }
-  return nfts;
 };
 // nft owned
 export const getNftOwned = async (user, sro721) => {
-  const totalSupply = await sro721.totalSupply();
-  const owned = [];
-  for (let i = 1; i <= totalSupply; i++) {
-    const owner = await sro721
-      .ownerOf(i)
-      .then((address) => address.toLowerCase());
-    if (owner === user.fullAddress) {
-      const metadata = await sro721.getNftById(i);
-      const data = await userData(metadata.author.toLowerCase());
-      const url = await sro721.tokenURI(i);
-      owned.push({
-        id: i,
-        metadata: { ...metadata, url: url },
-        owner: user,
-        creator: data,
-      });
-    }
+  const owned = []
+  const balance = await sro721.balanceOf(user.fullAddress);
+  for (let i = 0; i < balance; i++) {
+    const nftId = await sro721.tokenOfOwnerByIndex(user.fullAddress, i).then((result) => result.toString())
+    const metadata = await sro721.getNftById(nftId);
+    const data = await userData(metadata.author.toLowerCase());
+    const url = await sro721.tokenURI(nftId);
+    owned.push({
+      id: nftId,
+      metadata: { ...metadata, url: url },
+      sale: {price: null},
+      owner: user,
+      creator: data,
+    })
   }
   return owned;
 };
 
-export const getNftOnSale = async () => {
-  const OnSale = [];
-  return OnSale;
+export const getNftOnSale = async (nftOwned, marketplace) => {
+  const onSale = [];
+  nftOwned.forEach(async (nft) => {
+    if(await marketplace.isOnSale(SRO721Address, nft.id )){
+      const saleId = await marketplace.getSaleId(SRO721Address, nft.id)
+      const sale = await marketplace.getSale(saleId)
+      onSale.push({...nft, sale: sale})
+    }
+  }) 
+  return onSale;
 };
 
 export const getLikedNft = async (user, id, sro721) => {
-  const isLiked = await sro721.hasLiked(user, id);
+  const isLiked = await sro721.isLiked(user, id);
   return isLiked;
 };
 

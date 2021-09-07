@@ -2,7 +2,9 @@ import React, {useState} from "react";
 import { NftViewBuy, TabZoneBuyNft } from "./index";
 import { Button, ButtonOnClick } from "../Button";
 import { NameTag } from "../Tags";
-import { ModCheckout, ModFixedPrice, ModFollowStep } from "../Modal";
+import { ModFixedPrice, ModCreateSale, ModPurchase } from "../Modal";
+import { SRO721Address } from "../../contracts/SRO721";
+import { ToastContainer } from "react-toastify";
 
 // import { userTest } from "../../images";
 
@@ -16,7 +18,7 @@ const NameTagTitle2 = "Collection: SRO";
 
 const Nft = ({
   mediaURL,
-  nftNumber,
+  nftId,
   nftName,
   nftTitle,
   nftNumberOfCopie,
@@ -26,14 +28,17 @@ const Nft = ({
   Royalties,
   owner,
   user,
+  sale,
 }) => {
-  const [open, setOpen] = useState(false);
-  const [nextStep, setNextStep] = useState({price: null, isNext: false, isMinted: true});
+  const [open, setOpen] = useState({createSale: false, removeSale: false, editPrice: false, buyNft: false});
+  const [nextStep, setNextStep] = useState({nftId: nftId, collection: SRO721Address, token: 'ETH', price: null, isNext: false});
 
   return (
     <>
-      <ModFixedPrice isOpen={open} setOpen={setOpen} setNextStep={setNextStep} />
-      <ModFollowStep nextStep={nextStep} setNextStep={setNextStep} />
+      <ToastContainer />
+      <ModFixedPrice open={open} setOpen={setOpen} setNextStep={setNextStep} nextStep={nextStep}/>
+      <ModCreateSale nextStep={nextStep} setNextStep={setNextStep} />
+      <ModPurchase open={open} setOpen={setOpen} sale={sale} />
       <div className="container mx-auto">
         <div className="flex flex-col md:flex-row">
           <div className=" flex content-center items-center justify-center mx-auto max-w-screen-lg px-8">
@@ -47,7 +52,7 @@ const Nft = ({
                 </h1>
                 <div className="flex ">
                   <h3 className="text-yellow-300 font-bold ">Number : </h3>
-                  <p className="pl-4 text-gray-300">{nftNumber}</p>
+                  <p className="pl-4 text-gray-300">{nftId}</p>
                 </div>
                 <div className="flex text-left">
                   <h3 className="text-yellow-300 font-bold">Name : </h3>
@@ -89,20 +94,44 @@ const Nft = ({
               <div className="">
                 <TabZoneBuyNft />
               </div>
-              <div className="flex items-center justify-center mb-5 mt-8 space-x-10">
-                {owner.fullAddress.toLowerCase() === user.fullAddress ? (
-                  <ButtonOnClick onClick={() => setOpen(!open)} target={""} buttonStyle>
-                    Put on sale
-                  </ButtonOnClick>
-                ) : (
-                  <ButtonOnClick buttonStyle>
-                    Buy for {priceNft} {SymboleNft}
-                  </ButtonOnClick>
-                )}
-                <Button target={""} buttonStyle>
-                  Coming Soon
-                </Button>
-              </div>
+              {sale !== null ? 
+                <div className="flex items-center justify-center mb-5 mt-8 space-x-10">
+                  {owner.fullAddress.toLowerCase() === user.fullAddress ? (
+                    <>
+                      <ButtonOnClick onClick={() => setOpen(!open)} buttonStyle>
+                        Edit price
+                      </ButtonOnClick>
+                      <ButtonOnClick onClick={() => setOpen(!open)}  buttonStyle>
+                        Remove sale
+                      </ButtonOnClick>
+                    </>
+                  ) : (
+                    <>
+                      <ButtonOnClick onClick={() => setOpen({...open, buyNft: true})} buttonStyle>
+                        Buy for {priceNft} {SymboleNft}
+                      </ButtonOnClick>
+                      <ButtonOnClick buttonStyle>
+                        Make a bid
+                      </ButtonOnClick>
+                    </>
+                  )}
+                </div>
+              : 
+                <div className="flex items-center justify-center mb-5 mt-8 space-x-10">
+                  {owner.fullAddress.toLowerCase() === user.fullAddress ? (
+                    <ButtonOnClick onClick={() => setOpen({...open, createSale: true})} buttonStyle>
+                      Put on sale
+                    </ButtonOnClick>
+                  ) : (
+                    <ButtonOnClick buttonStyle>
+                      Make bid 
+                    </ButtonOnClick>
+                  )}
+                  <Button target={""} buttonStyle>
+                    Coming Soon
+                  </Button>
+                </div>
+              }
               <div className="flex items-center justify-center mb-5 mt-8 space-x-10">
                 {owner.fullAddress.toLowerCase() === user.fullAddress ? (
                   <>

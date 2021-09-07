@@ -1,4 +1,35 @@
 import { toast } from "react-toastify";
+import { MarketplaceAddress } from "../contracts/Marketplace";
+
+export const handleApproveNft = async(sro721, nftId, setLoading, setIsApproved) => {
+    try {
+        setLoading(true)
+        const tx = await sro721.approve(MarketplaceAddress, nftId)
+        await tx.wait()
+        setLoading(false)
+        setIsApproved(true)
+        toast.success(`Nft approved successfully \n`, {
+            position: "top-right",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: true,
+            progress: undefined,
+        });
+    } catch (e) {
+        setLoading(false)
+        toast.error(e.message, {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: true,
+            progress: undefined,
+        });
+    }
+  }
 
 
 export const handleCreateSaleButton = async (setLoading, marketPlace, collectionAddress, nftId, price) => {
