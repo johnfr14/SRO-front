@@ -63,9 +63,9 @@ export default function TabZone({ user }) {
 
   useEffect(() => {
     const fetchNft = async () => {
-      const nftOnSale = await getNftOnSale(marketplace, sro721);
-      const nftOwned = await getNftOwned(user, sro721);
       const nftCreated = await getNftCreated(user, sro721);
+      const nftOwned = await getNftOwned(user, sro721);
+      const nftOnSale = await getNftOnSale(nftOwned, marketplace, sro721);
       setNft({ onSale: nftOnSale, owned: nftOwned, created: nftCreated });
     };
 

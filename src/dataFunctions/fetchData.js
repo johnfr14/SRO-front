@@ -1,4 +1,5 @@
 import axios from "axios";
+import { SRO721Address } from "../contracts/SRO721";
 
 // nft created
 export const getNftCreated = async (user, sro721) => {
@@ -49,25 +50,15 @@ export const getNftOwned = async (user, sro721) => {
   return owned;
 };
 
-export const getNftOnSale = async (marketplace, sro721) => {
+export const getNftOnSale = async (nftOwned, marketplace) => {
   const onSale = [];
-  const totalSales = await marketplace.totalSale()
-  for (let i = 1; i <= totalSales; i++) {
-    const sale = await marketplace.getSale(i)
-    if(sale.status === 1){
-      const metadata = await sro721.getNftById(sale.nftId)
-      const url = await sro721.tokenURI(sale.nftId);
-      const dataCreator = await userData(metadata.author.toLowerCase());
-      const dataOwner = await userData(sale.seller.toLowerCase());
-      onSale.push({
-        id: sale.nftId,
-        metadata: { ...metadata, url: url },
-        sale: sale,
-        owner: dataOwner,
-        creator: dataCreator,
-      })
+  nftOwned.forEach(async (nft) => {
+    if(await marketplace.isOnSale(SRO721Address, nft.id )){
+      const saleId = await marketplace.getSaleId(SRO721Address, nft.id)
+      const sale = await marketplace.getSale(saleId)
+      onSale.push({...nft, sale: sale})
     }
-  }
+  }) 
   return onSale;
 };
 
