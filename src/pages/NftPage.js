@@ -33,7 +33,8 @@ const BuyNft = () => {
         const result = await marketplace.getSale(saleId)
         sale = {
           status: result[0].toString(),
-          id: result[1],
+          nftId: result[1].toString(),
+          saleId: saleId,
           price: ethers.utils.formatEther(result[2]),
           seller: result[3],
           collection: result[4],

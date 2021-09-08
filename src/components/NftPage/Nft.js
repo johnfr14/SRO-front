@@ -31,6 +31,7 @@ const Nft = ({
   sale,
   nft,
 }) => {
+
   const [open, setOpen] = useState({createSale: false, removeSale: false, editPrice: false, buyNft: false});
   const [nextStep, setNextStep] = useState({nftId: nftId, collection: SRO721Address, token: 'ETH', price: null, isNext: false});
 

@@ -52,7 +52,7 @@ const ModPurchase = ({open, setOpen, sale, nft, user}) => {
   const handleBuyButton = async() => {
     try {
       setLoading(true)
-      const tx = await marketplace.buyNft(sale.id)
+      const tx = await marketplace.buyNft(sale.saleId)
       await tx.wait()
       setLoading(false)
       toast.success(`Nft bougth successfully \n`, {
@@ -145,7 +145,6 @@ const ModPurchase = ({open, setOpen, sale, nft, user}) => {
                           <div className="flex">
                             <select
                               className="text-sm border rounded-l px-4 py-2 bg-gray-300 whitespace-no-wrap"
-                              onChange={""}
                             >
                               <option>XSRO</option>
                               <option disabled>ETH (soon)</option>
