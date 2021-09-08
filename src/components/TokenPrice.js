@@ -17,8 +17,8 @@ const TokenPrice = ({ register, watch, errors }) => {
           className="text-sm    bg-gray-900 text-white whitespace-no-wrap   w-20"
           {...register("token")}
         >
-          <option>ETH</option>
-          <option disabled>XSRO (soon)</option>
+          <option >XSRO</option>
+          <option disabled>ETH (soon)</option>
           <option disabled>SRO (soon)</option>
         </select>
       </div>
