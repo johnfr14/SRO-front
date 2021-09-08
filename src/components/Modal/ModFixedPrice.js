@@ -4,7 +4,6 @@ import { useForm } from "react-hook-form";
 
 import { TokenPrice } from "..";
 import { ButtonOnClick } from "../Button";
-import { useForm } from "react-hook-form";
 
 export default function ModFixedPrice({
   open,

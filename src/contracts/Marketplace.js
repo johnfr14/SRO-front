@@ -1,4 +1,4 @@
-export const MarketplaceAddress = "0x1f80340f50a63954BAb348A9F1593C99ec167FBF";
+export const MarketplaceAddress = "0x1d2028B4409C9238518209e0B7f384d75Db85246";
 
 export const MarketplaceAbi = [
 	{
