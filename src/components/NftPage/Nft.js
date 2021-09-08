@@ -94,14 +94,14 @@ const Nft = ({
               <div className="">
                 <TabZoneBuyNft />
               </div>
-              {sale.status === '2' ? 
+              {sale.status === '1' ? 
                 <div className="flex items-center justify-center mb-5 mt-8 space-x-10">
                   {owner.fullAddress.toLowerCase() === user.fullAddress ? (
                     <>
-                      <ButtonOnClick onClick={() => setOpen(!open)} buttonStyle>
+                      <ButtonOnClick onClick={() => setOpen({...open, editPrice: true})} buttonStyle>
                         Edit price
                       </ButtonOnClick>
-                      <ButtonOnClick onClick={() => setOpen(!open)}  buttonStyle>
+                      <ButtonOnClick onClick={() => setOpen({...open, removeSale: true})}  buttonStyle>
                         Remove sale
                       </ButtonOnClick>
                     </>
