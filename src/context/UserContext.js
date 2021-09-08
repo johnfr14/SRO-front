@@ -2,6 +2,8 @@ import {createContext, useContext, useEffect, useReducer, useState} from "react"
 import { Web3Context } from "web3-hooks";
 import { userReducer } from "../reducers/userReducer"
 import { userData } from "../dataFunctions/fetchData";
+import { useContracts } from './ContractContext'
+import { ethers } from 'ethers'
 import IPFS from "ipfs-core";
 const pinataSDK = require('@pinata/sdk');
 
@@ -23,6 +25,7 @@ const initialState = {
 }
 
 export const UserContextProvider = ({children}) => {
+  const { xsro } = useContracts()
   const [web3State] = useContext(Web3Context);  
   const [userState, dispatch] = useReducer(userReducer, initialState)
   const [ipfs, setIpfs] = useState(null)
@@ -33,7 +36,16 @@ export const UserContextProvider = ({children}) => {
       try {
         dispatch({type: 'FETCH_INIT'})
         const data = await userData(web3State.account)
-        dispatch({type: 'UPDATE_PROFILE', payload: data})
+        const balanceXsro = await  xsro.balanceOf(web3State.account)
+        dispatch({
+          type: 'UPDATE_PROFILE',
+          payload: {...data,
+            balance: {
+              xsro: ethers.utils.formatEther(balanceXsro),
+              eth: web3State.balance.toString(),
+            }
+          }
+        })
         const ipfs = await IPFS.create()
         const pinata = pinataSDK(process.env.REACT_APP_PINATA_API_KEY, process.env.REACT_APP_PINATA_SECRET_KEY);
         
@@ -46,7 +58,7 @@ export const UserContextProvider = ({children}) => {
     if(!web3State.account.startsWith("0x000")) {
         getAccount()
     }
-  }, [web3State.account]) 
+  }, [web3State, xsro]) 
 
   
   return (

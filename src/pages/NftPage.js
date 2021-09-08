@@ -39,7 +39,6 @@ const BuyNft = () => {
           collection: result[4],
         }
       } 
-      console.log(sale.status)
       const fetchNft = await sro721.getNftById(match.params.id)
       const owner = await sro721.ownerOf(match.params.id)
       const ownerData = await userData(owner.toLowerCase())
@@ -66,12 +65,13 @@ const BuyNft = () => {
               nftTitle={nft.data.title}
               nftNumberOfCopie={nftNumberOfCopie}
               nftDescription={nft.data.description}
-              priceNft={nft.sale !== null ? nft.sale.price: 'not for sale'}
+              priceNft={nft.sale.status === '1' ? nft.sale.price: 'not for sale'}
               SymboleNft={SymboleNft}
               Royalties={nft.data.royalties}
               owner={nft.owner}
               user={userState.data}
               sale={nft.sale}
+              nft={nft.data}
             />
           }
         />}

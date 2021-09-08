@@ -29,6 +29,7 @@ const Nft = ({
   owner,
   user,
   sale,
+  nft,
 }) => {
   const [open, setOpen] = useState({createSale: false, removeSale: false, editPrice: false, buyNft: false});
   const [nextStep, setNextStep] = useState({nftId: nftId, collection: SRO721Address, token: 'ETH', price: null, isNext: false});
@@ -38,7 +39,7 @@ const Nft = ({
       <ToastContainer />
       <ModFixedPrice open={open} setOpen={setOpen} setNextStep={setNextStep} nextStep={nextStep}/>
       <ModCreateSale nextStep={nextStep} setNextStep={setNextStep} />
-      <ModPurchase open={open} setOpen={setOpen} sale={sale} />
+      <ModPurchase open={open} setOpen={setOpen} sale={sale} nft={nft} user={user} />
       <div className="container mx-auto">
         <div className="flex flex-col md:flex-row">
           <div className=" flex content-center items-center justify-center mx-auto max-w-screen-lg px-8">
