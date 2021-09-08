@@ -12,7 +12,6 @@ const ProfilList = ({
   userIconOwner,
   linkToProfilOwner,
 }) => {
-  console.log(tipDataAdressCreator);
   const tip_DataAdress_Collection = "Collection: " + tipDataAdressCollection;
   const tip_DataAdress_Creator = "Creator:" + tipDataAdressCreator;
 
