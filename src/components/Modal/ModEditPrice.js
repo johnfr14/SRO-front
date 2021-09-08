@@ -7,19 +7,21 @@ import { toast } from "react-toastify";
 import { LoaderIcon } from "..";
 import { deleteIcon, checkmarkIcon } from "../../images";
 import classnames from "classnames";
+import { ethers } from 'ethers'
 
-const ModRemoveSale = ({open, setOpen, sale, nft}) => {
+const ModEditPrice = ({open, setOpen, sale, nft, user}) => {
   const cancelButtonRef = useRef(null);
   const { marketplace } = useContracts()
-  const [isRemoved, setIsRemoved] = useState(false)
+  const [isEdited, setIsEdited] = useState(false)
+  const [newPrice, setNewPrice] = useState(false)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(false)
 
 
-  const handleRemoveButton = async() => {
+  const handleEditButton = async() => {
     try {
       setLoading(true)
-      const tx = await marketplace.removeSale(sale.saleId)
+      const tx = await marketplace.setPrice(sale.saleId, ethers.utils.parseEther(newPrice))
       await tx.wait()
       setLoading(false)
       toast.success(`Nft removed successfully \n`, {
@@ -31,9 +33,9 @@ const ModRemoveSale = ({open, setOpen, sale, nft}) => {
           draggable: true,
           progress: undefined,
       });
-      setIsRemoved(true)
+      setIsEdited(true)
       setTimeout(() => {
-        setOpen({...open, removeSale: false})
+        setOpen({...open, editPrice: false})
       }, 2000);
     } catch (e) {
         setLoading(false)
@@ -51,12 +53,12 @@ const ModRemoveSale = ({open, setOpen, sale, nft}) => {
   }
 
   return (
-    <Transition.Root show={open.removeSale} as={Fragment}>
+    <Transition.Root show={open.editPrice} as={Fragment}>
       <Dialog
         as="div"
         className="fixed z-10 inset-0 overflow-y-auto"
         initialFocus={cancelButtonRef}
-        onClose={() => setOpen({...open, removeSale: false})}
+        onClose={() => setOpen({...open, editPrice: false})}
       >
         <div className="flex justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
           <Transition.Child
@@ -101,8 +103,16 @@ const ModRemoveSale = ({open, setOpen, sale, nft}) => {
                         </div>
                       </div>
                      
-                      <div className="pt-5 ml-4 text-left text-white ">
-                        <p>Last bid : XXX</p>
+                      <div className="">
+                        <div className="pt-5 px-7">
+                          <input
+                            className="appearance-none block w-full bg-gray-900 text-white border  shadow-inner rounded-md py-3 px-4  leading-tight focus:outline-none  focus:border-gray-500"
+                            type="text"
+                            placeholder="1"
+                            onChange={(e) => setNewPrice(e.target.value)}
+                          />
+                          <p style={{color: 'white'}}>actual price: {sale.price} XSRO</p>
+                        </div>
                       </div>
                       
                       <div className="flex items-center justify-center pt-4 pb-3">
@@ -134,7 +144,7 @@ const ModRemoveSale = ({open, setOpen, sale, nft}) => {
                                   />{" "}
                               </div>
                             )}
-                            {isRemoved && (
+                            {isEdited && (
                               <div className="  ">
                                 {" "}
                                 <img
@@ -146,11 +156,11 @@ const ModRemoveSale = ({open, setOpen, sale, nft}) => {
                             )}
                             <div className="">
                               <ButtonOnClick
-                                onClick={handleRemoveButton}
-                                buttonRemove={!isRemoved}
-                                buttonSuccess={isRemoved}
+                                onClick={handleEditButton}
+                                buttonStyle
+                                buttonSuccess={isEdited}
                                 >
-                                Remove {nft.title}
+                                Set new price
                               </ButtonOnClick>
                             </div>
                           </>
@@ -160,7 +170,7 @@ const ModRemoveSale = ({open, setOpen, sale, nft}) => {
                       <div className="flex items-center justify-center pt-3 pb-3">
                         <a
                           href="#fs-sale"
-                          onClick={() => setOpen({...open, removeSale: false})}
+                          onClick={() => setOpen({...open, editPrice: false})}
                           className="  px-5 py-3 text-center text-white hover:bg-gray-200 hover:text-black font-bold rounded-lg text-sm"
                         >
                           Cancel
@@ -180,4 +190,4 @@ const ModRemoveSale = ({open, setOpen, sale, nft}) => {
 }
 
 
-export default ModRemoveSale
+export default ModEditPrice

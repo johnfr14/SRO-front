@@ -10,7 +10,7 @@ import { ButtonOnClick } from "../Button";
 import { toast } from "react-toastify";
 import { ethers } from "ethers";
 
-export default function ModCheckout({ nextStep, setNextStep }) {
+export default function ModCreateSale({ nextStep, setNextStep }) {
   const { marketplace, sro721 } = useContracts();
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);

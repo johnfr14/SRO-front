@@ -5,6 +5,7 @@ import ModPurchase from "./ModPurchase";
 import ModWrongNetwork from "./ModWrongNetwork";
 import ModCreateSale from "./ModCreateSale"
 import ModRemoveSale from "./ModRemoveSale";
+import ModEditPrice from "./ModEditPrice";
 
 export {
   ModCheckout,
@@ -14,4 +15,5 @@ export {
   ModWrongNetwork,
   ModCreateSale,
   ModRemoveSale,
+  ModEditPrice,
 };
