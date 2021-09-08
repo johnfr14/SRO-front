@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import { NftViewBuy, TabZoneBuyNft } from "./index";
 import { Button, ButtonOnClick } from "../Button";
 import { NameTag } from "../Tags";
-import { ModFixedPrice, ModCreateSale, ModPurchase } from "../Modal";
+import { ModFixedPrice, ModCreateSale, ModPurchase, ModRemoveSale } from "../Modal";
 import { SRO721Address } from "../../contracts/SRO721";
 import { ToastContainer } from "react-toastify";
 
@@ -41,6 +41,7 @@ const Nft = ({
       <ModFixedPrice open={open} setOpen={setOpen} setNextStep={setNextStep} nextStep={nextStep}/>
       <ModCreateSale nextStep={nextStep} setNextStep={setNextStep} />
       <ModPurchase open={open} setOpen={setOpen} sale={sale} nft={nft} user={user} />
+      <ModRemoveSale open={open} setOpen={setOpen} sale={sale} nft={nft} user={user} />
       <div className="container mx-auto">
         <div className="flex flex-col md:flex-row">
           <div className=" flex content-center items-center justify-center mx-auto max-w-screen-lg px-8">
@@ -103,7 +104,7 @@ const Nft = ({
                       <ButtonOnClick onClick={() => setOpen({...open, editPrice: true})} buttonStyle>
                         Edit price
                       </ButtonOnClick>
-                      <ButtonOnClick onClick={() => setOpen({...open, removeSale: true})}  buttonStyle>
+                      <ButtonOnClick onClick={() => setOpen({...open, removeSale: true})}  buttonRemove>
                         Remove sale
                       </ButtonOnClick>
                     </>
