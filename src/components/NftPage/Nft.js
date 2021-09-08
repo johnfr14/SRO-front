@@ -94,7 +94,7 @@ const Nft = ({
               <div className="">
                 <TabZoneBuyNft />
               </div>
-              {sale !== null ? 
+              {sale.status === '2' ? 
                 <div className="flex items-center justify-center mb-5 mt-8 space-x-10">
                   {owner.fullAddress.toLowerCase() === user.fullAddress ? (
                     <>

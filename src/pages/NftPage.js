@@ -27,7 +27,7 @@ const BuyNft = () => {
 
   useEffect(() => {
     const fetch = async() => {
-      let sale = null;
+      let sale = {status: '0'};
       if (await marketplace.isOnSale(SRO721Address, match.params.id)) {
         const saleId = await marketplace.getSaleId(SRO721Address, match.params.id)
         const result = await marketplace.getSale(saleId)
@@ -39,6 +39,7 @@ const BuyNft = () => {
           collection: result[4],
         }
       } 
+      console.log(sale.status)
       const fetchNft = await sro721.getNftById(match.params.id)
       const owner = await sro721.ownerOf(match.params.id)
       const ownerData = await userData(owner.toLowerCase())
