@@ -5,11 +5,49 @@ import { useContracts } from "../../context/ContractContext";
 import { ButtonOnClick } from "../Button";
 import { toast } from "react-toastify";
 import { LoaderIcon } from "..";
+import { deleteIcon, checkmarkIcon } from "../../images";
+import classnames from "classnames";
+import { MarketplaceAddress } from "../../contracts/Marketplace";
+import { ethers } from "ethers"
 
 const ModPurchase = ({open, setOpen, sale}) => {
-  const { marketplace } = useContracts()
+  const { marketplace, xsro } = useContracts()
   const cancelButtonRef = useRef(null);
+  const [isApproved, setIsApproved] = useState(false);
   const [loading, setLoading] = useState(false)
+  const [error, setError] = useState(false)
+
+  //Function to approve
+  const handleApproveButton = async () => {
+    try {
+      setLoading(true);
+      const tx = await xsro.approve(MarketplaceAddress, ethers.utils.parseEther(sale.price));
+      await tx.wait();
+      setLoading(false);
+      setIsApproved(true);
+      toast.success(`Amount approved \n`, {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
+      });
+    } catch (e) {
+      setLoading(false);
+      setError(true);
+      toast.error(e.message, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
+      });
+    }
+  };
 
   const handleBuyButton = async() => {
     try {
@@ -29,18 +67,18 @@ const ModPurchase = ({open, setOpen, sale}) => {
       setTimeout(() => {
         setOpen({...open, buyNft: false})
       }, 2000);
-  } catch (e) {
-      setLoading(false)
-      toast.error(e.message, {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: false,
-          draggable: true,
-          progress: undefined,
-      });
-  }
+    } catch (e) {
+        setLoading(false)
+        toast.error(e.message, {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: true,
+            progress: undefined,
+        });
+    }
   }
 
   return (
@@ -84,24 +122,129 @@ const ModPurchase = ({open, setOpen, sale}) => {
                 <div className="bg-gradient-to-b  flex justify-center items-center py-5">
                   <div className=" rounded-lg">
                     <div className="">
-                      <div className="">
-                        <div className="text-white text-center">
-                          <h2 className="text-5xl font-bold py-4">
-                            Quick recap
-                          </h2>
-                          <p className="text-sm font-bold">
-                            Enter new price. Your NFT will be pushed in top of
-                            marketplace
-                          </p>
-                        </div>
+                      <h2 className="text-white text-5xl font-bold py-4">
+                        Quick recap
+                      </h2>
+
+                      {/*Approve xsro*/}
+
+                      <div className="flex items-center justify-center pt-4 pb-3">
+                        {isApproved ? (
+                          <>
+                            <div className=" mr-2 ">
+                              <img
+                                alt=""
+                                className="w-5 "
+                                src={checkmarkIcon}
+                              />
+                            </div>
+                            <div className="pr-5">
+                              <button
+                                disabled={true}
+                                className={classnames(
+                                  "bg-green-100 rounded-xl",
+                                  "text-black px-8 py-3"
+                                )}
+                              >
+                                Appoved
+                              </button>
+                            </div>
+                          </>
+                        ) : loading ? (
+                          <div className="flex ">
+                            <LoaderIcon />
+                            <div className="pr-5">
+                              <button
+                                disabled={true}
+                                className={classnames(
+                                  "transition duration-300 bg-gradient-to-br rounded-xl hover:opacity-75",
+                                  "text-black px-8 py-3 from-primary-200 to-primary-200" ||
+                                    "text-white hover:text-primary-200"
+                                )}
+                              >
+                                In progress...
+                              </button>
+                            </div>
+                          </div>
+                        ) : (
+                          <>
+                            {error && (
+                              <div className="  ">
+                                {" "}
+                                <img
+                                  alt=""
+                                  className="w-4 mr-2"
+                                  src={deleteIcon}
+                                />{" "}
+                              </div>
+                            )}
+                            <div className="">
+                              <ButtonOnClick
+                                onClick={handleApproveButton}
+                                buttonStyle
+                              >
+                                Approve xsro
+                              </ButtonOnClick>
+                            </div>
+                          </>
+                        )}
                       </div>
-                      <div className="flex items-center justify-center pt-4 pb-3 pr-5 ">
-                        <div className="pt-5 pl-5">
-                          {loading && <LoaderIcon />}
-                          <ButtonOnClick loading={loading} onClick={handleBuyButton} buttonStyle>
-                            {loading ? 'In progress' : 'Buy'}
-                          </ButtonOnClick>
-                        </div>
+
+                      {/*Buy NFT*/}
+
+                      <div className="flex items-center justify-center pt-4 pb-3">
+                        {isApproved ? loading ? (
+                            <div className="flex items-center justify-center pt-4 pb-3">
+                              <LoaderIcon />
+                              <div className="">
+                                <button
+                                  disabled={true}
+                                  className={classnames(
+                                    "transition duration-300 bg-gradient-to-br rounded-xl hover:opacity-75",
+                                    "text-black px-8 py-3 from-primary-200 to-primary-200" ||
+                                      "text-white hover:text-primary-200"
+                                  )}
+                                >
+                                  In progress...
+                                </button>
+                              </div>
+                            </div>
+                          ) : (
+                            <>
+                              {error && (
+                                <div className="mr-2">
+                                  {" "}
+                                  <img
+                                    alt=""
+                                    className="w-7 "
+                                    src={deleteIcon}
+                                  />{" "}
+                                </div>
+                              )}
+                              <div className=" ">
+                                <ButtonOnClick
+                                  onClick={handleBuyButton}
+                                  buttonStyle
+                                >
+                                  Buy
+                                </ButtonOnClick>
+                              </div>
+                            </>
+                          )
+                          :
+                          (
+                          <div className="">
+                            <button
+                              disabled={true}
+                              className={classnames(
+                                "bg-gray-200 rounded-xl",
+                                "text-black px-8 py-3 from-primary-200 to-primary-200"
+                              )}
+                            >
+                              Buy
+                            </button>
+                          </div>
+                        )}
                       </div>
                       <div className="flex items-center justify-center pt-3 pb-3">
                         <button 
