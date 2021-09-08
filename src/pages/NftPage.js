@@ -40,10 +40,11 @@ const BuyNft = () => {
         }
       } 
       const fetchNft = await sro721.getNftById(match.params.id)
-      const owner = await userData(fetchNft.author)
+      const owner = await sro721.ownerOf(match.params.id)
+      const ownerData = await userData(owner.toLowerCase())
       const uri = await sro721.tokenURI(match.params.id)
 
-      setNft({data: {...fetchNft, url: uri}, owner: owner, sale: sale})
+      setNft({data: {...fetchNft, url: uri}, owner: ownerData, sale: sale})
     }
 
     if(sro721 !== null) {
