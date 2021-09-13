@@ -73,7 +73,7 @@ const CardList = ({ idx, user }) => {
     data
   );
 
-  const memoizedCallback = useCallback(async (index) => {
+  const fetchData = useCallback(async (index) => {
     if(sro721 !== null && marketplace !== null && fetch) {
       setFetch(false)
       switch(index) {
@@ -94,8 +94,8 @@ const CardList = ({ idx, user }) => {
   );
 
   useEffect(() => {
-      memoizedCallback(idx)
-  }, [idx, memoizedCallback])
+    fetchData(idx)
+  }, [idx, fetchData])
 
   return (
     <>
