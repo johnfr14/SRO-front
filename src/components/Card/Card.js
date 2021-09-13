@@ -1,4 +1,4 @@
-import { useEffect, useState, Suspense, lazy } from "react";
+import { useEffect, useState, Suspense, lazy, memo } from "react";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 
@@ -142,4 +142,4 @@ const Card = ({
   );
 };
 
-export default Card;
+export default memo(Card);

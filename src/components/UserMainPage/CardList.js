@@ -1,4 +1,4 @@
-import { Suspense, lazy, useEffect, useState } from "react";
+import { Suspense, lazy, useEffect, useState, memo, useCallback } from "react";
 import { userTest } from "../../images/";
 import { ethers } from "ethers"
 import { SRO721Address } from "../../contracts/SRO721";
@@ -73,8 +73,9 @@ const CardList = ({ idx, user }) => {
     data
   );
 
-  useEffect(() => {
-    const fetchNft = async (index) => {
+  const memoizedCallback = useCallback(async (index) => {
+    if(sro721 !== null && marketplace !== null && fetch) {
+      setFetch(false)
       switch(index) {
         case 0: 
           return setData(await fetchLastNftOnSale(marketplace, sro721, data))
@@ -88,12 +89,13 @@ const CardList = ({ idx, user }) => {
           return "error"
       }
     }
+  },
+    [marketplace, sro721, data, user, fetch],
+  );
 
-    if(sro721 !== null && marketplace !== null && fetch) {
-      setFetch(false)
-      fetchNft(idx)
-    }
-  }, [marketplace, sro721, data, idx, fetch, user])
+  useEffect(() => {
+      memoizedCallback(idx)
+  }, [idx, memoizedCallback])
 
   return (
     <>
@@ -132,4 +134,4 @@ const CardList = ({ idx, user }) => {
   );
 };
 
-export default CardList;
+export default memo(CardList);
