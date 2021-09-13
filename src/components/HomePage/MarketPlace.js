@@ -1,5 +1,6 @@
 import React from 'react'
 import { Divider } from "../index";
+import { CardList } from '../UserMainPage';
 
 const MarketPlace = () => {
   return (
@@ -17,6 +18,7 @@ const MarketPlace = () => {
           <h2 className="mb-2 text-3xl font-bold text-left text-white">
             Market Place
           </h2>
+          <CardList idx={0} />
         </div>
       </div>
     </>

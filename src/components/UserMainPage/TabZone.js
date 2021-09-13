@@ -1,8 +1,5 @@
-import { useEffect, useState, Suspense, lazy } from "react";
+import { useState, Suspense, lazy } from "react";
 import { Tab } from "@headlessui/react";
-
-import { useContracts } from "../../context/ContractContext";
-import { getNftCreated, getNftOnSale, getNftOwned } from "../../dataFunctions/fetchData";
 
 import "../../css/userTab.css";
 
@@ -34,8 +31,6 @@ function classNames(...classes) {
 //   }
 
 export default function TabZone({ user }) {
-  const { sro721, marketplace } = useContracts();
-  const [nft, setNft] = useState({ created: {} });
 
   let [categories] = useState({
     On_sale: [
@@ -60,19 +55,6 @@ export default function TabZone({ user }) {
       },
     ],
   });
-
-  useEffect(() => {
-    const fetchNft = async () => {
-      const nftCreated = await getNftCreated(user, sro721);
-      const nftOwned = await getNftOwned(user, sro721);
-      const nftOnSale = await getNftOnSale(nftOwned, marketplace, sro721);
-      setNft({ onSale: nftOnSale, owned: nftOwned, created: nftCreated });
-    };
-
-    if (Object.keys(nft).length !== 3 && sro721 !== null) {
-      fetchNft();
-    }
-  }, [sro721, marketplace, user, nft]);
 
   return (
     <div className="w-full px-2 py-16 sm:px-0">
@@ -102,19 +84,19 @@ export default function TabZone({ user }) {
         <Tab.Panels className="mt-2">
           <Tab.Panel>
             <Suspense fallback={<span>Loading...</span>}>
-              {nft.onSale && <CardList idx={1} data={nft.onSale} />}
+              <CardList idx={1} user={user} />
             </Suspense>
           </Tab.Panel>
 
           <Tab.Panel>
             <Suspense fallback={<span>Loading...</span>}>
-              {nft.owned && <CardList idx={2} data={nft.owned} />}
+              <CardList idx={2} user={user} />
             </Suspense>
           </Tab.Panel>
 
           <Tab.Panel>
             <Suspense fallback={<span>Loading...</span>}>
-              {nft.created && <CardList idx={3} data={nft.created} />}
+              <CardList idx={3} user={user} />
             </Suspense>
           </Tab.Panel>
         </Tab.Panels>

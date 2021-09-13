@@ -1,7 +1,9 @@
-import { Suspense, lazy } from "react";
+import { Suspense, lazy, useEffect, useState } from "react";
 import { userTest } from "../../images/";
 import { ethers } from "ethers"
 import { SRO721Address } from "../../contracts/SRO721";
+import { useContracts } from '../../context/ContractContext';
+import { fetchLastNftOnSale, getNftCreated, getNftOnSale, getNftOwned } from '../../dataFunctions/fetchData';
 
 const Card = lazy(() => import("../Card/Card"));
 const Noitems = lazy(() => import("../UserMainPage/Noitems"));
@@ -62,11 +64,38 @@ const defaultData = [
   },
 ];
 
-const CardList = ({ idx, data }) => {
+const CardList = ({ idx, user }) => {
+  const { marketplace, sro721 } = useContracts()
+  const [data, setData] = useState([])
+  const [fetch, setFetch] = useState(true)
   console.log(
     `Tab: ${idx === 1 ? "nftOnSale" : idx === 2 ? "nft owned" : "nft created"}`,
     data
   );
+  console.log(data)
+
+  useEffect(() => {
+    const fetchNft = async (index) => {
+      switch(index) {
+        case 0: 
+        return setData(await fetchLastNftOnSale(marketplace, sro721, data))
+        case 1: 
+          return setData(await getNftOnSale(user, marketplace, sro721));
+        case 2: 
+          return setData(await getNftOwned(user, sro721));
+        case 3: 
+          return setData(await getNftCreated(user, sro721));
+        default: 
+          return "error"
+      }
+    }
+
+    if(sro721 !== null && fetch) {
+      setFetch(false)
+      fetchNft(idx)
+    }
+  }, [marketplace, sro721, data, idx, fetch, user])
+
   return (
     <>
       {data.length > 0 ? (
@@ -75,12 +104,12 @@ const CardList = ({ idx, data }) => {
             <Suspense fallback={<div>Loading...</div>}>
               <Card
                 id={data.id}
-                key={data.id + index || defaultData.name + data.index}
+                key={index}
                 imgUrl={data.metadata.url || defaultData.imgUrl}
                 name={data.metadata.title || defaultData.name}
                 amountLike={data.metadata.likes}
                 price={data.sale.price !== null ? ethers.utils.formatEther(data.sale.price) : 'not on sale'}
-                unity={data.sale.price > 0 ? "ETH" : ''}
+                unity={data.sale.price > 0 ? "SRO" : ''}
                 linkToNFT={`/${SRO721Address}/${data.id}`}
                 linkToProfilCollection={"SRO"}
                 linkToProfilCreator={data.creator.fullAddress}

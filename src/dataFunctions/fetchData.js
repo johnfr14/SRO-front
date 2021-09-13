@@ -27,7 +27,7 @@ export const getNftCreated = async (user, sro721) => {
         creator: user,
       });
     }
-    return created;
+    return created
   }
 };
 // nft owned
@@ -47,19 +47,28 @@ export const getNftOwned = async (user, sro721) => {
       creator: data,
     })
   }
-  return owned;
+  return owned
 };
 
-export const getNftOnSale = async (nftOwned, marketplace) => {
+export const getNftOnSale = async (user, marketplace, sro721) => {
+  const nftOwned = []
+  const balance = await sro721.balanceOf(user.fullAddress)
+  for (let i = 0; i < balance; i++) {
+    nftOwned.push(await sro721.tokenOfOwnerByIndex(user.fullAddress, i).then((result) => result.toString()))
+  }
+
   const onSale = [];
   nftOwned.forEach(async (nft) => {
-    if(await marketplace.isOnSale(SRO721Address, nft.id )){
-      const saleId = await marketplace.getSaleId(SRO721Address, nft.id)
+    if(await marketplace.isOnSale(SRO721Address, nft)){
+      const metadata = await sro721.getNftById(nft);
+      const saleId = await marketplace.getSaleId(SRO721Address, nft)
       const sale = await marketplace.getSale(saleId)
-      onSale.push({...nft, sale: sale})
+      const data = await userData(metadata.author.toLowerCase());
+      const url = await sro721.tokenURI(nft);
+      onSale.push({id: nft, metadata: {...metadata, url: url}, sale: sale, creator: data, owner: user})
     }
   }) 
-  return onSale;
+  return onSale
 };
 
 export const getLikedNft = async (user, id, sro721) => {
@@ -86,3 +95,28 @@ export const userData = async (address) => {
 
   return data;
 };
+
+export const fetchLastNftOnSale = async(marketplace, sro721, nftDisplayed) => {
+  try {
+    const nfts = nftDisplayed
+    const totalSales = await marketplace.totalSale()
+    const start = totalSales - nftDisplayed.length
+    const end = nftDisplayed.length + 10
+    
+    for (let i = start; nfts.length !== end && i !== 0; i--) {
+      const sale = await marketplace.getSale(i)
+      console.log(nfts.length)
+      if(sale.status === 2) {
+        const metadata = await sro721.getNftById(sale.nftId)
+        const url = await sro721.tokenURI(sale.nftId);
+        const creatorData = await userData(metadata.author.toLowerCase());
+        const owner = await sro721.ownerOf(sale.nftId);
+        const ownerData = await userData(owner.toLowerCase())
+        nfts.push({id: sale.nftId, metadata: {...metadata, url: url}, sale: sale, owner: ownerData, creator: creatorData})
+      }
+    }
+    return nfts
+  } catch (e){
+    console.error(e)
+  }
+}
