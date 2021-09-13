@@ -72,7 +72,6 @@ const CardList = ({ idx, user }) => {
     `Tab: ${idx === 1 ? "nftOnSale" : idx === 2 ? "nft owned" : "nft created"}`,
     data
   );
-  console.log(data)
 
   useEffect(() => {
     const fetchNft = async (index) => {
