@@ -58,7 +58,8 @@ export const getNftOnSale = async (user, marketplace, sro721) => {
   }
 
   const onSale = [];
-  nftOwned.forEach(async (nft) => {
+  await nftOwned.forEach(async (nft) => {
+    console.log(nft)
     if(await marketplace.isOnSale(SRO721Address, nft)){
       const metadata = await sro721.getNftById(nft);
       const saleId = await marketplace.getSaleId(SRO721Address, nft)

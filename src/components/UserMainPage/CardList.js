@@ -77,9 +77,9 @@ const CardList = ({ idx, user }) => {
     const fetchNft = async (index) => {
       switch(index) {
         case 0: 
-        return setData(await fetchLastNftOnSale(marketplace, sro721, data))
+          return setData(await fetchLastNftOnSale(marketplace, sro721, data))
         case 1: 
-          return setData(await getNftOnSale(user, marketplace, sro721));
+          return setData(await getNftOnSale(user, marketplace, sro721))
         case 2: 
           return setData(await getNftOwned(user, sro721));
         case 3: 
@@ -89,7 +89,7 @@ const CardList = ({ idx, user }) => {
       }
     }
 
-    if(sro721 !== null && fetch) {
+    if(sro721 !== null && marketplace !== null && fetch) {
       setFetch(false)
       fetchNft(idx)
     }

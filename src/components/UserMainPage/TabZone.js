@@ -1,4 +1,4 @@
-import { useState, Suspense, lazy } from "react";
+import { useState, lazy } from "react";
 import { Tab } from "@headlessui/react";
 
 import "../../css/userTab.css";
@@ -83,21 +83,15 @@ export default function TabZone({ user }) {
 
         <Tab.Panels className="mt-2">
           <Tab.Panel>
-            <Suspense fallback={<span>Loading...</span>}>
               <CardList idx={1} user={user} />
-            </Suspense>
           </Tab.Panel>
 
           <Tab.Panel>
-            <Suspense fallback={<span>Loading...</span>}>
               <CardList idx={2} user={user} />
-            </Suspense>
           </Tab.Panel>
 
           <Tab.Panel>
-            <Suspense fallback={<span>Loading...</span>}>
               <CardList idx={3} user={user} />
-            </Suspense>
           </Tab.Panel>
         </Tab.Panels>
       </Tab.Group>
