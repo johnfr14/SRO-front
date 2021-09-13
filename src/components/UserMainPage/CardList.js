@@ -77,8 +77,27 @@ const CardList = ({ idx, user }) => {
     if(sro721 !== null && marketplace !== null && fetch) {
       setFetch(false)
       switch(index) {
-        case 0: 
-          return setData(await fetchLastNftOnSale(marketplace, sro721, data))
+        case 0:
+          const nfts = data
+          const totalSales = await marketplace.totalSale()
+          const start = totalSales - data.length
+          const end = data.length + 10
+          const sale = []
+          for (let i = start;i !== 0; i--) {
+            sale.push(marketplace.getSale(i))
+            console.log(i)
+          }
+          for (const elem of sale) {
+            const nft = await elem.then(result => result)
+            if(nft.status === 2) {
+              if(nfts.length !== end) {
+                nfts.push(await fetchLastNftOnSale(sro721, nft))
+              } else {
+                return setData(nfts)
+              }
+            } 
+          }
+          return setData(nfts)
         case 1: 
           return setData(await getNftOnSale(user, marketplace, sro721))
         case 2: 

@@ -96,26 +96,14 @@ export const userData = async (address) => {
   return data;
 };
 
-export const fetchLastNftOnSale = async(marketplace, sro721, nftDisplayed) => {
+export const fetchLastNftOnSale = async(sro721, sale) => {
   try {
-    const nfts = nftDisplayed
-    const totalSales = await marketplace.totalSale()
-    const start = totalSales - nftDisplayed.length
-    const end = nftDisplayed.length + 10
-    
-    for (let i = start; nfts.length !== end && i !== 0; i--) {
-      const sale = await marketplace.getSale(i)
-      console.log(nfts.length)
-      if(sale.status === 2) {
-        const metadata = await sro721.getNftById(sale.nftId)
-        const url = await sro721.tokenURI(sale.nftId);
-        const creatorData = await userData(metadata.author.toLowerCase());
-        const owner = await sro721.ownerOf(sale.nftId);
-        const ownerData = await userData(owner.toLowerCase())
-        nfts.push({id: sale.nftId, metadata: {...metadata, url: url}, sale: sale, owner: ownerData, creator: creatorData})
-      }
-    }
-    return nfts
+    const metadata = await sro721.getNftById(sale.nftId)
+    const url = await sro721.tokenURI(sale.nftId);
+    const creatorData = await userData(metadata.author.toLowerCase());
+    const owner = await sro721.ownerOf(sale.nftId);
+    const ownerData = await userData(owner.toLowerCase())
+    return {id: sale.nftId, metadata: {...metadata, url: url}, sale: sale, owner: ownerData, creator: creatorData}
   } catch (e){
     console.error(e)
   }
