@@ -72,32 +72,29 @@ const CardList = ({ idx, user }) => {
     `Tab: ${idx === 1 ? "nftOnSale" : idx === 2 ? "nft owned" : "nft created"}`,
     data
   );
-
+  
   const fetchData = useCallback(async (index) => {
     if(sro721 !== null && marketplace !== null && fetch) {
       setFetch(false)
       switch(index) {
         case 0:
-          const nfts = data
           const totalSales = await marketplace.totalSale()
-          const start = totalSales - data.length
-          const end = data.length + 10
-          const sale = []
-          for (let i = start;i !== 0; i--) {
-            sale.push(marketplace.getSale(i))
-            console.log(i)
+          const sales = []
+          for (let i = totalSales; i > 0; i--) {
+            sales.push(marketplace.getSale(i))
           }
-          for (const elem of sale) {
-            const nft = await elem.then(result => result)
-            if(nft.status === 2) {
-              if(nfts.length !== end) {
-                nfts.push(await fetchLastNftOnSale(sro721, nft))
-              } else {
-                return setData(nfts)
-              }
-            } 
-          }
-          return setData(nfts)
+          const datas = []
+          await Promise.all(sales).then(result => result.forEach(element => {
+            return element[0] === 2 ? datas.push({
+                status: element[0],
+                nftId: element[1].toString(),
+                price: ethers.utils.formatEther(element[2]),
+                seller: element[3],
+                collections: element[4],
+              }) : ''
+            })
+          )
+          return setData(datas)
         case 1: 
           return setData(await getNftOnSale(user, marketplace, sro721))
         case 2: 
@@ -109,7 +106,7 @@ const CardList = ({ idx, user }) => {
       }
     }
   },
-    [marketplace, sro721, data, user, fetch],
+    [marketplace, sro721, user, fetch],
   );
 
   useEffect(() => {
@@ -125,24 +122,27 @@ const CardList = ({ idx, user }) => {
               <Card
                 id={data.id}
                 key={index}
-                imgUrl={data.metadata.url || defaultData.imgUrl}
-                name={data.metadata.title || defaultData.name}
-                amountLike={data.metadata.likes}
-                price={data.sale.price !== null ? ethers.utils.formatEther(data.sale.price) : 'not on sale'}
-                unity={data.sale.price > 0 ? "SRO" : ''}
-                linkToNFT={`/${SRO721Address}/${data.id}`}
-                linkToProfilCollection={"SRO"}
-                linkToProfilCreator={data.creator.fullAddress}
-                linkToProfilOwner={data.owner.fullAddress}
-                userIconCollection={defaultData.imgUrl}
-                userIconCreator={data.creator.avatar}
-                userIconOwner={data.owner.avatar}
-                tipDataAdressCollection={SubstrAdress(
-                  "0xa4D174cF992ABf58A0E95D1f5A95443699640A8E"
-                )}
-                tipDataAdressCreator={data.creator.address}
-                tipDataAdressOwner={data.owner.address}
-              />
+                // imgUrl={data.metadata.url || defaultData.imgUrl}
+                // name={data.metadata.title || defaultData.name}
+                // amountLike={data.metadata.likes}
+                // price={data.sale.price !== null ? ethers.utils.formatEther(data.sale.price) : 'not on sale'}
+                // unity={data.sale.price > 0 ? "SRO" : ''}
+                // linkToNFT={`/${SRO721Address}/${data.id}`}
+                // linkToProfilCollection={"SRO"}
+                // linkToProfilCreator={data.creator.fullAddress}
+                // linkToProfilOwner={data.owner.fullAddress}
+                // userIconCollection={defaultData.imgUrl}
+                // userIconCreator={data.creator.avatar}
+                // userIconOwner={data.owner.avatar}
+                // tipDataAdressCollection={SubstrAdress(
+                //   "0xa4D174cF992ABf58A0E95D1f5A95443699640A8E"
+                // )}
+                // tipDataAdressCreator={data.creator.address}
+                // tipDataAdressOwner={data.owner.address}
+                idx={idx}
+                user={user}
+                data={data}
+              /> 
             </Suspense>
           ))}
         </div>

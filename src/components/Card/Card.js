@@ -1,6 +1,7 @@
-import { useEffect, useState, Suspense, lazy, memo } from "react";
+import { useEffect, useState, Suspense, lazy, memo, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
+import { fetchLastNftOnSale, getNftOnSale, getNftCreated, getNftOwned } from "../../dataFunctions/fetchData"
 
 import { ProfilList, DotMenu } from "./";
 import { useContracts } from "../../context/ContractContext";
@@ -28,13 +29,18 @@ const Card = ({
   tipDataAdressCollection,
   tipDataAdressCreator,
   tipDataAdressOwner,
+  idx,
+  user,
+  data,
 }) => {
-  const { sro721 } = useContracts();
+  const { sro721, marketplace } = useContracts();
   const { userState } = useUser();
+  const [nft, setNft] = useState({id: null, metadata: null, sale: null, creator: null, owner: null})
   const [likeState, setLikeState] = useState({
     isLiked: false,
     amountLike: "",
   });
+  // console.log(nft)
 
   const handleLikeButton = async () => {
     try {
@@ -60,18 +66,38 @@ const Card = ({
     }
   };
 
+  const fetchData = useCallback(async (index) => {
+    if(sro721 !== null && marketplace !== null && fetch) {
+      switch(index) {
+        case 0:
+          return setNft(await fetchLastNftOnSale(sro721, data))
+        case 1: 
+          return setNft(await getNftOnSale(user, marketplace, sro721))
+        case 2: 
+          return setNft(await getNftOwned(user, sro721));
+        case 3: 
+          return setNft(await getNftCreated(user, sro721));
+        default: 
+          return "error"
+      }
+    }
+  },
+    [marketplace, sro721, user, setNft, data],
+  );
+  const fetchLike = useCallback(async () => {
+    setLikeState({
+      isLiked: await getLikedNft(userState.data.fullAddress, id, sro721),
+      amountLike: amountLike,
+    });
+  }, [amountLike, userState, setLikeState, sro721, id]);
+
   useEffect(() => {
-    const fetchLike = async () => {
-      setLikeState({
-        isLiked: await getLikedNft(userState.data.fullAddress, id, sro721),
-        amountLike: amountLike,
-      });
-    };
 
     if (likeState.amountLike === "") {
       fetchLike();
+      fetchData(idx)
     }
-  }, [sro721, userState.data.fullAddress, id, likeState, amountLike]);
+  }, [idx, likeState, fetchData, fetchLike]);
   return (
     <div className="max-w-xs bg-gray-900 shadow-lg rounded-xl p-2 border-2 border-gray-200 border-opacity-25 pb-5 relative">
       <div className="iHLBIg">

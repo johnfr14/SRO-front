@@ -100,6 +100,7 @@ export const fetchLastNftOnSale = async(sro721, sale) => {
   try {
     const metadata = await sro721.getNftById(sale.nftId)
     const url = await sro721.tokenURI(sale.nftId);
+    console.log(metadata)
     const creatorData = await userData(metadata.author.toLowerCase());
     const owner = await sro721.ownerOf(sale.nftId);
     const ownerData = await userData(owner.toLowerCase())
