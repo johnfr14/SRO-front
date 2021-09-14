@@ -1,7 +1,7 @@
 import { Button } from "../index";
 import "../../css/noItems.css";
 
-const Noitems = () => {
+const Noitems = ({ marketPlace }) => {
   return (
     <>
       <div className="flex jCiuZr">
@@ -12,11 +12,15 @@ const Noitems = () => {
               Come back soon! Or try to browse something for you on our
               marketplace
             </span>
-            <div className="iNCLVq">
-              <Button target={"/"} buttonStyle>
-                Browse marketplace
-              </Button>
-            </div>
+            {!marketPlace ? (
+              <div className="iNCLVq">
+                <Button target={"/"} buttonStyle>
+                  Browse marketplace
+                </Button>
+              </div>
+            ) : (
+              ""
+            )}
           </div>
         </div>
       </div>

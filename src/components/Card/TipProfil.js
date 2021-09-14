@@ -13,11 +13,11 @@ const TipProfil = ({
         <span className="tooltip rounded shadow-lg p-1 bg-black text-white -mt-8">
           {tipData}
         </span>
-        <Link to={linkTo === null ? '/' : `/user/${linkTo}`} className="cvuikC">
+        <Link to={linkTo === null ? "/" : `/user/${linkTo}`} className="cvuikC">
           <img
             className="avatar h-10 w-10 rounded-full border-2 border-opacity-40 border-black bgKYbJ"
             src={userIcon}
-            alt={userIcon}
+            alt="S"
           />
         </Link>
       </div>

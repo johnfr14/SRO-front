@@ -5,7 +5,7 @@ function IndexPage() {
   return (
     <>
       <Layout>
-        <Container children={<MarketPlace />} className="h-screen" />
+        <Container children={<MarketPlace />} />
       </Layout>
     </>
   );
