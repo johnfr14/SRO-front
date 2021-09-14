@@ -1,5 +1,48 @@
 import axios from "axios";
 import { SRO721Address } from "../contracts/SRO721";
+import { userDefault } from "../images";
+
+export const defaultCardData = {
+  id: null,
+  metadata: {
+    author: null,
+    timestamp: null,
+    royalties: null,
+    likes: null,
+    title: null,
+    description: null,
+    url: null
+  },
+  sale: {
+    status: null,
+    nftId: null,
+    price: null,
+    seller: null,
+    collection: null,
+  },
+  owner: {
+  fullAddress: null,
+  address: null,
+  id: null,
+  username: null,
+  bio: null,
+  url: null,
+  twitterUsername: null,
+  portfolio: null,
+  avatar: userDefault,
+  },
+  creator: {
+  fullAddress: null,
+  address: null,
+  id: null,
+  username: null,
+  bio: null,
+  url: null,
+  twitterUsername: null,
+  portfolio: null,
+  avatar: userDefault,
+  },
+}
 
 // nft created
 export const getNftCreated = async (user, sro721) => {
@@ -100,7 +143,6 @@ export const fetchLastNftOnSale = async(sro721, sale) => {
   try {
     const metadata = await sro721.getNftById(sale.nftId)
     const url = await sro721.tokenURI(sale.nftId);
-    console.log(metadata)
     const creatorData = await userData(metadata.author.toLowerCase());
     const owner = await sro721.ownerOf(sale.nftId);
     const ownerData = await userData(owner.toLowerCase())
