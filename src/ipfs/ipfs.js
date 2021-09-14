@@ -16,7 +16,7 @@ export const pinOnIpfs = async (file) => {
 
     return hash
   } catch (e) {
-    console.error(e.message)
+    throw new Error(e.message)
   }
 }
 
