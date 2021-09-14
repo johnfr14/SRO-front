@@ -4,7 +4,7 @@ import { userData } from "../../dataFunctions/fetchData";
 import { Web3Context } from "web3-hooks";
 import { AvatarSettings } from "./index";
 import { ToastContainer, toast } from "react-toastify";
-import { pinOnIpfs } from "../../ipfs/ipfs"
+import { pinOnIpfs } from "../../ipfs/ipfs";
 import axios from "axios";
 import classnames from "classnames";
 import "react-toastify/dist/ReactToastify.css";
@@ -14,7 +14,7 @@ require("dotenv").config();
 
 // @TODO: toast pour l'update du profil ( dans la fonction "onSubmit()")
 const SettingsInfo = ({ data, dispatch }) => {
-  const [ web3State ] = useContext(Web3Context);
+  const [web3State] = useContext(Web3Context);
   const {
     register,
     watch,
@@ -22,30 +22,29 @@ const SettingsInfo = ({ data, dispatch }) => {
     formState: { errors },
   } = useForm();
 
-  
   const onSubmit = async () => {
     try {
       let avatar = data.avatar;
       if (watch().avatar.length !== 0) {
-        avatar = await pinOnIpfs(watch().avatar[0])
-        console.log(avatar)
+        avatar = await pinOnIpfs(watch().avatar[0]);
       } else {
         avatar = avatar === null ? null : data.avatar.split("/").pop();
       }
-      dispatch({type: 'FETCH_INIT'})
-      await axios.post(`https://bdd-sro.herokuapp.com/edit_profile/${web3State.account}`,
-      {
-        data: {
-          username: watch().username || null,
-          bio: watch().bio || null,
-          url: watch().url || null,
-          twitterUsername: watch().twitterUsername || null,
-          portfolio: watch().portfolio || null,
-          avatar: `https://gateway.pinata.cloud/ipfs/${avatar}`,
-        },
-      }
+      dispatch({ type: "FETCH_INIT" });
+      await axios.post(
+        `https://bdd-sro.herokuapp.com/edit_profile/${web3State.account}`,
+        {
+          data: {
+            username: watch().username || null,
+            bio: watch().bio || null,
+            url: watch().url || null,
+            twitterUsername: watch().twitterUsername || null,
+            portfolio: watch().portfolio || null,
+            avatar: `https://gateway.pinata.cloud/ipfs/${avatar}`,
+          },
+        }
       );
-      const newData = await userData(web3State.account)
+      const newData = await userData(web3State.account);
       dispatch({ type: "UPDATE_PROFILE", payload: newData });
 
       toast.success("Profile Updated", {
@@ -56,7 +55,7 @@ const SettingsInfo = ({ data, dispatch }) => {
         pauseOnHover: false,
         draggable: true,
         progress: undefined,
-      })
+      });
       //after updating data it redirect to the dashboard
     } catch (e) {
       toast.error(e.message, {
@@ -67,8 +66,8 @@ const SettingsInfo = ({ data, dispatch }) => {
         pauseOnHover: false,
         draggable: true,
         progress: undefined,
-      })
-    } 
+      });
+    }
   };
 
   return (
