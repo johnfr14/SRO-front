@@ -1,7 +1,7 @@
 import { useEffect, useState, Suspense, lazy, memo, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
-import { defaultCardData, fetchLastNftOnSale, getNftOnSale, getNftCreated, getNftOwned } from "../../dataFunctions/fetchData"
+import { defaultCardData, fetchLastNftOnSale } from "../../dataFunctions/fetchData"
 
 import { ProfilList, DotMenu } from "./";
 import { useContracts } from "../../context/ContractContext";
@@ -62,17 +62,17 @@ const Card = ({
         case 0:
           return setNft(await fetchLastNftOnSale(sro721, data))
         case 1: 
-          return setNft(await getNftOnSale(data, user, marketplace, sro721))
+          return setNft(data)
         case 2: 
-          return setNft(await getNftOwned(user, sro721));
+          return setNft(data);
         case 3: 
-          return setNft(await getNftCreated(user, sro721));
+          return setNft(data);
         default: 
           return "error"
       }
     }
   },
-    [marketplace, sro721, user, setNft, data],
+    [marketplace, sro721, setNft, data],
   );
   const fetchLike = useCallback(async () => {
     setLikeState({
@@ -134,14 +134,14 @@ const Card = ({
               </button>
             </div>
             <Suspense fallback={<div>Loading...</div>}>
-              <MediaCard mediaURL={nft.metadata.url} linkTo={`/${SRO721Address}/${nft.id}`} altName={nft.metadata.title} />
+              <MediaCard mediaURL={nft.metadata.url} linkTo={nft.id === null ? '/' : `/${SRO721Address}/${nft.id}`} altName={nft.metadata.title} />
             </Suspense>
           </div>
           <div className="flex-auto justify-evenly ml-4 mr-4">
             <div className="flex flex-wrap ">
               <div className="flex items-center w-full justify-between min-w-0 ">
                 <Link
-                  to={`/${SRO721Address}/${nft.id}`}
+                  to={nft.id === null ? '/' : `/${SRO721Address}/${nft.id}`}
                   className="text-lg mr-auto cursor-pointer text-gray-200 hover:text-yellow-500 truncate font-black"
                 >
                   {nft.metadata.title}

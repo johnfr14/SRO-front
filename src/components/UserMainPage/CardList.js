@@ -1,6 +1,5 @@
 import { Suspense, lazy, useEffect, useState, memo, useCallback } from "react";
 import { ethers } from "ethers"
-import { SRO721Address } from "../../contracts/SRO721";
 import { useContracts } from '../../context/ContractContext';
 import {  getNftCreated, getNftOwned, getNftOnSale } from '../../dataFunctions/fetchData';
 

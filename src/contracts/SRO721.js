@@ -1,4 +1,4 @@
-export const SRO721Address = "0xcc452B976BE00fB623dbCfeD96662B75813C8217";
+export const SRO721Address = "0x176703E8e80E6405728F0b44eeaE7c0d17Bb4F53";
 
 export const SRO721Abi = [
 	{
