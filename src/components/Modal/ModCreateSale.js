@@ -74,7 +74,6 @@ export default function ModCreateSale({ nextStep, setNextStep }) {
         setNextStep({ ...nextStep, isNext: false });
       }, 2000);
     } catch (e) {
-      console.log(e.message);
       setError(true);
       setLoading(false);
       toast.error(e.message, {

@@ -1,16 +1,16 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import { NftViewBuy, TabZoneBuyNft } from "./index";
 import { Button, ButtonOnClick } from "../Button";
 import { NameTag } from "../Tags";
-import { ModFixedPrice, ModCreateSale, ModPurchase, ModRemoveSale, ModEditPrice } from "../Modal";
+import {
+  ModFixedPrice,
+  ModCreateSale,
+  ModPurchase,
+  ModRemoveSale,
+  ModEditPrice,
+} from "../Modal";
 import { SRO721Address } from "../../contracts/SRO721";
 import { ToastContainer } from "react-toastify";
-
-// import { userTest } from "../../images";
-
-// const linkToNameTag1 = "/user";
-// const userIcon1 = userTest;
-// const NameTagTitle1 = "Owner";
 
 const linkToNameTag2 = "/";
 
@@ -31,18 +31,51 @@ const Nft = ({
   sale,
   nft,
 }) => {
-
-  const [open, setOpen] = useState({createSale: false, removeSale: false, editPrice: false, buyNft: false});
-  const [nextStep, setNextStep] = useState({nftId: nftId, collection: SRO721Address, token: 'ETH', price: null, isNext: false});
+  const [open, setOpen] = useState({
+    createSale: false,
+    removeSale: false,
+    editPrice: false,
+    buyNft: false,
+  });
+  const [nextStep, setNextStep] = useState({
+    nftId: nftId,
+    collection: SRO721Address,
+    token: "ETH",
+    price: null,
+    isNext: false,
+  });
 
   return (
     <>
       <ToastContainer />
-      <ModFixedPrice open={open} setOpen={setOpen} setNextStep={setNextStep} nextStep={nextStep}/>
+      <ModFixedPrice
+        open={open}
+        setOpen={setOpen}
+        setNextStep={setNextStep}
+        nextStep={nextStep}
+      />
       <ModCreateSale nextStep={nextStep} setNextStep={setNextStep} />
-      <ModPurchase open={open} setOpen={setOpen} sale={sale} nft={nft} user={user} />
-      <ModRemoveSale open={open} setOpen={setOpen} sale={sale} nft={nft} user={user} />
-      <ModEditPrice open={open} setOpen={setOpen} sale={sale} nft={nft} user={user} />
+      <ModPurchase
+        open={open}
+        setOpen={setOpen}
+        sale={sale}
+        nft={nft}
+        user={user}
+      />
+      <ModRemoveSale
+        open={open}
+        setOpen={setOpen}
+        sale={sale}
+        nft={nft}
+        user={user}
+      />
+      <ModEditPrice
+        open={open}
+        setOpen={setOpen}
+        sale={sale}
+        nft={nft}
+        user={user}
+      />
 
       <div className="container mx-auto">
         <div className="flex flex-col md:flex-row">
@@ -60,7 +93,7 @@ const Nft = ({
                   <p className="pl-4 text-gray-300">{nftId}</p>
                 </div>
                 <div className="flex text-left">
-                  <h3 className="text-yellow-300 font-bold">Name : </h3>
+                  <h3 className="text-yellow-300 font-bold">Owner : </h3>
                   <p className="pl-4 text-gray-300">{nftName}</p>
                 </div>
                 <div className="flex  text-left ">
@@ -99,44 +132,52 @@ const Nft = ({
               <div className="">
                 <TabZoneBuyNft />
               </div>
-              {sale.status === '1' ? 
+              {sale.status === "1" ? (
                 <div className="flex items-center justify-center mb-5 mt-8 space-x-10">
                   {owner.fullAddress.toLowerCase() === user.fullAddress ? (
                     <>
-                      <ButtonOnClick onClick={() => setOpen({...open, editPrice: true})} buttonStyle>
+                      <ButtonOnClick
+                        onClick={() => setOpen({ ...open, editPrice: true })}
+                        buttonStyle
+                      >
                         Edit price
                       </ButtonOnClick>
-                      <ButtonOnClick onClick={() => setOpen({...open, removeSale: true})}  buttonRemove>
+                      <ButtonOnClick
+                        onClick={() => setOpen({ ...open, removeSale: true })}
+                        buttonRemove
+                      >
                         Remove sale
                       </ButtonOnClick>
                     </>
                   ) : (
                     <>
-                      <ButtonOnClick onClick={() => setOpen({...open, buyNft: true})} buttonStyle>
+                      <ButtonOnClick
+                        onClick={() => setOpen({ ...open, buyNft: true })}
+                        buttonStyle
+                      >
                         Buy for {priceNft} {SymboleNft}
                       </ButtonOnClick>
-                      <ButtonOnClick buttonStyle>
-                        Make a bid
-                      </ButtonOnClick>
+                      <ButtonOnClick buttonStyle>Make a bid</ButtonOnClick>
                     </>
                   )}
                 </div>
-              : 
+              ) : (
                 <div className="flex items-center justify-center mb-5 mt-8 space-x-10">
                   {owner.fullAddress.toLowerCase() === user.fullAddress ? (
-                    <ButtonOnClick onClick={() => setOpen({...open, createSale: true})} buttonStyle>
+                    <ButtonOnClick
+                      onClick={() => setOpen({ ...open, createSale: true })}
+                      buttonStyle
+                    >
                       Put on sale
                     </ButtonOnClick>
                   ) : (
-                    <ButtonOnClick buttonStyle>
-                      Make bid 
-                    </ButtonOnClick>
+                    <ButtonOnClick buttonStyle>Make bid</ButtonOnClick>
                   )}
                   <Button target={""} buttonStyle>
                     Coming Soon
                   </Button>
                 </div>
-              }
+              )}
               <div className="flex items-center justify-center mb-5 mt-8 space-x-10">
                 {owner.fullAddress.toLowerCase() === user.fullAddress ? (
                   <>

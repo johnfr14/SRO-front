@@ -1,26 +1,23 @@
 import { useEffect, useState, Suspense, lazy, memo, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
-import { defaultCardData, fetchLastNftOnSale } from "../../dataFunctions/fetchData"
+import {
+  defaultCardData,
+  fetchLastNftOnSale,
+} from "../../dataFunctions/fetchData";
 
 import { ProfilList, DotMenu } from "./";
 import { useContracts } from "../../context/ContractContext";
 import { SRO721Address } from "../../contracts/SRO721";
+import { logoSRO } from "../../images";
 import "../../css/card.css";
 import "../../css/toast.css";
 
-
 const MediaCard = lazy(() => import("../Card/MediaCard"));
-const imgUrl = "https://img.rarible.com/prod/image/upload/prod-itemImages/0x3bf2922f4520a8ba0c2efc3d2a1539678dad5e9d:7371"
 
-const Card = ({
-  idx,
-  user,
-  data,
-}) => {
+const Card = ({ idx, user, data }) => {
   const { sro721, marketplace } = useContracts();
-  const [nft, setNft] = useState(defaultCardData)
- 
+  const [nft, setNft] = useState(defaultCardData);
 
   const handleLikeButton = async () => {
     try {
@@ -40,27 +37,28 @@ const Card = ({
     }
   };
 
-  const fetchData = useCallback(async (index) => {
-    if(sro721 !== null && marketplace !== null && fetch) {
-      switch(index) {
-        case 0:
-          return setNft(await fetchLastNftOnSale(sro721, data))
-        case 1: 
-          return setNft(data)
-        case 2: 
-          return setNft(data);
-        case 3: 
-          return setNft(data);
-        default: 
-          return "error"
+  const fetchData = useCallback(
+    async (index) => {
+      if (sro721 !== null && marketplace !== null && fetch) {
+        switch (index) {
+          case 0:
+            return setNft(await fetchLastNftOnSale(sro721, data));
+          case 1:
+            return setNft(data);
+          case 2:
+            return setNft(data);
+          case 3:
+            return setNft(data);
+          default:
+            return "error";
+        }
       }
-    }
-  },
-    [marketplace, sro721, setNft, data],
+    },
+    [marketplace, sro721, setNft, data]
   );
 
   useEffect(() => {
-      fetchData(idx)
+    fetchData(idx);
   }, [idx, fetchData]);
 
   return (
@@ -68,10 +66,14 @@ const Card = ({
       <div className="iHLBIg">
         <div className="flex bAGyCr">
           <ProfilList
-            tipDataAdressCollection={'0x176703E8e80E6405728F0b44eeaE7c0d17Bb4F53'}
-            userIconCollection={imgUrl}
+            tipDataAdressCollection={
+              "0x176703E8e80E6405728F0b44eeaE7c0d17Bb4F53"
+            }
+            userIconCollection={logoSRO}
             linkToProfilCollection={"SRO"}
-            tipDataAdressCreator={nft.creator.address ? nft.creator.address : ''}
+            tipDataAdressCreator={
+              nft.creator.address ? nft.creator.address : ""
+            }
             userIconCreator={nft.creator.avatar}
             linkToProfilCreator={nft.creator.fullAddress}
             tipDataAdressOwner={nft.owner.address}
@@ -79,13 +81,13 @@ const Card = ({
             linkToProfilOwner={nft.owner.fullAddress}
           />
         </div>
-        <div className="z-10">
+        <div className="dotMenu">
           <DotMenu />
         </div>
       </div>
-      <div className="flex flex-col ">
+      <div className="flex flex-col">
         <div className="">
-          <div className="relative h-62 w-full mb-3 p-2">
+          <div className="relative h-62 w-full mb-3 p-2 like">
             <div className="absolute flex flex-col top-0 right-0 p-3">
               <button
                 onClick={handleLikeButton}
@@ -109,14 +111,18 @@ const Card = ({
               </button>
             </div>
             <Suspense fallback={<div>Loading...</div>}>
-              <MediaCard mediaURL={nft.metadata.url} linkTo={nft.id === null ? '/' : `/${SRO721Address}/${nft.id}`} altName={nft.metadata.title} />
+              <MediaCard
+                mediaURL={nft.metadata.url}
+                linkTo={nft.id === null ? "/" : `/${SRO721Address}/${nft.id}`}
+                altName={nft.metadata.title}
+              />
             </Suspense>
           </div>
           <div className="flex-auto justify-evenly ml-4 mr-4">
             <div className="flex flex-wrap ">
               <div className="flex items-center w-full justify-between min-w-0 ">
                 <Link
-                  to={nft.id === null ? '/' : `/${SRO721Address}/${nft.id}`}
+                  to={nft.id === null ? "/" : `/${SRO721Address}/${nft.id}`}
                   className="text-lg mr-auto cursor-pointer text-gray-200 hover:text-yellow-500 truncate font-black"
                 >
                   {nft.metadata.title}
@@ -124,7 +130,7 @@ const Card = ({
               </div>
             </div>
             <div className=" text-white font-semibold mt-1">
-              {nft.sale.price === null ? '' : nft.sale.price + ' SRO'}
+              {nft.sale.price === null ? "" : nft.sale.price + " SRO"}
             </div>
           </div>
         </div>

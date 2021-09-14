@@ -1,7 +1,9 @@
-import { Fragment, useContext } from "react";
+import { Fragment, useContext, useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import { Menu, Transition } from "@headlessui/react";
-import { Web3Context } from "web3-hooks";
+import { Web3Context, useContract } from "web3-hooks";
+import { xSROAddress, xSROAbi } from "../../contracts/xSRO";
+import { ethers } from "ethers";
 
 import { Divider } from "../index";
 import { XpBar } from "./index";
@@ -16,9 +18,13 @@ function classNames(...classes) {
 export default function LogUser() {
   const { userState } = useUser();
   const [web3State] = useContext(Web3Context);
+  const xsro = useContract(xSROAddress, xSROAbi);
+  const [userBalance, setUserBalance] = useState();
 
   let balance = web3State.balance;
-  let balanceRounded = Math.round(balance * 10000) / 10000;
+  let balanceXsro = userBalance;
+  let balanceRoundedETH = Math.round(balance * 10000) / 10000;
+  let balanceRoundedXsro = Math.round(balanceXsro * 100) / 100;
 
   const profile = [
     {
@@ -38,6 +44,21 @@ export default function LogUser() {
       url: "/",
     },
   ];
+
+  // xsro user balance
+  useEffect(() => {
+    if (xsro) {
+      const getInfo = async () => {
+        try {
+          const balance = await xsro.balanceOf(web3State.account);
+          setUserBalance(ethers.utils.formatEther(balance));
+        } catch (e) {
+          console.error(e.message);
+        }
+      };
+      getInfo();
+    }
+  }, [xsro, web3State.account, web3State.balance]);
 
   return (
     <div>
@@ -76,10 +97,11 @@ export default function LogUser() {
                       User
                     </p>
                     <p className="ml-4 text-left">
-                      Balance : {balanceRounded} ETH
+                      Balance : {balanceRoundedETH} ETH
                     </p>
-                    <p className="ml-4 text-left">Balance : xx SRO</p>
-                    <p className="ml-4 text-left">Balance : xx XSRO</p>
+                    <p className="ml-4 text-left">
+                      Balance : {balanceRoundedXsro} XSRO
+                    </p>
                   </div>
                   <Divider className="mt-3 mb-2 bg-black" />
                   {profile.map((item, index) => (
