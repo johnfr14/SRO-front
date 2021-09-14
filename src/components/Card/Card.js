@@ -5,8 +5,6 @@ import { defaultCardData, fetchLastNftOnSale } from "../../dataFunctions/fetchDa
 
 import { ProfilList, DotMenu } from "./";
 import { useContracts } from "../../context/ContractContext";
-import { useUser } from "../../context/UserContext";
-import { getLikedNft } from "../../dataFunctions/fetchData";
 import { SRO721Address } from "../../contracts/SRO721";
 import "../../css/card.css";
 import "../../css/toast.css";
@@ -15,33 +13,19 @@ import "../../css/toast.css";
 const MediaCard = lazy(() => import("../Card/MediaCard"));
 const imgUrl = "https://img.rarible.com/prod/image/upload/prod-itemImages/0x3bf2922f4520a8ba0c2efc3d2a1539678dad5e9d:7371"
 
-const SubstrAdress = (dataAdress) => {
-  return dataAdress.substr(0, 6) + "..." + dataAdress.substr(-4);
-};
-
 const Card = ({
   idx,
   user,
   data,
 }) => {
   const { sro721, marketplace } = useContracts();
-  const { userState } = useUser();
   const [nft, setNft] = useState(defaultCardData)
-  const [likeState, setLikeState] = useState({
-    isLiked: false,
-    amountLike: "",
-  });
+ 
 
   const handleLikeButton = async () => {
     try {
       const tx = await sro721.like(nft.id);
       await tx.wait();
-      setLikeState({
-        isLiked: !likeState.isLiked,
-        amountLike: !likeState.isLiked
-          ? likeState.amountLike + 1
-          : likeState.amountLike - 1,
-      });
     } catch (e) {
       console.error(e.message);
       toast.error(e.message, {
@@ -74,26 +58,17 @@ const Card = ({
   },
     [marketplace, sro721, setNft, data],
   );
-  const fetchLike = useCallback(async () => {
-    setLikeState({
-      isLiked: await getLikedNft(userState.data.fullAddress, data.nftId, sro721),
-      amountLike: nft.metadata.likes,
-    });
-  }, [nft, userState, setLikeState, sro721, data]);
 
   useEffect(() => {
-    if (likeState.amountLike === "") {
-      fetchLike();
       fetchData(idx)
-    }
-  }, [idx, likeState, fetchData, fetchLike]);
+  }, [idx, fetchData]);
 
   return (
     <div className="max-w-xs bg-gray-900 shadow-lg rounded-xl p-2 border-2 border-gray-200 border-opacity-25 pb-5 relative">
       <div className="iHLBIg">
         <div className="flex bAGyCr">
           <ProfilList
-            tipDataAdressCollection={SubstrAdress("0xa4D174cF992ABf58A0E95D1f5A95443699640A8E")}
+            tipDataAdressCollection={'0x176703E8e80E6405728F0b44eeaE7c0d17Bb4F53'}
             userIconCollection={imgUrl}
             linkToProfilCollection={"SRO"}
             tipDataAdressCreator={nft.creator.address ? nft.creator.address : ''}
@@ -119,7 +94,7 @@ const Card = ({
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="h-6 w-6"
-                  fill={likeState.isLiked ? "red" : "none"}
+                  fill={nft.metadata.isLiked ? "red" : "none"}
                   viewBox="0 0 24 24"
                   stroke="currentColor"
                 >
@@ -149,7 +124,7 @@ const Card = ({
               </div>
             </div>
             <div className=" text-white font-semibold mt-1">
-              {nft.sale.price + ' SRO'}
+              {nft.sale.price === null ? '' : nft.sale.price + ' SRO'}
             </div>
           </div>
         </div>

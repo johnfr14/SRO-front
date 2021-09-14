@@ -1,5 +1,4 @@
 import { Suspense, lazy, useEffect, useState, memo, useCallback } from "react";
-import { ethers } from "ethers"
 import { useContracts } from '../../context/ContractContext';
 import {  getNftCreated, getNftOwned, getNftOnSale } from '../../dataFunctions/fetchData';
 
@@ -36,12 +35,13 @@ const CardList = ({ idx, user }) => {
           for (let i = totalSales; i > 0; i--) {
             sales.push(marketplace.getSale(i))
           }
+          await Promise.all(sales).then(result => console.log(result))
           const datas = []
           await Promise.all(sales).then(result => result.forEach(element => {
-            return element[0] === 2 ? datas.push({
+            return element[0] === 1 ? datas.push({
                 status: element[0],
                 nftId: element[1].toString(),
-                price: ethers.utils.formatEther(element[2]),
+                price: element[2],
                 seller: element[3],
                 collections: element[4],
               }) : ''

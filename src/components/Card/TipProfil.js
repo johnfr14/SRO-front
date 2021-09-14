@@ -7,7 +7,6 @@ const TipProfil = ({
   linkTo = "/",
   userIcon = userDefault,
 }) => {
-  console.log(linkTo === null ? '/' : linkTo)
   return (
     <>
       <div className="has-tooltip cqhhpO">
