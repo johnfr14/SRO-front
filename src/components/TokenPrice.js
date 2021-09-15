@@ -1,30 +1,35 @@
 import React from "react";
 
-const TokenPrice = () => {
-  const handleDestinationChange = (event) => {
-    console.log(`Vous avez choisi ${event.target.value}`);
-  };
-
+const TokenPrice = ({ register, watch, errors }) => {
   return (
     <div className="text-white">
-      <div className="flex">
-        <select
-          className="text-sm border rounded-l px-4 py-2 bg-gray-300 text-gray-900 whitespace-no-wrap"
-          onChange={handleDestinationChange}
-        >
-          <option>ETH</option>
-          <option>XSRO</option>
-          <option>SRO</option>
-        </select>
+      <div className="flex text-sm appearance-none mt-2 w-full bg-gray-900  border border-gray-400 shadow-inner rounded-md py-3 px-4  leading-tight focus:outline-none  focus:border-gray-500">
         <input
-          type="text"
-          className="flex-shrink flex-grow flex-auto leading-normal w-px bg-gray-900  border border-gray-400 shadow-inner rounded-md py-3 px-4 focus:outline-none  focus:border-gray-500"
+          type="number"
+          min="0"
+          className="flex-1  
+                      text-white  bg-gray-900 
+                      outline-none"
           placeholder="Enter price for one piece"
+          {...register("price", { min: 0 })}
         />
+        <select
+          className="text-sm    bg-gray-900 text-white whitespace-no-wrap   w-20"
+          {...register("token")}
+        >
+          <option >XSRO</option>
+          <option disabled>ETH (soon)</option>
+          <option disabled>SRO (soon)</option>
+        </select>
       </div>
+      {errors.token && (
+        <p style={{ color: "red" }}>Price must be a positive number</p>
+      )}
       <div className="text-xs ">
         <p className="pt-4">Service fee 2.5%</p>
-        <p>You will receive xxx ETH $XXX</p>
+        <p className="flex text-yellow-400">
+          You will receive : <p className="ml-1 text-white">{watch().price * 0.975} {watch().token}</p>
+        </p>
       </div>
     </div>
   );

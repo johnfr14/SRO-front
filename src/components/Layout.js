@@ -1,4 +1,4 @@
-import { Header, Footer, Container } from "./index";
+import { Header, Footer, Container } from "./";
 
 function Layout({ children }) {
   return (

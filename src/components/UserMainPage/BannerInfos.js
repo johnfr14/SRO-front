@@ -18,7 +18,11 @@ const BannerInfos = ({ data }) => {
           <div className="bYqeUY left-5">
             <div className="dWVFoH">
               <div className="cNAXjx">
-                <img alt="" className="kffNNE" src={data.avatar || userDefault} />
+                <img
+                  alt=""
+                  className="kffNNE"
+                  src={data.avatar || userDefault}
+                />
               </div>
             </div>
           </div>
@@ -33,39 +37,48 @@ const BannerInfos = ({ data }) => {
               </Button>
             </div>
             <div className="ml-3">
-              <p className="font-bold text-lg">{data.username}</p>
+              <p className="font-bold text-4xl text-purple-600">{data.username}</p>
               <p className=" ">{data.address}</p>
-              <p className="text-gray-500">@{data.username}</p>
+              {/* <div className="flex items-center ">
+                <p>Twitter: </p>
+                <p className="text-gray-500 ml-2">@{data.twitterUsername}</p>
+              </div> */}
             </div>
 
             <div className="px-3 mt-3">
+              <p className="text-yellow-400">Bio :</p>
               <p>{data.bio}</p>
             </div>
 
             <div className=" flex mt-3">
               <div className="flex items-center ">
                 <i className="fas fa-link"></i>
-                <p className="ml-2">
+                {/* <p className="ml-2">
                   <Link
                     className="from-primary-200 hover:underline"
                     target="_blank"
                     rel="noopener"
-                    href="#"
+                    to="#"
                   >
                     {data.twitterUsername}
                   </Link>
-                </p>
+                </p> */}
+                <p className="ml-3 text-yellow-400">Site : </p>
                 <p className="ml-2">
                   <Link
                     className="from-primary-200 hover:underline"
                     target="_blank"
                     rel="noopener"
-                    href="#"
+                    to="#"
                   >
                     {data.portfolio}
                   </Link>
                 </p>
               </div>
+            </div>
+            <div className="flex items-center ml-3 text-yellow-400">
+              <p>Twitter : </p>
+              <p className="text-gray-500 ml-2">@{data.twitterUsername}</p>
             </div>
           </div>
         </div>

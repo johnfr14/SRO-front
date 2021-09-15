@@ -17,12 +17,13 @@
 }
 .loader-svg.bg {
   stroke-width: 8px;
-  stroke: #cec9b0;
+  stroke: #000000;
 }
 
 .animate {
   stroke-dasharray: 242.6;
   animation: fill-animation 1s cubic-bezier(1, 1, 1, 1) 0s infinite;
+  animation-direction: reverse;
 }
 
 @keyframes fill-animation {

@@ -12,7 +12,7 @@ function XpBar() {
       <div className="mt-2 mb-4 px-4 py-2 border-dotted border-4 border-light-blue-500">
         <div className="h-1 relative rounded-full ">
           <div className="bg-gray-300 w-full mb-4" style={styleBar}>
-            <div className="bg-yellow-300 w-4/6 h-full" />
+            <div className="bg-yellow-400 w-4/6 h-full" />
           </div>
         </div>
         <div className="flex justify-between dark:text-alt mt-1">

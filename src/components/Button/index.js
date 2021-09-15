@@ -1,4 +1,5 @@
-import Button from "./Button"
-import ButtonModal from "./ButtonModal"
+import Button from "./Button";
+import ButtonModal from "./ButtonModal";
+import ButtonOnClick from "./ButtonOnClick";
 
-export { Button, ButtonModal }
+export { Button, ButtonModal, ButtonOnClick };

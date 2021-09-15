@@ -1,28 +1,37 @@
-import { useState } from "react";
+import { useState, lazy } from "react";
 import { Tab } from "@headlessui/react";
 
-import { Noitems } from "./index";
-import { Card } from "../index";
-
 import "../../css/userTab.css";
+
+const CardList = lazy(() => import("./CardList"));
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export function CardList() {
-  return (
-    <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 md:gap-x-10 xl-grid-cols-4 gap-y-5 gap-x-6 ">
-      <Card />
-      <Card />
-      <Card />
-      <Card />
-      <Card />
-    </div>
-  );
-}
+// const defaultData = {
+//     imgUrl:
+//       "https://upload.wikimedia.org/wikipedia/en/e/ed/Leonardo_%28Teenage_Mutant_Ninja_Turtles%29.jpg",
+//     name: "Leonardo",
+//     price: "0.05",
+//     unity: "ETH",
+//     linkToNFT: "/",
 
-export default function TabZone() {
+//     linkToProfilCollection: "/",
+//     linkToProfilCreator: "/",
+//     linkToProfilOwner: "/",
+
+//     // userIconCollection: userTest,
+//     // userIconCreator: cardMediaTest,
+//     //userIconOwner: "",
+
+//     tipDataAdressCollection: "SRO",
+//     tipDataAdressCreator: "0x0000000000000000000000000000000000000000",
+//     tipDataAdressOwner: "0x0000000000000000000000000000000000000000",
+//   }
+
+export default function TabZone({ user }) {
+
   let [categories] = useState({
     On_sale: [
       {
@@ -35,14 +44,14 @@ export default function TabZone() {
       {
         id: 1,
         name: "Owned",
-        component: "",
+        component: <CardList />,
       },
     ],
     Created: [
       {
         id: 1,
         name: "Created",
-        component: <Noitems />,
+        component: <CardList />,
       },
     ],
   });
@@ -73,22 +82,17 @@ export default function TabZone() {
         </div>
 
         <Tab.Panels className="mt-2">
-          {Object.values(categories).map((posts, idx) => (
-            <Tab.Panel key={idx} className={classNames("text-white")}>
-              <ul>
-                {posts.map((post) => (
-                  <li
-                    key={post.id}
-                    className="relative p-3 rounded-md hover:bg-coolGray-100"
-                  >
-                    <h3 className="text-sm font-medium leading-5">
-                      {post.component}
-                    </h3>
-                  </li>
-                ))}
-              </ul>
-            </Tab.Panel>
-          ))}
+          <Tab.Panel>
+              <CardList idx={1} user={user} />
+          </Tab.Panel>
+
+          <Tab.Panel>
+              <CardList idx={2} user={user} />
+          </Tab.Panel>
+
+          <Tab.Panel>
+              <CardList idx={3} user={user} />
+          </Tab.Panel>
         </Tab.Panels>
       </Tab.Group>
     </div>

@@ -8,8 +8,7 @@ import { Erc721Nft, PreviewFile, UploadFile } from "./CreateNftPage";
 import {
   ModCheckout,
   ModFixedPrice,
-  ModFollowStepCreate,
-  ModFollowStepSale,
+  ModFollowStep,
   ModPurchase,
 } from "./Modal";
 import Footer from "./Footer";
@@ -19,6 +18,8 @@ import { Login } from "./Login";
 import { MarketPlace } from "./HomePage";
 import { Nft, NftViewBuy, TabZoneBuyNft } from "./NftPage/";
 import TokenPrice from "./TokenPrice";
+import SubstrAdress from "./SubstrAdress/SubstrAdress";
+
 import SwitchToggle from "./SwitchToggle";
 
 export {
@@ -39,8 +40,6 @@ export {
   MediaCard,
   ModCheckout,
   ModFixedPrice,
-  ModFollowStepCreate,
-  ModFollowStepSale,
   ModPurchase,
   Nft,
   NftViewBuy,
@@ -53,4 +52,6 @@ export {
   SwitchToggle,
   TabZone,
   UploadFile,
+  SubstrAdress,
+  ModFollowStep,
 };
