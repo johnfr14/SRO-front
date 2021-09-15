@@ -13,9 +13,10 @@ const Footer = () => (
     <div className="flex flex-row items-center justify-between w-full max-w-xs mx-auto text-primary-100">
       <div className="flex flex-row items-center justify-between w-full max-w-xs">
         <a
-          href="/"
+          href="https://github.com/SRO-SarahRo/xsro-front"
           rel="noopener noreferrer"
           className="transition duration-300 hover:text-primary-200"
+          target="_blank"
         >
           <FaGithub />
         </a>
@@ -23,20 +24,23 @@ const Footer = () => (
           href="/"
           rel="noopener noreferrer"
           className="transition duration-300 hover:text-primary-200"
+          target="_blank"
         >
           <FaTwitter />
         </a>
         <a
-          href="/"
+          href="/https://twitter.com/Sarahro_Sro"
           rel="noopener noreferrer"
           className="transition duration-300 hover:text-primary-200"
+          target="_blank"
         >
           <FaMediumM />
         </a>
         <a
-          href="/"
+          href="/https://medium.com/@sarahro_sro"
           rel="noopener noreferrer"
           className="transition duration-300 hover:text-primary-200"
+          target="_blank"
         >
           <FaTelegramPlane />
         </a>
@@ -44,6 +48,7 @@ const Footer = () => (
           href="/"
           rel="noopener noreferrer"
           className="transition duration-300 hover:text-primary-200"
+          target="_blank"
         >
           <FaDiscord />
         </a>
