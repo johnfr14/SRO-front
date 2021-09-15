@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { useHistory } from "react-router-dom";
 import { useUser } from "../../context/UserContext";
 import { PreviewFile, UploadFile } from ".";
-import { SwitchToggle, TokenPrice } from "../";
+//import { SwitchToggle, TokenPrice } from "../";
 import classnames from "classnames";
 import { ToastContainer, toast } from "react-toastify";
 import { pinOnIpfs } from "../../ipfs/ipfs";
@@ -14,8 +14,8 @@ import { useContracts } from "../../context/ContractContext"; // instance des co
 const Erc721Nft = () => {
   const { sro721 } = useContracts();
   const { userState } = useUser();
-  const [isToggledPrice, setIsToggledPrice] = useState(false);
-  const [isToggled, setIsToggled] = useState(false);
+  // const [isToggledPrice, setIsToggledPrice] = useState(false);
+  // const [isToggled, setIsToggled] = useState(false);
   const [loading, setLoading] = useState(false);
   const {
     register,
@@ -72,7 +72,7 @@ const Erc721Nft = () => {
         className="min-h-screen pt-2 font-mono my-16 text-white"
       >
         <div className="container mx-auto">
-          <h1 className="text-5xl  text-center font-bold pb-10">
+          <h1 className="text-5xl text-yellow-400 text-center font-bold pb-10">
             Create single collectible
           </h1>
           <div className="mb-5">
@@ -86,7 +86,10 @@ const Erc721Nft = () => {
             <div>
               <PreviewFile watch={watch().file || 0} />
             </div>
-            <div className="flex">
+
+            {/* Future Extension */}
+
+            {/* <div className="flex">
               <div className="md:pl-5 ">
                 <div className="">
                   <h2 className="text-2xl font-semibold pt-4 pb-1">
@@ -120,12 +123,12 @@ const Erc721Nft = () => {
                   </label>
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
           <div className="container mx-auto max-w-screen-lg h-full">
             <div className=" relative h-full flex flex-col bg-gray-900 shadow-xl rounded-md mt-3 border-2 border-gray-200 border-opacity-25 p-5 ">
               <div className="items-center justify-center">
-                <label className="block uppercase tracking-wide  text-xl font-bold mb-2 mt-5">
+                <label className="block uppercase tracking-wide text-2xl text-yellow-400 font-bold mb-2 mt-5">
                   Title
                 </label>
                 <div className="">
@@ -143,8 +146,8 @@ const Erc721Nft = () => {
                 )}
               </div>
               <div className="items-center justify-center">
-                <label className="block uppercase tracking-wide  text-xl font-bold mb-2 mt-5">
-                  Decription (Optional)
+                <label className="block uppercase tracking-wide text-2xl font-bold mb-2 mt-5">
+                  <p className="flex text-yellow-400"> Decription <p className="pl-1 text-purple-500 text-sm">(Optional)</p></p>
                 </label>
                 <div className="">
                   <input
@@ -156,7 +159,7 @@ const Erc721Nft = () => {
                 </div>
               </div>
               <div className="items-center justify-center">
-                <label className="block uppercase tracking-wide  text-xl font-bold mb-2 mt-5">
+                <label className="block uppercase tracking-wide text-yellow-400 text-2xl font-bold mb-2 mt-5">
                   Royalties
                 </label>
                 <div className="">
@@ -166,11 +169,16 @@ const Erc721Nft = () => {
                     min="0"
                     max="50"
                     placeholder="10 %"
-                    {...register("royalties")}
+                    {...register("royalties", { required: true })}
                   />
+                  {errors.royalties && (
+                    <p className="text-xs text-red-500 mt-2">
+                      "Royalties" is required
+                    </p>
+                  )}
                 </div>
                 <p className="block tracking-wide text-xs mb-2 mt-2">
-                  Suggested: 0%, 10%, 20%, 30%. Maximum is 50%
+                  <p className="flex text-yellow-400">Suggested : <p className="pl-1 text-gray-400">0%, 10%, 20%, 30%. Maximum is 50%</p></p>
                 </p>
               </div>
               <div className="flex items-center justify-center my-8">
@@ -182,7 +190,7 @@ const Erc721Nft = () => {
                     className={classnames(
                       "transition duration-300 bg-gradient-to-br rounded-xl hover:opacity-75",
                       "text-black px-8 py-3 from-primary-200 to-primary-200" ||
-                        "text-white hover:text-primary-200"
+                      "text-white hover:text-primary-200"
                     )}
                     value="Create item"
                   />

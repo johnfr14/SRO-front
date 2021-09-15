@@ -91,7 +91,7 @@ const Card = ({ idx, user, data }) => {
             <div className="absolute flex flex-col top-0 right-0 p-3">
               <button
                 onClick={handleLikeButton}
-                className="transition ease-in duration-300 bg-gray-800  hover:text-yellow-500 shadow hover:shadow-md text-gray-500 rounded-full w-8 h-8 text-center p-1"
+                className="transition ease-in duration-300 bg-gray-800  hover:text-yellow-400 shadow hover:shadow-md text-gray-500 rounded-full w-8 h-8 text-center p-1"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -123,16 +123,20 @@ const Card = ({ idx, user, data }) => {
               <div className="flex items-center w-full justify-between min-w-0 ">
                 <Link
                   to={nft.id === null ? "/" : `/${SRO721Address}/${nft.id}`}
-                  className="text-lg mr-auto cursor-pointer text-gray-200 hover:text-yellow-500 truncate font-black"
+                  className="text-lg mr-auto cursor-pointer text-gray-200 hover:text-yellow-400 truncate font-black"
                 >
-                  <div className="text-yellow-500 text-2xl">
+                  <div className="text-yellow-400 text-2xl">
                     {nft.metadata.title}
                   </div>
                 </Link>
               </div>
             </div>
             <div className="mt-1">
-              <p className="flex text-purple-400 text-sm">Price : <p className="pl-1 text-white">{nft.sale.price === null ? "" : nft.sale.price + " SRO"}</p></p>
+              <p className="flex text-sm">
+                <div className="">
+                  <p>{nft.sale.price === null ? "" : <p className="flex text-purple-500">Price : <p className="pl-1 text-gray-300">{nft.sale.price} xSRO</p></p>}</p>
+                </div>
+              </p>
             </div>
           </div>
         </div>
