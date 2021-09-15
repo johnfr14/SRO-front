@@ -9,10 +9,10 @@ const Header = () => {
   return (
     <div className="flex flex-col justify-between px-6 py-8 space-y-8 md:space-y-0 md:flex-row md:px-10 md:py-10">
       <div className="flex flex-row items-center justify-between">
-        <Button target={"/"}>XSRO</Button>
+        <Button target={"/"} className="text-yellow-400 text-3xl">SarahRo - [xSRO]</Button>
         <Login noLogged className={"md:hidden"} />
       </div>
-      <div className="flex flex-row items-center justify-around text-sm sm:space-x-5 sm:mx-auto md:mx-0">
+      <div className="flex flex-row items-center justify-around sm:space-x-5 sm:mx-auto md:mx-0">
         <Button target={"/"}>Marketplace</Button>
         <Button target={`/user/${web3State.account}`}>Dashboard</Button>
         <Button target={"/"}>Docs</Button>
