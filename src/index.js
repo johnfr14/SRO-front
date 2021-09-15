@@ -6,6 +6,7 @@ import "./index.css";
 import { UserContextProvider } from "./context/UserContext";
 import { ContractContextProvider } from "./context/ContractContext";
 
+
 ReactDOM.render(
   <React.StrictMode>
     <Web3Provider>
