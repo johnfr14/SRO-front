@@ -15,6 +15,10 @@ import "../../css/toast.css";
 
 const MediaCard = lazy(() => import("../Card/MediaCard"));
 
+const SubstrAdress = (dataAdress) => {
+  return dataAdress.substr(0, 6) + "..." + dataAdress.substr(-4);
+};
+
 const Card = ({ idx, user, data }) => {
   const { sro721, marketplace } = useContracts();
   const [nft, setNft] = useState(defaultCardData);
@@ -66,9 +70,9 @@ const Card = ({ idx, user, data }) => {
       <div className="iHLBIg">
         <div className="flex bAGyCr">
           <ProfilList
-            tipDataAdressCollection={
+            tipDataAdressCollection={SubstrAdress(
               "0x176703E8e80E6405728F0b44eeaE7c0d17Bb4F53"
-            }
+            )}
             userIconCollection={logoSRO}
             linkToProfilCollection={"SRO"}
             tipDataAdressCreator={
@@ -134,7 +138,18 @@ const Card = ({ idx, user, data }) => {
             <div className="mt-1">
               <p className="flex text-sm">
                 <div className="">
-                  <p>{nft.sale.price === null ? "" : <p className="flex text-purple-500">Price : <p className="pl-1 text-gray-300">{nft.sale.price} xSRO</p></p>}</p>
+                  <p>
+                    {nft.sale.price === null ? (
+                      ""
+                    ) : (
+                      <p className="flex text-purple-500">
+                        Price :{" "}
+                        <p className="pl-1 text-gray-300">
+                          {nft.sale.price} xSRO
+                        </p>
+                      </p>
+                    )}
+                  </p>
                 </div>
               </p>
             </div>
