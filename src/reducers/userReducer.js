@@ -3,7 +3,7 @@ export const userReducer = (state, action) => {
       case 'FETCH_INIT':
         return { ...state, loading: true}
       case 'FETCH_SUCCESS':
-        return { ...state, data: action.payload, loading: false}
+        return { ...state, loading: false}
       case 'FETCH_FAILURE':
         return { ...state, loading: false, error: action.payload }
       case 'UPDATE_PROFILE':

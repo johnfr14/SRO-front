@@ -1,34 +1,32 @@
-import React, { useState } from "react";
-import { Fragment, useRef } from "react";
+import { Fragment, useRef, useState, useEffect } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { useContracts } from "../../context/ContractContext";
+import { MarketplaceAddress } from "../../contracts/Marketplace";
+
+import { LoaderIcon } from "..";
+import classnames from "classnames";
+import { deleteIcon, checkmarkIcon } from "../../images";
 import { ButtonOnClick } from "../Button";
 import { toast } from "react-toastify";
-import { LoaderIcon } from "..";
-import { deleteIcon, checkmarkIcon } from "../../images";
-import classnames from "classnames";
-import { MarketplaceAddress } from "../../contracts/Marketplace";
 import { ethers } from "ethers";
 
-const ModPurchase = ({ open, setOpen, sale, nft, user }) => {
-  const cancelButtonRef = useRef(null);
-  const { marketplace, xsro } = useContracts();
-  const [isApproved, setIsApproved] = useState(false);
-  const [loading, setLoading] = useState(false);
+export default function ModCreateSale({ nextStep, setNextStep }) {
+  const { marketplace, sro721 } = useContracts();
   const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [isApproved, setIsApproved] = useState(false);
+  const [isOnSale, setIsOnSale] = useState(false);
+  const cancelButtonRef = useRef(null);
 
   //Function to approve
-  const handleApproveButton = async () => {
+  const handleApproveNft = async () => {
     try {
       setLoading(true);
-      const tx = await xsro.approve(
-        MarketplaceAddress,
-        ethers.utils.parseEther(sale.price)
-      );
+      const tx = await sro721.approve(MarketplaceAddress, nextStep.nftId);
       await tx.wait();
       setLoading(false);
       setIsApproved(true);
-      toast.success(`Amount approved \n`, {
+      toast.success(`Nft minted \n`, {
         position: "top-right",
         autoClose: 2000,
         hideProgressBar: false,
@@ -51,14 +49,19 @@ const ModPurchase = ({ open, setOpen, sale, nft, user }) => {
       });
     }
   };
-
-  const handleBuyButton = async () => {
+  //Function to create
+  const handleCreateSaleButton = async () => {
     try {
       setLoading(true);
-      const tx = await marketplace.buyNft(sale.saleId);
+      const tx = await marketplace.createSale(
+        nextStep.collection,
+        nextStep.nftId,
+        ethers.utils.parseEther(nextStep.price)
+      );
       await tx.wait();
       setLoading(false);
-      toast.success(`Nft bougth successfully \n`, {
+      setIsOnSale(true);
+      toast.success(`Sale created sucessfully`, {
         position: "top-right",
         autoClose: 2000,
         hideProgressBar: false,
@@ -68,9 +71,10 @@ const ModPurchase = ({ open, setOpen, sale, nft, user }) => {
         progress: undefined,
       });
       setTimeout(() => {
-        setOpen({ ...open, buyNft: false });
+        setNextStep({ ...nextStep, isNext: false });
       }, 2000);
     } catch (e) {
+      setError(true);
       setLoading(false);
       toast.error(e.message, {
         position: "top-right",
@@ -84,13 +88,21 @@ const ModPurchase = ({ open, setOpen, sale, nft, user }) => {
     }
   };
 
+  useEffect(() => {
+    const fetchApprovedNft = async () => {
+      const address = await sro721.getApproved(nextStep.nftId);
+      setIsApproved(address === MarketplaceAddress);
+    };
+    fetchApprovedNft();
+  }, [nextStep.nftId, sro721]);
+
   return (
-    <Transition.Root show={open.buyNft} as={Fragment}>
+    <Transition.Root show={nextStep.isNext} as={Fragment}>
       <Dialog
         as="div"
         className="fixed z-10 inset-0 overflow-y-auto"
         initialFocus={cancelButtonRef}
-        onClose={() => setOpen({ ...open, buyNft: false })}
+        onClose={() => setNextStep({ ...nextStep, isNext: false })}
       >
         <div className="flex justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
           <Transition.Child
@@ -121,40 +133,22 @@ const ModPurchase = ({ open, setOpen, sale, nft, user }) => {
             leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
           >
             <div className="inline-block align-bottom bg-gray-900 rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-sm sm:w-full border border-gray-600">
-              <div className="bg-black bg-opacity-90 px-4 sm:p-6 ">
+              <div className=" px-4 sm:p-6 ">
                 <div className="bg-gradient-to-b  flex justify-center items-center py-5">
-                  <div className="rounded-lg">
+                  <div className=" rounded-lg">
                     <div className="">
+                      <h2 className="text-5xl text-yellow-400 font-bold py-4">
+                        Follow steps
+                      </h2>
                       <div className="">
-                        <div className="text-white text-center">
-                          <h2 className="text-5xl text-yellow-400 font-bold py-4">Checkout</h2>
-                          <p className="text-sm font-bold">
-                            You are about to purchase{" "}
-                            <i className="text-yellow-400 mr-1"> {nft.title}</i>
-                            from {" "}
-                            <i className="text-purple-500 mr-1"> {nft.author}</i>
+                        <div className="text-center">
+                          <h3 className="text-3xl mb-2 font-bold text-white">Approve</h3>
+                          <p className="text-gray-400 text-xs">
+                            This transaction is conducted only once per
+                            collection
                           </p>
                         </div>
                       </div>
-                      <div className="">
-                        <div className="pt-5 px-7">
-                          <input
-                            className="appearance-none block w-full bg-gray-900 text-white border  shadow-inner rounded-md py-3 px-4  leading-tight focus:outline-none  focus:border-gray-500"
-                            type="text"
-                            placeholder="1"
-                          />
-                          <p className="flex text-xs text-yellow-400 pt-2">
-                            Enter quantity : <p className="ml-1 text-white"> 1 available </p>
-                          </p>
-                        </div>
-                      </div>
-                      <div className="pt-5 ml-4 text-left">
-                        <p className="flex text-yellow-400">Balance : <p className="ml-2 text-white">{user.balance.xsro} XSRO</p></p>
-                        <p className="flex text-yellow-400">Service fee : <p className="ml-2 text-white">{(sale.price * 0.025).toFixed(5)} XSRO</p></p>
-                        <p className="flex text-yellow-400">Total Price : <p className="ml-2 text-white">{sale.price} XSRO</p></p>
-                      </div>
-
-                      {/*Approve xsro*/}
 
                       <div className="flex items-center justify-center pt-4 pb-3">
                         {isApproved ? (
@@ -174,7 +168,7 @@ const ModPurchase = ({ open, setOpen, sale, nft, user }) => {
                                   "text-black px-8 py-3"
                                 )}
                               >
-                                Appoved
+                                Approved
                               </button>
                             </div>
                           </>
@@ -208,21 +202,50 @@ const ModPurchase = ({ open, setOpen, sale, nft, user }) => {
                             )}
                             <div className="">
                               <ButtonOnClick
-                                onClick={handleApproveButton}
+                                onClick={handleApproveNft}
                                 buttonStyle
                               >
-                                Approve xsro
+                                Start
                               </ButtonOnClick>
                             </div>
                           </>
                         )}
                       </div>
 
-                      {/*Buy NFT*/}
-
+                      <div className="">
+                        <div className="text-white text-center">
+                          <h3 className="text-3xl mb-2 font-bold text-white">
+                            Set fixed price
+                          </h3>
+                          <p className="text-gray-400 text-xs">
+                            Sign message to set fixed price
+                          </p>
+                        </div>
+                      </div>
                       <div className="flex items-center justify-center pt-4 pb-3">
                         {isApproved ? (
-                          loading ? (
+                          isOnSale ? (
+                            <>
+                              <div className=" pr-5 ">
+                                <img
+                                  alt=""
+                                  className="w-7 "
+                                  src={checkmarkIcon}
+                                />
+                              </div>
+                              <div className="pr-5">
+                                <button
+                                  disabled={true}
+                                  className={classnames(
+                                    "bg-green-100 rounded-xl",
+                                    "text-black px-8 py-3"
+                                  )}
+                                >
+                                  Created !
+                                </button>
+                              </div>
+                            </>
+                          ) : loading ? (
                             <div className="flex items-center justify-center pt-4 pb-3">
                               <LoaderIcon />
                               <div className="">
@@ -252,10 +275,10 @@ const ModPurchase = ({ open, setOpen, sale, nft, user }) => {
                               )}
                               <div className=" ">
                                 <ButtonOnClick
-                                  onClick={handleBuyButton}
+                                  onClick={handleCreateSaleButton}
                                   buttonStyle
                                 >
-                                  Buy for {sale.price} XSRO
+                                  Create Sale
                                 </ButtonOnClick>
                               </div>
                             </>
@@ -269,23 +292,27 @@ const ModPurchase = ({ open, setOpen, sale, nft, user }) => {
                                 "text-black px-8 py-3 from-primary-200 to-primary-200"
                               )}
                             >
-                              Buy for {sale.price} XSRO
+                              Create Sale
                             </button>
                           </div>
                         )}
                       </div>
                       <div className="flex items-center justify-center pt-3 pb-3">
-                        <a
-                          href="#fs-sale"
-                          onClick={() => setOpen({ ...open, buyNft: false })}
-                          className="  px-5 py-3 text-center text-white hover:bg-gray-200 hover:text-black font-bold rounded-lg text-sm"
+                        <button
+                          onClick={() =>
+                            setNextStep({ ...nextStep, isNext: false })
+                          }
+                          className="  px-5 py-3 text-center bg-gray-400 text-white hover:bg-gray-200 hover:text-black font-bold rounded-lg text-sm"
                         >
                           Cancel
-                        </a>
+                        </button>
                       </div>
                     </div>
                   </div>
                 </div>
+              </div>
+              <div className="hidden">
+                <button type="button" ref={cancelButtonRef} />
               </div>
             </div>
           </Transition.Child>
@@ -293,6 +320,4 @@ const ModPurchase = ({ open, setOpen, sale, nft, user }) => {
       </Dialog>
     </Transition.Root>
   );
-};
-
-export default ModPurchase;
+}

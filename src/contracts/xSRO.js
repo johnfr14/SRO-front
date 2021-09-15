@@ -1,4 +1,4 @@
-export const xSROAddress = "0x52f8171c0552ea259B2307F4789F4180307fbf2c";
+export const xSROAddress = "0xf94Bc0b0411284de46EEEE6C653A18CFd51Ef9C8";
 
 export const xSROAbi = [
   {

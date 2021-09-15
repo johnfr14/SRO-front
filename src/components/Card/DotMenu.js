@@ -3,7 +3,7 @@ import { Fragment } from "react";
 
 export default function DotMenu() {
   return (
-    <div className="text-right ">
+    <div className="text-right">
       <Menu as="div" className="relative inline-block text-left">
         <div>
           <Menu.Button className="inline-flex justify-center w-full px-4 py-2 font-medium text-white bg-black rounded-md bg-opacity-20 hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
