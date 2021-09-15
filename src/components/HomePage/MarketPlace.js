@@ -6,7 +6,7 @@ const MarketPlace = () => {
     <>
       <div>
         <div className="md:mx-8">
-          <h2 className="mb-2 text-3xl font-bold text-left text-white">
+          <h2 className="text-5xl text-yellow-400 text-center font-bold pb-10">
             Market Place
           </h2>
           <CardList idx={0} marketPlace />

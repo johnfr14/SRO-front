@@ -36,14 +36,14 @@ const AvatarSettings = ({ register, watch, avatar }) => {
                 className={classnames(
                   "transition duration-300 bg-gradient-to-br rounded-xl hover:opacity-75",
                   "text-black px-8 py-3 from-primary-200 to-primary-200" ||
-                    "text-white hover:text-primary-200"
+                  "text-white hover:text-primary-200"
                 )}
                 style={{ cursor: "pointer" }}
                 htmlFor="avatar"
               >
                 Select Avatar
               </label>
-              <p className="mt-3 text-sm text-white pt-5">
+              <p className="mt-3 text-sm text-gray-400 pt-5">
                 We recommend an image of at least 400x400.
               </p>
             </div>

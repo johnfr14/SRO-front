@@ -84,7 +84,7 @@ const Nft = ({
           <div className="relative bg-gray-900 shadow-xl rounded-md border-2 border-gray-200 border-opacity-25 md:max-w-lg">
             <div className="">
               <div className="pt-12 items-center justify-center py-2 pl-4">
-                <h1 className="pb-5 text-gray-300 text-center font-bold text-4xl">
+                <h1 className="pb-8 text-purple-500 text-center font-bold text-4xl">
                   {nftTitle}
                 </h1>
                 {/* <div className="flex ">
