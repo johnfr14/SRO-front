@@ -76,7 +76,7 @@ const TabZoneBuyNft = () => {
                     key={post.id}
                     className="relative p-3 rounded-md hover:bg-coolGray-100"
                   >
-                    <h3 className="text-sm font-medium leading-5">
+                    <h3 className="text-sm text-purple-500 font-medium leading-5">
                       {post.component}
                     </h3>
                   </li>
