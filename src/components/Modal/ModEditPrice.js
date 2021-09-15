@@ -110,7 +110,7 @@ const ModEditPrice = ({ open, setOpen, sale, nft, user }) => {
                             placeholder="1"
                             onChange={(e) => setNewPrice(e.target.value)}
                           />
-                          <p className="flex justify-center mt-3 text-left text-yellow-400">Actual price : <p className="ml-1 text-white"> {sale.price} XSRO</p></p>
+                          <p className="flex justify-center mt-3 text-left text-yellow-400">Current price : <p className="ml-1 text-white"> {sale.price} XSRO</p></p>
                         </div>
                       </div>
                       <div className="flex items-center justify-center pt-4 pb-3">
