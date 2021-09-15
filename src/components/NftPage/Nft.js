@@ -76,7 +76,6 @@ const Nft = ({
         nft={nft}
         user={user}
       />
-
       <div className="container mx-auto">
         <div className="flex flex-col md:flex-row">
           <div className=" flex content-center items-center justify-center mx-auto max-w-screen-lg px-8">
@@ -85,13 +84,13 @@ const Nft = ({
           <div className="relative bg-gray-900 shadow-xl rounded-md border-2 border-gray-200 border-opacity-25 md:max-w-lg">
             <div className="">
               <div className="pt-12 items-center justify-center py-2 pl-4">
-                <h1 className="pb-5 text-gray-300 text-center font-bold text-2xl">
+                <h1 className="pb-5 text-gray-300 text-center font-bold text-4xl">
                   {nftTitle}
                 </h1>
-                <div className="flex ">
+                {/* <div className="flex ">
                   <h3 className="text-yellow-300 font-bold ">Number : </h3>
                   <p className="pl-4 text-gray-300">{nftId}</p>
-                </div>
+                </div> */}
                 <div className="flex text-left">
                   <h3 className="text-yellow-300 font-bold">Owner : </h3>
                   <p className="pl-4 text-gray-300">{nftName}</p>
@@ -157,8 +156,12 @@ const Nft = ({
                       >
                         Buy for {priceNft} {SymboleNft}
                       </ButtonOnClick>
-                      <ButtonOnClick buttonStyle>Make a bid</ButtonOnClick>
-                    </>
+                      <ButtonOnClick >
+                        <div className="flex">
+                          <p className="text-yellow-400">Make a bid :</p>
+                          <p className="ml-1 text-purple-500">Coming Soon</p>
+                        </div>
+                      </ButtonOnClick>                    </>
                   )}
                 </div>
               ) : (
@@ -171,26 +174,37 @@ const Nft = ({
                       Put on sale
                     </ButtonOnClick>
                   ) : (
-                    <ButtonOnClick buttonStyle>Make bid</ButtonOnClick>
+                    <ButtonOnClick >
+                      <div className="flex">
+                        <p className="text-yellow-400">Make a bid :</p>
+                        <p className="ml-1 text-purple-500">Coming Soon</p>
+                      </div>
+                    </ButtonOnClick>
                   )}
-                  <Button target={""} buttonStyle>
+                  {/* <Button target={""} buttonStyle>
                     Coming Soon
-                  </Button>
+                  </Button> */}
                 </div>
               )}
               <div className="flex items-center justify-center mb-5 mt-8 space-x-10">
                 {owner.fullAddress.toLowerCase() === user.fullAddress ? (
                   <>
-                    <Button target={""} buttonStyle>
+                    {/* <Button target={""} buttonStyle>
                       Start Auction(Coming Soon)
-                    </Button>
+                    </Button> */}
+                    <ButtonOnClick >
+                      <div className="flex">
+                        <p className="text-yellow-400">Start Auction :</p>
+                        <p className="ml-1 text-purple-500">Coming Soon</p>
+                      </div>
+                    </ButtonOnClick>
                   </>
                 ) : (
                   <>
-                    <Button target={""} buttonStyle>
-                      Place a bid
-                    </Button>
-                    <Button target={""} buttonStyle>
+                    {/* <Button target={""} buttonStyle>
+                      Place a bid(Coming Soon)
+                    </Button> */}
+                    <Button target={"/"} buttonStyle>
                       Cancel
                     </Button>
                   </>

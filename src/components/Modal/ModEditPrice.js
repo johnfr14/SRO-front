@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import { Fragment, useRef } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { useContracts } from "../../context/ContractContext";
@@ -9,7 +9,7 @@ import { deleteIcon, checkmarkIcon } from "../../images";
 import classnames from "classnames";
 import { ethers } from 'ethers'
 
-const ModEditPrice = ({open, setOpen, sale, nft, user}) => {
+const ModEditPrice = ({ open, setOpen, sale, nft, user }) => {
   const cancelButtonRef = useRef(null);
   const { marketplace } = useContracts()
   const [isEdited, setIsEdited] = useState(false)
@@ -18,37 +18,37 @@ const ModEditPrice = ({open, setOpen, sale, nft, user}) => {
   const [error, setError] = useState(false)
 
 
-  const handleEditButton = async() => {
+  const handleEditButton = async () => {
     try {
       setLoading(true)
       const tx = await marketplace.setPrice(sale.saleId, ethers.utils.parseEther(newPrice))
       await tx.wait()
       setLoading(false)
       toast.success(`Nft removed successfully \n`, {
-          position: "top-right",
-          autoClose: 2000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: false,
-          draggable: true,
-          progress: undefined,
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
       });
       setIsEdited(true)
       setTimeout(() => {
-        setOpen({...open, editPrice: false})
+        setOpen({ ...open, editPrice: false })
       }, 2000);
     } catch (e) {
-        setLoading(false)
-        setError(true);
-        toast.error(e.message, {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: false,
-            draggable: true,
-            progress: undefined,
-        });
+      setLoading(false)
+      setError(true);
+      toast.error(e.message, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
+      });
     }
   }
 
@@ -58,7 +58,7 @@ const ModEditPrice = ({open, setOpen, sale, nft, user}) => {
         as="div"
         className="fixed z-10 inset-0 overflow-y-auto"
         initialFocus={cancelButtonRef}
-        onClose={() => setOpen({...open, editPrice: false})}
+        onClose={() => setOpen({ ...open, editPrice: false })}
       >
         <div className="flex justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
           <Transition.Child
@@ -88,21 +88,20 @@ const ModEditPrice = ({open, setOpen, sale, nft, user}) => {
             leaveFrom="opacity-100 translate-y-0 sm:scale-100"
             leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
           >
-          <div className="inline-block align-bottom bg-gray-900 rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-sm sm:w-full border border-gray-600">
+            <div className="inline-block align-bottom bg-gray-900 rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-sm sm:w-full border border-gray-600">
               <div className="bg-black bg-opacity-90 px-4 sm:p-6 ">
                 <div className="bg-gradient-to-b  flex justify-center items-center py-5">
                   <div className="rounded-lg">
                     <div className="">
-
                       <div className="">
                         <div className="text-white text-center">
-                          <h2 className="text-5xl font-bold py-4">Remove</h2>
+                          <h2 className="text-5xl text-yellow-400 font-bold py-4">Edit Price</h2>
                           <p className="text-sm font-bold">
-                            You are about to remove <i style={{color: 'yellow'}}>{nft.title}</i> from the marketplace
+                            You are about to edit price for the NFT
+                            <p className="text-yellow-400">{nft.title}</p>
                           </p>
                         </div>
                       </div>
-                     
                       <div className="">
                         <div className="pt-5 px-7">
                           <input
@@ -111,10 +110,9 @@ const ModEditPrice = ({open, setOpen, sale, nft, user}) => {
                             placeholder="1"
                             onChange={(e) => setNewPrice(e.target.value)}
                           />
-                          <p style={{color: 'white'}}>actual price: {sale.price} XSRO</p>
+                          <p className="flex justify-center mt-3 text-left text-yellow-400">Actual price : <p className="ml-1 text-white"> {sale.price} XSRO</p></p>
                         </div>
                       </div>
-                      
                       <div className="flex items-center justify-center pt-4 pb-3">
                         {loading ? (
                           <div className="flex ">
@@ -126,8 +124,8 @@ const ModEditPrice = ({open, setOpen, sale, nft, user}) => {
                                   "transition duration-300 bg-gradient-to-br rounded-xl hover:opacity-75",
                                   "text-black px-8 py-3 from-primary-200 to-primary-200" ||
                                   "text-white hover:text-primary-200"
-                                  )}
-                                  >
+                                )}
+                              >
                                 In progress...
                               </button>
                             </div>
@@ -141,7 +139,7 @@ const ModEditPrice = ({open, setOpen, sale, nft, user}) => {
                                   alt=""
                                   className="w-4 mr-2"
                                   src={deleteIcon}
-                                  />{" "}
+                                />{" "}
                               </div>
                             )}
                             {isEdited && (
@@ -151,7 +149,7 @@ const ModEditPrice = ({open, setOpen, sale, nft, user}) => {
                                   alt=""
                                   className="w-4 mr-2"
                                   src={checkmarkIcon}
-                                  />{" "}
+                                />{" "}
                               </div>
                             )}
                             <div className="">
@@ -159,35 +157,32 @@ const ModEditPrice = ({open, setOpen, sale, nft, user}) => {
                                 onClick={handleEditButton}
                                 buttonStyle
                                 buttonSuccess={isEdited}
-                                >
+                              >
                                 Set new price
                               </ButtonOnClick>
                             </div>
                           </>
                         )}
                       </div>
-
                       <div className="flex items-center justify-center pt-3 pb-3">
                         <a
                           href="#fs-sale"
-                          onClick={() => setOpen({...open, editPrice: false})}
+                          onClick={() => setOpen({ ...open, editPrice: false })}
                           className="  px-5 py-3 text-center text-white hover:bg-gray-200 hover:text-black font-bold rounded-lg text-sm"
                         >
                           Cancel
                         </a>
                       </div>
-
                     </div>
                   </div>
                 </div>
               </div>
-          </div>
+            </div>
           </Transition.Child>
         </div>
       </Dialog>
     </Transition.Root>
   );
 }
-
 
 export default ModEditPrice

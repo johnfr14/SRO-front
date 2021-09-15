@@ -137,13 +137,13 @@ export default function ModCreateSale({ nextStep, setNextStep }) {
                 <div className="bg-gradient-to-b  flex justify-center items-center py-5">
                   <div className=" rounded-lg">
                     <div className="">
-                      <h2 className="text-white text-2xl text-center font-bold py-4">
+                      <h2 className="text-5xl text-yellow-400 font-bold py-4">
                         Follow steps
                       </h2>
                       <div className="">
-                        <div className="text-white text-center">
-                          <h3 className="text-3xl mb-2 font-bold">Approve</h3>
-                          <p className="text-xs">
+                        <div className="text-center">
+                          <h3 className="text-3xl mb-2 font-bold text-white">Approve</h3>
+                          <p className="text-gray-400 text-xs">
                             This transaction is conducted only once per
                             collection
                           </p>
@@ -168,7 +168,7 @@ export default function ModCreateSale({ nextStep, setNextStep }) {
                                   "text-black px-8 py-3"
                                 )}
                               >
-                                Appoved
+                                Approved
                               </button>
                             </div>
                           </>
@@ -181,7 +181,7 @@ export default function ModCreateSale({ nextStep, setNextStep }) {
                                 className={classnames(
                                   "transition duration-300 bg-gradient-to-br rounded-xl hover:opacity-75",
                                   "text-black px-8 py-3 from-primary-200 to-primary-200" ||
-                                    "text-white hover:text-primary-200"
+                                  "text-white hover:text-primary-200"
                                 )}
                               >
                                 In progress...
@@ -214,10 +214,10 @@ export default function ModCreateSale({ nextStep, setNextStep }) {
 
                       <div className="">
                         <div className="text-white text-center">
-                          <h3 className="text-2xl font-bold">
+                          <h3 className="text-3xl mb-2 font-bold text-white">
                             Set fixed price
                           </h3>
-                          <p className="text-xs">
+                          <p className="text-gray-400 text-xs">
                             Sign message to set fixed price
                           </p>
                         </div>
@@ -254,7 +254,7 @@ export default function ModCreateSale({ nextStep, setNextStep }) {
                                   className={classnames(
                                     "transition duration-300 bg-gradient-to-br rounded-xl hover:opacity-75",
                                     "text-black px-8 py-3 from-primary-200 to-primary-200" ||
-                                      "text-white hover:text-primary-200"
+                                    "text-white hover:text-primary-200"
                                   )}
                                 >
                                   In progress...

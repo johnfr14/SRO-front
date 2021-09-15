@@ -71,7 +71,7 @@ export default function ModFixedPrice({
                     <div className="">
                       <div className="">
                         <div className="text-white text-center">
-                          <h2 className="text-xl font-bold py-4">
+                          <h2 className="text-5xl text-yellow-400 font-bold py-4">
                             Fixed price
                           </h2>
                           <p className="text-sm font-bold">

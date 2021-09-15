@@ -125,12 +125,14 @@ const Card = ({ idx, user, data }) => {
                   to={nft.id === null ? "/" : `/${SRO721Address}/${nft.id}`}
                   className="text-lg mr-auto cursor-pointer text-gray-200 hover:text-yellow-500 truncate font-black"
                 >
-                  {nft.metadata.title}
+                  <div className="text-yellow-500 text-2xl">
+                    {nft.metadata.title}
+                  </div>
                 </Link>
               </div>
             </div>
-            <div className=" text-white font-semibold mt-1">
-              {nft.sale.price === null ? "" : nft.sale.price + " SRO"}
+            <div className="mt-1">
+              <p className="flex text-purple-400 text-sm">Price : <p className="pl-1 text-white">{nft.sale.price === null ? "" : nft.sale.price + " SRO"}</p></p>
             </div>
           </div>
         </div>

@@ -127,11 +127,12 @@ const ModPurchase = ({ open, setOpen, sale, nft, user }) => {
                     <div className="">
                       <div className="">
                         <div className="text-white text-center">
-                          <h2 className="text-5xl font-bold py-4">Checkout</h2>
+                          <h2 className="text-5xl text-yellow-400 font-bold py-4">Checkout</h2>
                           <p className="text-sm font-bold">
                             You are about to purchase{" "}
-                            <i style={{ color: "yellow" }}>{nft.title}</i> from{" "}
-                            {nft.author}
+                            <i className="text-yellow-400 mr-1"> {nft.title}</i>
+                            from {" "}
+                            <i className="text-purple-400 mr-1"> {nft.author}</i>
                           </p>
                         </div>
                       </div>
@@ -142,17 +143,15 @@ const ModPurchase = ({ open, setOpen, sale, nft, user }) => {
                             type="text"
                             placeholder="1"
                           />
-                          <p className="text-xs text-white pt-2">
-                            Enter quantity. 1 available
+                          <p className="flex text-xs text-yellow-400 pt-2">
+                            Enter quantity : <p className="ml-1 text-white"> 1 available </p>
                           </p>
                         </div>
                       </div>
-                      <div className="pt-5 ml-4 text-left text-white ">
-                        <p>Balance : {user.balance.xsro} XSRO</p>
-                        <p>
-                          Service fee : {(sale.price * 0.025).toFixed(5)} XSRO
-                        </p>
-                        <p>Total Price : {sale.price} XSRO</p>
+                      <div className="pt-5 ml-4 text-left">
+                        <p className="flex text-yellow-400">Balance : <p className="ml-2 text-white">{user.balance.xsro} XSRO</p></p>
+                        <p className="flex text-yellow-400">Service fee : <p className="ml-2 text-white">{(sale.price * 0.025).toFixed(5)} XSRO</p></p>
+                        <p className="flex text-yellow-400">Total Price : <p className="ml-2 text-white">{sale.price} XSRO</p></p>
                       </div>
 
                       {/*Approve xsro*/}
@@ -188,7 +187,7 @@ const ModPurchase = ({ open, setOpen, sale, nft, user }) => {
                                 className={classnames(
                                   "transition duration-300 bg-gradient-to-br rounded-xl hover:opacity-75",
                                   "text-black px-8 py-3 from-primary-200 to-primary-200" ||
-                                    "text-white hover:text-primary-200"
+                                  "text-white hover:text-primary-200"
                                 )}
                               >
                                 In progress...
@@ -232,7 +231,7 @@ const ModPurchase = ({ open, setOpen, sale, nft, user }) => {
                                   className={classnames(
                                     "transition duration-300 bg-gradient-to-br rounded-xl hover:opacity-75",
                                     "text-black px-8 py-3 from-primary-200 to-primary-200" ||
-                                      "text-white hover:text-primary-200"
+                                    "text-white hover:text-primary-200"
                                   )}
                                 >
                                   In progress...

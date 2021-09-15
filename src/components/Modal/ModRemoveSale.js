@@ -94,14 +94,13 @@ const ModRemoveSale = ({ open, setOpen, sale, nft }) => {
 
                       <div className="">
                         <div className="text-white text-center">
-                          <h2 className="text-5xl font-bold py-4">Remove</h2>
+                          <h2 className="text-5xl text-yellow-400 font-bold py-4">Remove</h2>
                           <p className="text-sm font-bold">
-                            You are about to remove <i className="text-yellow-400">{nft.title}</i> from the marketplace
+                            You are about to remove the NFT <i className="text-yellow-400">{nft.title}</i> from the marketplace
                           </p>
                         </div>
                       </div>
-
-                      <div className="flex pt-5 ml-4 text-left text-sm text-white ">
+                      <div className="flex justify-center pt-5 ml-4 text-left">
                         <p className="text-yellow-400">Last bid :</p>
                         <p className="ml-3 text-purple-500">(Coming Soon)</p>
                       </div>
