@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import { Fragment, useRef } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { useContracts } from "../../context/ContractContext";
@@ -8,7 +8,7 @@ import { LoaderIcon } from "..";
 import { deleteIcon, checkmarkIcon } from "../../images";
 import classnames from "classnames";
 
-const ModRemoveSale = ({open, setOpen, sale, nft}) => {
+const ModRemoveSale = ({ open, setOpen, sale, nft }) => {
   const cancelButtonRef = useRef(null);
   const { marketplace } = useContracts()
   const [isRemoved, setIsRemoved] = useState(false)
@@ -16,37 +16,37 @@ const ModRemoveSale = ({open, setOpen, sale, nft}) => {
   const [error, setError] = useState(false)
 
 
-  const handleRemoveButton = async() => {
+  const handleRemoveButton = async () => {
     try {
       setLoading(true)
       const tx = await marketplace.removeSale(sale.saleId)
       await tx.wait()
       setLoading(false)
       toast.success(`Nft removed successfully \n`, {
-          position: "top-right",
-          autoClose: 2000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: false,
-          draggable: true,
-          progress: undefined,
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
       });
       setIsRemoved(true)
       setTimeout(() => {
-        setOpen({...open, removeSale: false})
+        setOpen({ ...open, removeSale: false })
       }, 2000);
     } catch (e) {
-        setLoading(false)
-        setError(true);
-        toast.error(e.message, {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: false,
-            draggable: true,
-            progress: undefined,
-        });
+      setLoading(false)
+      setError(true);
+      toast.error(e.message, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
+      });
     }
   }
 
@@ -56,7 +56,7 @@ const ModRemoveSale = ({open, setOpen, sale, nft}) => {
         as="div"
         className="fixed z-10 inset-0 overflow-y-auto"
         initialFocus={cancelButtonRef}
-        onClose={() => setOpen({...open, removeSale: false})}
+        onClose={() => setOpen({ ...open, removeSale: false })}
       >
         <div className="flex justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
           <Transition.Child
@@ -86,7 +86,7 @@ const ModRemoveSale = ({open, setOpen, sale, nft}) => {
             leaveFrom="opacity-100 translate-y-0 sm:scale-100"
             leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
           >
-          <div className="inline-block align-bottom bg-gray-900 rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-sm sm:w-full border border-gray-600">
+            <div className="inline-block align-bottom bg-gray-900 rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-sm sm:w-full border border-gray-600">
               <div className="bg-black bg-opacity-90 px-4 sm:p-6 ">
                 <div className="bg-gradient-to-b  flex justify-center items-center py-5">
                   <div className="rounded-lg">
@@ -96,15 +96,15 @@ const ModRemoveSale = ({open, setOpen, sale, nft}) => {
                         <div className="text-white text-center">
                           <h2 className="text-5xl font-bold py-4">Remove</h2>
                           <p className="text-sm font-bold">
-                            You are about to remove <i style={{color: 'yellow'}}>{nft.title}</i> from the marketplace
+                            You are about to remove <i className="text-yellow-400">{nft.title}</i> from the marketplace
                           </p>
                         </div>
                       </div>
-                     
-                      <div className="pt-5 ml-4 text-left text-white ">
-                        <p>Last bid : XXX</p>
+
+                      <div className="flex pt-5 ml-4 text-left text-sm text-white ">
+                        <p className="text-yellow-400">Last bid :</p>
+                        <p className="ml-3 text-purple-500">(Coming Soon)</p>
                       </div>
-                      
                       <div className="flex items-center justify-center pt-4 pb-3">
                         {loading ? (
                           <div className="flex ">
@@ -116,8 +116,8 @@ const ModRemoveSale = ({open, setOpen, sale, nft}) => {
                                   "transition duration-300 bg-gradient-to-br rounded-xl hover:opacity-75",
                                   "text-black px-8 py-3 from-primary-200 to-primary-200" ||
                                   "text-white hover:text-primary-200"
-                                  )}
-                                  >
+                                )}
+                              >
                                 In progress...
                               </button>
                             </div>
@@ -131,7 +131,7 @@ const ModRemoveSale = ({open, setOpen, sale, nft}) => {
                                   alt=""
                                   className="w-4 mr-2"
                                   src={deleteIcon}
-                                  />{" "}
+                                />{" "}
                               </div>
                             )}
                             {isRemoved && (
@@ -141,7 +141,7 @@ const ModRemoveSale = ({open, setOpen, sale, nft}) => {
                                   alt=""
                                   className="w-4 mr-2"
                                   src={checkmarkIcon}
-                                  />{" "}
+                                />{" "}
                               </div>
                             )}
                             <div className="">
@@ -149,7 +149,7 @@ const ModRemoveSale = ({open, setOpen, sale, nft}) => {
                                 onClick={handleRemoveButton}
                                 buttonRemove={!isRemoved}
                                 buttonSuccess={isRemoved}
-                                >
+                              >
                                 Remove {nft.title}
                               </ButtonOnClick>
                             </div>
@@ -160,7 +160,7 @@ const ModRemoveSale = ({open, setOpen, sale, nft}) => {
                       <div className="flex items-center justify-center pt-3 pb-3">
                         <a
                           href="#fs-sale"
-                          onClick={() => setOpen({...open, removeSale: false})}
+                          onClick={() => setOpen({ ...open, removeSale: false })}
                           className="  px-5 py-3 text-center text-white hover:bg-gray-200 hover:text-black font-bold rounded-lg text-sm"
                         >
                           Cancel
@@ -171,7 +171,7 @@ const ModRemoveSale = ({open, setOpen, sale, nft}) => {
                   </div>
                 </div>
               </div>
-          </div>
+            </div>
           </Transition.Child>
         </div>
       </Dialog>
