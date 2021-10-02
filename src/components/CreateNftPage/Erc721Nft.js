@@ -6,7 +6,7 @@ import { PreviewFile, UploadFile } from ".";
 //import { SwitchToggle, TokenPrice } from "../";
 import classnames from "classnames";
 import { ToastContainer, toast } from "react-toastify";
-import { pinOnIpfs } from "../../ipfs/ipfs";
+import { pinOnIpfs } from "../../dataFunctions/fetchData";
 import "react-toastify/dist/ReactToastify.css";
 import "../../css/toast.css";
 import { useContracts } from "../../context/ContractContext"; // instance des contracts

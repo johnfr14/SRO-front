@@ -4,7 +4,7 @@ import { userData } from "../../dataFunctions/fetchData";
 import { Web3Context } from "web3-hooks";
 import { AvatarSettings } from "./index";
 import { ToastContainer, toast } from "react-toastify";
-import { pinOnIpfs } from "../../ipfs/ipfs";
+import { pinOnIpfs } from "../../dataFunctions/fetchData";
 import axios from "axios";
 import classnames from "classnames";
 import "react-toastify/dist/ReactToastify.css";
