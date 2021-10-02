@@ -1,12 +1,9 @@
-import {createContext, useContext, useEffect, useReducer, useState} from "react"
+import {createContext, useContext, useEffect, useReducer} from "react"
 import { Web3Context } from "web3-hooks";
 import { userReducer } from "../reducers/userReducer"
 import { userData } from "../dataFunctions/fetchData";
 import { useContracts } from './ContractContext'
 import { ethers } from 'ethers'
-import IPFS from "ipfs-core";
-const pinataSDK = require('@pinata/sdk');
-
 
 export const UserContext = createContext()
 
@@ -28,8 +25,6 @@ export const UserContextProvider = ({children}) => {
   const { xsro } = useContracts()
   const [web3State] = useContext(Web3Context);  
   const [userState, dispatch] = useReducer(userReducer, initialState)
-  const [ipfs, setIpfs] = useState(null)
-  const [pinata, setPinata] = useState(null)
   
   useEffect(() => {
     const getAccount = async () => {
@@ -46,11 +41,6 @@ export const UserContextProvider = ({children}) => {
             }
           }
         })
-        const ipfs = await IPFS.create()
-        const pinata = pinataSDK(process.env.REACT_APP_PINATA_API_KEY, process.env.REACT_APP_PINATA_SECRET_KEY);
-        
-        setPinata(pinata)
-        setIpfs(ipfs)
         } catch (e) {
           dispatch({type: 'FETCH_FAILURE', payload: e.message})
         }
@@ -62,7 +52,7 @@ export const UserContextProvider = ({children}) => {
 
   
   return (
-    <UserContext.Provider value={{ userState, dispatch, ipfs, pinata}}>
+    <UserContext.Provider value={{ userState, dispatch }}>
       {children}
     </UserContext.Provider>
   )
