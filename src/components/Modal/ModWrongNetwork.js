@@ -11,11 +11,7 @@ export default function ModWrongNetwork() {
   const cancelButtonRef = useRef(null);
 
   useEffect(() => {
-    if (web3State.chainId === 4) {
-      setOpen(false);
-    } else {
-      setOpen(true);
-    }
+    web3State.chainId === 4 ? setOpen(false) : setOpen(true)
   }, [web3State.chainId]);
 
   return (
