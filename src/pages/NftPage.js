@@ -5,9 +5,7 @@ import { useRouteMatch } from "react-router-dom";
 import { Container, Nft } from "../components/index";
 import { useContracts } from "../context/ContractContext";
 import { useUser } from '../context/UserContext'
-import { userData } from '../dataFunctions/fetchData'
-import { SRO721Address } from "../contracts/SRO721";
-import { ethers } from "ethers"
+import { fetchNft } from "../dataFunctions/fetchData";
 const MediaDemo =
   "https://img.rarible.com/prod/image/upload/t_preview/prod-itemImages/0xd07dc4262bcdbf85190c01c996b4c06a461d2430:8207";
 
@@ -26,30 +24,8 @@ const BuyNft = () => {
   const match = useRouteMatch("/:address/:id");
 
   useEffect(() => {
-    const fetch = async() => {
-      let sale = {status: '0'};
-      if (await marketplace.isOnSale(SRO721Address, match.params.id)) {
-        const saleId = await marketplace.getSaleId(SRO721Address, match.params.id)
-        const result = await marketplace.getSale(saleId)
-        sale = {
-          status: result[0].toString(),
-          nftId: result[1].toString(),
-          saleId: saleId,
-          price: ethers.utils.formatEther(result[2]),
-          seller: result[3],
-          collection: result[4],
-        }
-      } 
-      const fetchNft = await sro721.getNftById(match.params.id)
-      const owner = await sro721.ownerOf(match.params.id)
-      const ownerData = await userData(owner.toLowerCase())
-      const uri = await sro721.tokenURI(match.params.id)
-
-      setNft({data: {...fetchNft, url: uri}, owner: ownerData, sale: sale})
-    }
-
     if(sro721 !== null) {
-      fetch()
+      fetchNft(sro721, marketplace, match.params.id).then((result) => setNft(result))
     }
   }, [sro721, marketplace, match.params.id])
 

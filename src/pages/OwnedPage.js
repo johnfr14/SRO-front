@@ -8,7 +8,7 @@ import { ethers } from 'ethers'
 
 function OwnedPage() {
   const { userState } = useUser() 
-  const [data, setData] = useState()
+  const [data, setData] = useState({fullAddress: null})
   const match = useRouteMatch("/user/:address");
 
   useEffect(() => {
