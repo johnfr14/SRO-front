@@ -4,15 +4,16 @@ import { userData } from "../dataFunctions/fetchData"
 import { useUser } from "../context/UserContext"
 import { useRouteMatch } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { ethers } from 'ethers'
 
 function OwnedPage() {
   const { userState } = useUser() 
-  const [data, setData] = useState({address: null})
+  const [data, setData] = useState()
   const match = useRouteMatch("/user/:address");
 
   useEffect(() => {
     const fetch = async() => {
-      const address = match.params.address.length === 42 ? match.params.address : userState.data.fullAddress
+      const address = ethers.utils.isAddress(match.params.address) ? match.params.address : userState.data.fullAddress
       setData(await userData(address.toLowerCase()))
     }
     if (data === undefined || (data.fullAddress !== match.params.address.toLowerCase())) {
