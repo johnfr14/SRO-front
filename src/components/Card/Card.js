@@ -5,6 +5,8 @@ import {
   defaultCardData,
   fetchLastNftOnSale,
   getNftOnSale,
+  getNftOwned,
+  getNftCreated,
 } from "../../dataFunctions/fetchData";
 
 import { ProfilList, DotMenu } from "./";
@@ -51,9 +53,9 @@ const Card = ({ idx, user, data }) => {
           case 1:
             return setNft(await getNftOnSale(user, data.id, marketplace, sro721));
           case 2:
-            return setNft(data);
+            return setNft(await getNftOwned(user, data.id, sro721));
           case 3:
-            return setNft(data);
+            return setNft(await getNftCreated(user, data.id, sro721));
           default:
             return "error";
         }

@@ -54,6 +54,7 @@ const getLikedNft = async (user, id, sro721) => {
 export const fetchCardList = async (index, user, sro721, marketplace) => {
   switch (index) {
     case 0:
+      //market place
       const totalSales = await marketplace.totalSale();
       const sales = [];
       for (let i = totalSales; i > 0; i--) {
@@ -76,16 +77,16 @@ export const fetchCardList = async (index, user, sro721, marketplace) => {
       );
       return datas;
     case 1:
-      //onSale
-      const nftOwned = []
+      //Tab on sale
+      const tabOnSale = []
       const balance = await sro721.balanceOf(user.fullAddress)
       for (let i = 0; i < balance; i++) {
-        nftOwned.push(sro721.tokenOfOwnerByIndex(user.fullAddress, i).then((result) => result.toString()))
+        tabOnSale.push(sro721.tokenOfOwnerByIndex(user.fullAddress, i).then((result) => result.toString()))
       }
 
       const onSales = [];
-      await Promise.all(nftOwned).then(async (nftOwned) => {
-        for (const nft of nftOwned) {
+      await Promise.all(tabOnSale).then(async (tabOnSale) => {
+        for (const nft of tabOnSale) {
           if (await marketplace.isOnSale(SRO721Address, nft)) {
             onSales.push({...defaultCardData, id: nft, owner: user})
           }
@@ -93,11 +94,36 @@ export const fetchCardList = async (index, user, sro721, marketplace) => {
       })  
       return onSales;
     case 2:
-      //owned
-      return datas;
+      //Tab owned
+      const tabOwned = []
+      const balanceOwner = await sro721.balanceOf(user.fullAddress);
+      for (let i = 0; i < balanceOwner; i++) {
+        tabOwned.push(sro721.tokenOfOwnerByIndex(user.fullAddress, i).then((result) => result.toString()))
+      }
+      const owned = [];
+      await Promise.all(tabOwned).then(async (tabOwned) => {
+        for (const nft of tabOwned) {
+          if (await marketplace.isOnSale(SRO721Address, nft)) {
+            owned.push({...defaultCardData, id: nft, owner: user})
+          }
+        }
+      })
+      return owned;
     case 3:
-      //created
-      return datas;
+      //Tab created
+      const tabCreated = [];
+      await sro721.getNftByAuthorTotal(user.fullAddress).then( async(result) => {
+        for (let i = 0; i < result; i++) {
+          tabCreated.push(sro721.getNftByAuthorAt(user.fullAddress, i).then((result) => result.toString()));
+        }
+      })
+      const created = []
+      await Promise.all(tabCreated).then(async (tabCreated) => {
+        for (const nft of tabCreated) {
+          created.push({...defaultCardData, id: nft, owner: user})
+        }
+      })
+      return created;
     default:
       return "error";
   }
@@ -134,69 +160,26 @@ export const getNftOnSale = async (user, id, marketplace, sro721) => {
     const creator = await userData(metadata.author.toLowerCase());
     const url = await sro721.tokenURI(id);
     const isLiked = await getLikedNft(user.fullAddress, id, sro721)
-  return {id: id, metadata: {...metadata, url: url}, sale: {...sale, price: ethers.utils.formatEther(sale.price)}, owner: user, creator: creator, isLiked: isLiked }
+  return {id: id, metadata: {...metadata, url: url, isLiked: isLiked }, sale: {...sale, price: ethers.utils.formatEther(sale.price)}, owner: user, creator: creator}
 };
 
-export const getNftOwned = async (user, sro721) => {
-  const owned = []
-  const balance = await sro721.balanceOf(user.fullAddress);
-  for (let i = 0; i < balance; i++) {
-    const nftId = await sro721.tokenOfOwnerByIndex(user.fullAddress, i).then((result) => result.toString())
-    const metadata = await sro721.getNftById(nftId);
-    const data = await userData(metadata.author.toLowerCase());
-    const url = await sro721.tokenURI(nftId);
-    const isLiked = await getLikedNft(user.fullAddress, nftId, sro721)
-    owned.push({
-      id: nftId,
-      metadata: { ...metadata, url: url, isLiked: isLiked },
-      sale: {
-        status: null,
-        nftId: null,
-        price: null,
-        seller: null,
-        collection: null,
-      },
-      owner: user,
-      creator: data,
-    })
-  }
-  return owned
+export const getNftOwned = async (user, id, sro721) => {
+  const metadata = await sro721.getNftById(id);
+  const data = await userData(metadata.author.toLowerCase());
+  const url = await sro721.tokenURI(id);
+  const isLiked = await getLikedNft(user.fullAddress, id, sro721)
+  return {...defaultCardData, id: id, metadata: { ...metadata, url: url, isLiked: isLiked }, owner: user, creator: data}
 };
 
-export const getNftCreated = async (user, sro721) => {
-  const nfts = [];
-  await sro721.getNftByAuthorTotal(user.fullAddress).then( async(result) => {
-    for (let i = 0; i < result; i++) {
-      const nft = await sro721.getNftByAuthorAt(user.fullAddress, i).then((result) => result.toString())
-      nfts.push(nft);
-    }
-  })
-  const created = []
-  if (nfts[0] !== "") {
-    for (let i = 0; i < nfts.length; i++) {
-      const ownerOf = await sro721
-        .ownerOf(nfts[i])
-        .then((address) => address.toLowerCase());
-      const owner = await userData(ownerOf);
-      const metadata = await sro721.getNftById(nfts[i]);
-      const url = await sro721.tokenURI(nfts[i]);
-      const isLiked = await getLikedNft(user.fullAddress, nfts[i], sro721)
-      created.push({
-        id: nfts[i],
-        metadata: { ...metadata, url: url, isLiked: isLiked },
-        sale: {
-          status: null,
-          nftId: null,
-          price: null,
-          seller: null,
-          collection: null,
-        },
-        owner: owner,
-        creator: user,
-      });
-    }
-    return created
-  }
+export const getNftCreated = async (user, id, sro721) => {
+  const ownerOf = await sro721
+    .ownerOf(id)
+    .then((address) => address.toLowerCase());
+  const owner = await userData(ownerOf);
+  const metadata = await sro721.getNftById(id);
+  const url = await sro721.tokenURI(id);
+  const isLiked = await getLikedNft(user.fullAddress, id, sro721)
+  return {...defaultCardData, id: id, metadata: { ...metadata, url: url, isLiked: isLiked }, owner: owner, creator: user}
 };
 
 // Home(MarketPlace)
