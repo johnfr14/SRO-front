@@ -5,7 +5,7 @@ import {
   Route,
   Redirect,
 } from "react-router-dom";
-
+import { ToastContainer } from "react-toastify";
 import ModWrongNetwork from "./components/Modal/ModWrongNetwork";
 
 import "./App.css";
@@ -19,6 +19,7 @@ const NftPage = lazy(() => import("./pages/NftPage"));
 function App() {
   return (
     <>
+      <ToastContainer />
       <ModWrongNetwork />
       <Router>
         <Suspense fallback={<div>Loading...</div>}>

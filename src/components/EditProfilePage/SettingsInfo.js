@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { userData } from "../../dataFunctions/fetchData";
 import { Web3Context } from "web3-hooks";
 import { AvatarSettings } from "./index";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import { pinOnIpfs } from "../../dataFunctions/fetchData";
 import axios from "axios";
 import classnames from "classnames";
@@ -72,7 +72,7 @@ const SettingsInfo = ({ data, dispatch }) => {
 
   return (
     <div className="mb-20 NotificationCustom">
-      <ToastContainer />
+      
       <div className="">
         <div>
           <h2 className="text-5xl text-yellow-400 text-center font-bold pb-10">Edit Profile</h2>

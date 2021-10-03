@@ -193,7 +193,7 @@ export const fetchData = async (index, user, data, sro721, marketplace) => {
   try {
     switch (index) {
       case 0:
-        return await fetchLastNftOnSale(sro721, data);
+        return await fetchLastNftOnSale(user, data, sro721);
       case 1:
         return await getNftOnSale(user, data.id, marketplace, sro721);
       case 2:
@@ -208,14 +208,15 @@ export const fetchData = async (index, user, data, sro721, marketplace) => {
   }
 }
 
-export const fetchLastNftOnSale = async(sro721, sale) => {
+export const fetchLastNftOnSale = async(user, sale, sro721) => {
   try {
     const metadata = await sro721.getNftById(sale.nftId)
     const url = await sro721.tokenURI(sale.nftId);
     const creatorData = await userData(metadata.author.toLowerCase());
     const owner = await sro721.ownerOf(sale.nftId);
     const ownerData = await userData(owner.toLowerCase())
-    return {id: sale.nftId.toString(), metadata: {...metadata, url: url}, sale: {...sale, price: ethers.utils.formatEther(sale.price)}, owner: ownerData, creator: creatorData}
+    const isLiked = await getLikedNft(user.fullAddress, sale.id, sro721)
+    return {id: sale.nftId.toString(), metadata: {...metadata, url: url}, sale: {...sale, price: ethers.utils.formatEther(sale.price)}, owner: ownerData, creator: creatorData, isLiked: isLiked }
   } catch (e){
     console.error(e)
   }
@@ -229,7 +230,7 @@ export const getNftOnSale = async (user, id, marketplace, sro721) => {
     const creator = await userData(metadata.author.toLowerCase());
     const url = await sro721.tokenURI(id);
     const isLiked = await getLikedNft(user.fullAddress, id, sro721)
-    return {id: id, metadata: {...metadata, url: url, isLiked: isLiked }, sale: {...sale, price: ethers.utils.formatEther(sale.price)}, owner: user, creator: creator}
+    return {id: id, metadata: {...metadata, url: url}, sale: {...sale, price: ethers.utils.formatEther(sale.price)}, owner: user, creator: creator, isLiked: isLiked }
   } catch (error) {
     console.error(error.message)    
   }
@@ -241,7 +242,7 @@ export const getNftOwned = async (user, id, sro721) => {
     const data = await userData(metadata.author.toLowerCase());
     const url = await sro721.tokenURI(id);
     const isLiked = await getLikedNft(user.fullAddress, id, sro721)
-    return {...defaultCardData, id: id, metadata: { ...metadata, url: url, isLiked: isLiked }, owner: user, creator: data}
+    return {...defaultCardData, id: id, metadata: {...metadata, url: url}, owner: user, creator: data, isLiked: isLiked}
   } catch (error) {
     console.error(error.message)
   }
@@ -256,7 +257,7 @@ export const getNftCreated = async (user, id, sro721) => {
     const metadata = await sro721.getNftById(id);
     const url = await sro721.tokenURI(id);
     const isLiked = await getLikedNft(user.fullAddress, id, sro721)
-    return {...defaultCardData, id: id, metadata: { ...metadata, url: url, isLiked: isLiked }, owner: owner, creator: user}
+    return {...defaultCardData, id: id, metadata: { ...metadata, url: url}, owner: owner, creator: user, isLiked: isLiked}
   } catch (error) {
     console.error(error.message)    
   }
