@@ -10,7 +10,6 @@ const CardList = ({ idx, user, marketPlace }) => {
   const [data, setData] = useState([]);
   const [fetch, setFetch] = useState(true);
 
-
   useEffect(() => {
     if (sro721 !== null && marketplace !== null && fetch) {
       fetchCardList(idx, user, sro721, marketplace).then(result => setData(result));

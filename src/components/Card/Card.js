@@ -1,26 +1,18 @@
-import { useEffect, useState, Suspense, lazy, memo, useCallback } from "react";
+import { useEffect, useState, Suspense, lazy, memo } from "react";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import {
   defaultCardData,
-  fetchLastNftOnSale,
-  getNftOnSale,
-  getNftOwned,
-  getNftCreated,
+  SubstrAdress,
+  fetchData,
 } from "../../dataFunctions/fetchData";
-
 import { ProfilList, DotMenu } from "./";
 import { useContracts } from "../../context/ContractContext";
 import { SRO721Address } from "../../contracts/SRO721";
 import { logoSRO } from "../../images";
 import "../../css/card.css";
 import "../../css/toast.css";
-
 const MediaCard = lazy(() => import("../Card/MediaCard"));
-
-const SubstrAdress = (dataAdress) => {
-  return dataAdress.substr(0, 6) + "..." + dataAdress.substr(-4);
-};
 
 const Card = ({ idx, user, data }) => {
   const { sro721, marketplace } = useContracts();
@@ -44,29 +36,12 @@ const Card = ({ idx, user, data }) => {
     }
   };
 
-  const fetchData = useCallback(
-    async (index) => {
-      if (sro721 !== null && marketplace !== null && fetch) {
-        switch (index) {
-          case 0:
-            return setNft(await fetchLastNftOnSale(sro721, data));
-          case 1:
-            return setNft(await getNftOnSale(user, data.id, marketplace, sro721));
-          case 2:
-            return setNft(await getNftOwned(user, data.id, sro721));
-          case 3:
-            return setNft(await getNftCreated(user, data.id, sro721));
-          default:
-            return "error";
-        }
-      }
-    },
-    [marketplace, sro721, data, user]
-  );
-
   useEffect(() => {
-    fetchData(idx);
-  }, [idx, fetchData]);
+    if (sro721 !== null && marketplace !== null) {
+      fetchData(idx, user, data, sro721, marketplace)
+      .then((result) => setNft(result));
+    }
+  }, [idx, marketplace, sro721, data, user]);
 
   return (
     <div className="max-w-xs bg-gray-900 shadow-lg rounded-xl p-2 border-2 border-gray-200 border-opacity-25 pb-5 relative">
