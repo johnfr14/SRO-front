@@ -48,7 +48,7 @@ export const defaultCardData = {
 //------------- General --------------//
 const getLikedNft = async (user, id, sro721) => {
   try {
-    const isLiked = await sro721.isLiked(user, id);
+    const isLiked = await sro721.isLiked(user, id.toString());
     return isLiked;
   } catch (error) {
     console.error(error.message)    
@@ -107,7 +107,6 @@ export const pinOnIpfs = async (file) => {
 
 // src/components/UserMainPage/CardList.js
 export const fetchCardList = async (index, user, sro721, marketplace) => {
-  
   try{
     switch (index) {
       case 0:
@@ -215,7 +214,7 @@ export const fetchLastNftOnSale = async(user, sale, sro721) => {
     const creatorData = await userData(metadata.author.toLowerCase());
     const owner = await sro721.ownerOf(sale.nftId);
     const ownerData = await userData(owner.toLowerCase())
-    const isLiked = await getLikedNft(user.fullAddress, sale.id, sro721)
+    const isLiked = await getLikedNft(user.fullAddress, sale.nftId, sro721)
     return {id: sale.nftId.toString(), metadata: {...metadata, url: url}, sale: {...sale, price: ethers.utils.formatEther(sale.price)}, owner: ownerData, creator: creatorData, isLiked: isLiked }
   } catch (e){
     console.error(e)

@@ -9,6 +9,7 @@ export const UserContext = createContext()
 
 const initialState = { 
   data: {
+    fullAddress: null,
     address: null,
     name: null,
     bio: null,
@@ -25,13 +26,12 @@ export const UserContextProvider = ({children}) => {
   const { xsro } = useContracts()
   const [web3State] = useContext(Web3Context);  
   const [userState, dispatch] = useReducer(userReducer, initialState)
-  
   useEffect(() => {
     const getAccount = async () => {
       try {
         dispatch({type: 'FETCH_INIT'})
         const data = await userData(web3State.account)
-        const balanceXsro = await  xsro.balanceOf(web3State.account)
+        const balanceXsro = await xsro.balanceOf(web3State.account)
         dispatch({
           type: 'UPDATE_PROFILE',
           payload: {...data,
@@ -41,11 +41,11 @@ export const UserContextProvider = ({children}) => {
             }
           }
         })
-        } catch (e) {
-          dispatch({type: 'FETCH_FAILURE', payload: e.message})
-        }
+      } catch (e) {
+        dispatch({type: 'FETCH_FAILURE', payload: e.message})
+      }
     }
-    if(!web3State.account.startsWith("0x000")) {
+    if(!web3State.account.startsWith("0x000") && xsro !== null) {
         getAccount()
     }
   }, [web3State, xsro]) 
