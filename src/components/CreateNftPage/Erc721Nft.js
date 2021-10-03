@@ -3,19 +3,16 @@ import { useForm } from "react-hook-form";
 import { useHistory } from "react-router-dom";
 import { useUser } from "../../context/UserContext";
 import { PreviewFile, UploadFile } from ".";
-//import { SwitchToggle, TokenPrice } from "../";
 import classnames from "classnames";
 import { ToastContainer, toast } from "react-toastify";
 import { pinOnIpfs } from "../../dataFunctions/fetchData";
 import "react-toastify/dist/ReactToastify.css";
 import "../../css/toast.css";
-import { useContracts } from "../../context/ContractContext"; // instance des contracts
+import { useContracts } from "../../context/ContractContext";
 
 const Erc721Nft = () => {
   const { sro721 } = useContracts();
   const { userState } = useUser();
-  // const [isToggledPrice, setIsToggledPrice] = useState(false);
-  // const [isToggled, setIsToggled] = useState(false);
   const [loading, setLoading] = useState(false);
   const {
     register,
@@ -26,7 +23,7 @@ const Erc721Nft = () => {
   let history = useHistory();
 
   const onSubmit = async (data) => {
-    // loading on ?
+    // loading on ? oui loading on tu as bien vue 
     setLoading(true);
     try {
       const uriHash =

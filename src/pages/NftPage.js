@@ -6,16 +6,11 @@ import { Container, Nft } from "../components/index";
 import { useContracts } from "../context/ContractContext";
 import { useUser } from '../context/UserContext'
 import { fetchNft } from "../dataFunctions/fetchData";
+
 const MediaDemo =
   "https://img.rarible.com/prod/image/upload/t_preview/prod-itemImages/0xd07dc4262bcdbf85190c01c996b4c06a461d2430:8207";
-
-// const nftNumber = "#1";
-// const nftName = "NFTSROPOWAAA";
 const nftNumberOfCopie = "1";
-// const nftDescription = "Its the Best NFT for TO THE MOON with SRO TEAM  !!!!";
-// let nftTitle = `${nftNumber} - ${nftName}`;
 let SymboleNft = "SRO";
-// let Royalties = 10;
 
 const BuyNft = () => {
   const { userState } = useUser()
@@ -28,7 +23,6 @@ const BuyNft = () => {
       fetchNft(sro721, marketplace, match.params.id).then((result) => setNft(result))
     }
   }, [sro721, marketplace, match.params.id])
-
 
   return (
     <>

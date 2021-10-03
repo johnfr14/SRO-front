@@ -5,7 +5,6 @@ import { useUser } from "../context/UserContext";
 
 const EditProfile = () => {
   const { userState, dispatch } = useUser()
-
   return (
     <>
       <Layout>

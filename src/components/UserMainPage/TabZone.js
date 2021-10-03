@@ -1,34 +1,11 @@
 import { useState, lazy } from "react";
 import { Tab } from "@headlessui/react";
-
 import "../../css/userTab.css";
-
 const CardList = lazy(() => import("./CardList"));
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
-
-// const defaultData = {
-//     imgUrl:
-//       "https://upload.wikimedia.org/wikipedia/en/e/ed/Leonardo_%28Teenage_Mutant_Ninja_Turtles%29.jpg",
-//     name: "Leonardo",
-//     price: "0.05",
-//     unity: "ETH",
-//     linkToNFT: "/",
-
-//     linkToProfilCollection: "/",
-//     linkToProfilCreator: "/",
-//     linkToProfilOwner: "/",
-
-//     // userIconCollection: userTest,
-//     // userIconCreator: cardMediaTest,
-//     //userIconOwner: "",
-
-//     tipDataAdressCollection: "SRO",
-//     tipDataAdressCreator: "0x0000000000000000000000000000000000000000",
-//     tipDataAdressOwner: "0x0000000000000000000000000000000000000000",
-//   }
 
 export default function TabZone({ user }) {
 

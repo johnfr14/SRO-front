@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import {
   defaultCardData,
   fetchLastNftOnSale,
+  getNftOnSale,
 } from "../../dataFunctions/fetchData";
 
 import { ProfilList, DotMenu } from "./";
@@ -48,7 +49,7 @@ const Card = ({ idx, user, data }) => {
           case 0:
             return setNft(await fetchLastNftOnSale(sro721, data));
           case 1:
-            return setNft(data);
+            return setNft(await getNftOnSale(user, data.id, marketplace, sro721));
           case 2:
             return setNft(data);
           case 3:
@@ -58,7 +59,7 @@ const Card = ({ idx, user, data }) => {
         }
       }
     },
-    [marketplace, sro721, setNft, data]
+    [marketplace, sro721, data, user]
   );
 
   useEffect(() => {
