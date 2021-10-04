@@ -1,23 +1,24 @@
 import { useEffect, useState, Suspense, lazy, memo } from "react";
 import { Link } from "react-router-dom";
+import "../../css/card.css";
+import "../../css/toast.css";
 import { defaultCardData, SubstrAdress, fetchData } from "../../dataFunctions/fetchData";
 import { ProfilList, DotMenu } from "./";
 import { useContracts } from "../../context/ContractContext";
 import { SRO721Address } from "../../contracts/SRO721";
 import { logoSRO } from "../../images";
-import "../../css/card.css";
-import "../../css/toast.css";
 import { handleLikeButton } from "../../dataFunctions/handleButtons";
 const MediaCard = lazy(() => import("../Card/MediaCard"));
 
 const Card = ({ idx, user, data }) => {
   const { sro721, marketplace } = useContracts();
   const [nft, setNft] = useState(defaultCardData);
+  // console.log(nft)
 
   const handleButton = () => handleLikeButton(nft, sro721).then((result) => setNft(result))
 
   useEffect(() => {
-    if (sro721 !== null && marketplace !== null) {
+    if (sro721 !== null) {
       fetchData(idx, user, data, sro721, marketplace)
       .then((result) => setNft(result));
     }
