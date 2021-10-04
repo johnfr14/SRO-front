@@ -67,7 +67,7 @@ const SettingsInfo = () => {
                   </div>
                   <div className="items-center justify-center">
                     <label className="block uppercase tracking-wide text-yellow-400 text-xl font-bold mb-2 mt-5">
-                      <p className="flex text-yellow-400">Custom URL<p className="pl-1 text-purple-500 text-xs">(Coming Soon)</p></p>
+                      <p className="flex text-yellow-400">Custom URL<span className="pl-1 text-purple-500 text-xs">(Coming Soon)</span></p>
                     </label>
                     <div className="flex flex-col md:flex-row mb-4">
                       <div className="flex -mr-px mb-2 md:mb-0">

@@ -1,7 +1,8 @@
 import { toast } from "react-toastify";
 import { pinOnIpfs, userData } from "./fetchData";
 import axios from "axios";
-  
+
+//---------- General ----------//
 export const handleLikeButton = async (nft, sro721) => {
     try {
       const tx = await sro721.like(nft.id);
@@ -21,6 +22,7 @@ export const handleLikeButton = async (nft, sro721) => {
     };
 };
 
+ // src/components/EditProfilePage/SettingInfo.js
 export const handleSettingProfileButton = async(userState, dispatch, watch) => {
   try {
     let avatar = userState.data.avatar;
@@ -55,7 +57,6 @@ export const handleSettingProfileButton = async(userState, dispatch, watch) => {
       draggable: true,
       progress: undefined,
     });
-    //after updating data it redirect to the dashboard
   } catch (e) {
     toast.error(e.message, {
       position: "bottom-right",
@@ -66,5 +67,44 @@ export const handleSettingProfileButton = async(userState, dispatch, watch) => {
       draggable: true,
       progress: undefined,
     });
+  }
+}
+
+export const handleCreateNft = async (userState, data, watch, sro721, setLoading, history) => {
+  // loading on ? oui loading on tu as bien vue 
+  setLoading(true);
+  try {
+    const uriHash =
+      `https://gateway.pinata.cloud/ipfs/` +
+      (await pinOnIpfs(watch().file[0]));
+    const royalties = data.royalties || 0;
+    const title = data.title;
+    const description = data.description;
+    const tx = await sro721.create(royalties, title, description, uriHash);
+    await tx.wait();
+    toast.success(`Nft minted \n`, {
+      position: "top-right",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: false,
+      draggable: true,
+      progress: undefined,
+    });
+    setTimeout(() => {
+      history.push(`/user/${userState.data.fullAddress}`);
+    }, 2000);
+  } catch (e) {
+    toast.error(e.message, {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: false,
+      draggable: true,
+      progress: undefined,
+    });
+  } finally {
+    setLoading(false);
   }
 }

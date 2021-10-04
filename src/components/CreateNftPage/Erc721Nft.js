@@ -4,66 +4,22 @@ import { useHistory } from "react-router-dom";
 import { useUser } from "../../context/UserContext";
 import { PreviewFile, UploadFile } from ".";
 import classnames from "classnames";
-import { ToastContainer, toast } from "react-toastify";
-import { pinOnIpfs } from "../../dataFunctions/fetchData";
 import "react-toastify/dist/ReactToastify.css";
 import "../../css/toast.css";
 import { useContracts } from "../../context/ContractContext";
+import { handleCreateNft } from "../../dataFunctions/handleButtons";
 
 const Erc721Nft = () => {
   const { sro721 } = useContracts();
   const { userState } = useUser();
   const [loading, setLoading] = useState(false);
-  const {
-    register,
-    watch,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
+  const { register, watch, handleSubmit, formState: { errors } } = useForm();
   let history = useHistory();
 
-  const onSubmit = async (data) => {
-    // loading on ? oui loading on tu as bien vue 
-    setLoading(true);
-    try {
-      const uriHash =
-        `https://gateway.pinata.cloud/ipfs/` +
-        (await pinOnIpfs(watch().file[0]));
-      const royalties = data.royalties || 0;
-      const title = data.title;
-      const description = data.description;
-      const tx = await sro721.create(royalties, title, description, uriHash);
-      await tx.wait();
-      toast.success(`Nft minted \n`, {
-        position: "top-right",
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: false,
-        draggable: true,
-        progress: undefined,
-      });
-      setTimeout(() => {
-        history.push(`/user/${userState.data.fullAddress}`);
-      }, 2000);
-    } catch (e) {
-      toast.error(e.message, {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: false,
-        draggable: true,
-        progress: undefined,
-      });
-    } finally {
-      setLoading(false);
-    }
-  };
+  const onSubmit = (data) => handleCreateNft(userState, data, watch, sro721, setLoading, history)
 
   return (
     <>
-      <ToastContainer />
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="min-h-screen pt-2 font-mono my-16 text-white"
@@ -144,7 +100,7 @@ const Erc721Nft = () => {
               </div>
               <div className="items-center justify-center">
                 <label className="block uppercase tracking-wide text-2xl font-bold mb-2 mt-5">
-                  <p className="flex text-yellow-400"> Decription <p className="pl-1 text-purple-500 text-sm">(Optional)</p></p>
+                  <p className="flex text-yellow-400"> Decription <span className="pl-1 text-purple-500 text-sm">(Optional)</span></p>
                 </label>
                 <div className="">
                   <input
@@ -174,9 +130,9 @@ const Erc721Nft = () => {
                     </p>
                   )}
                 </div>
-                <p className="block tracking-wide text-xs mb-2 mt-2">
-                  <p className="flex text-yellow-400">Suggested : <p className="pl-1 text-gray-400">0%, 10%, 20%, 30%. Maximum is 50%</p></p>
-                </p>
+                <div className="block tracking-wide text-xs mb-2 mt-2">
+                  <div className="flex text-yellow-400">Suggested : <p className="pl-1 text-gray-400">0%, 10%, 20%, 30%. Maximum is 50%</p></div>
+                </div>
               </div>
               <div className="flex items-center justify-center my-8">
                 {loading ? (
