@@ -153,15 +153,13 @@ export const fetchCardList = async (index, user, sro721, marketplace) => {
         //Tab owned
         const tabOwned = []
         const balanceOwner = await sro721.balanceOf(user.fullAddress);
-        for (let i = 0; i < balanceOwner; i++) {
+        for (let i = 0; i < balanceOwner.toString(); i++) {
           tabOwned.push(sro721.tokenOfOwnerByIndex(user.fullAddress, i).then((result) => result.toString()))
         }
         const owned = [];
         await Promise.all(tabOwned).then(async (tabOwned) => {
           for (const nft of tabOwned) {
-            if (await marketplace.isOnSale(SRO721Address, nft)) {
-              owned.push({...defaultCardData, id: nft, owner: user})
-            }
+            owned.push({...defaultCardData, id: nft, owner: user})
           }
         })
         return owned;
