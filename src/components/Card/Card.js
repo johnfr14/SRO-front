@@ -95,22 +95,22 @@ const Card = ({ idx, user, data }) => {
               </div>
             </div>
             <div className="mt-1">
-              <p className="flex text-sm">
+              <div className="flex text-sm">
                 <div className="">
-                  <p>
+                  <div>
                     {nft.sale.price === null ? (
                       ""
                     ) : (
-                      <p className="flex text-purple-500">
+                      <div className="flex text-purple-500">
                         Price :{" "}
                         <p className="pl-1 text-gray-300">
                           {nft.sale.price} xSRO
                         </p>
-                      </p>
+                      </div>
                     )}
-                  </p>
+                  </div>
                 </div>
-              </p>
+              </div>
             </div>
           </div>
         </div>
