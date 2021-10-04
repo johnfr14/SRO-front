@@ -3,52 +3,18 @@ import { Fragment, useRef } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { useContracts } from "../../context/ContractContext";
 import { ButtonOnClick } from "../Button";
-import { toast } from "react-toastify";
 import { LoaderIcon } from "..";
 import { deleteIcon, checkmarkIcon } from "../../images";
 import classnames from "classnames";
+import { handleRemove, initialStateModal } from '../../dataFunctions/handleButtons';
 
 const ModRemoveSale = ({ open, setOpen, sale, nft }) => {
   const cancelButtonRef = useRef(null);
   const { marketplace } = useContracts()
-  const [isRemoved, setIsRemoved] = useState(false)
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState(false)
+  const [modal, setModal] = useState(initialStateModal)
 
 
-  const handleRemoveButton = async () => {
-    try {
-      setLoading(true)
-      const tx = await marketplace.removeSale(sale.saleId)
-      await tx.wait()
-      setLoading(false)
-      toast.success(`Nft removed successfully \n`, {
-        position: "top-right",
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: false,
-        draggable: true,
-        progress: undefined,
-      });
-      setIsRemoved(true)
-      setTimeout(() => {
-        setOpen({ ...open, removeSale: false })
-      }, 2000);
-    } catch (e) {
-      setLoading(false)
-      setError(true);
-      toast.error(e.message, {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: false,
-        draggable: true,
-        progress: undefined,
-      });
-    }
-  }
+  const handleRemoveButton = async () => handleRemove(sale, marketplace, modal, setModal, open, setOpen)
 
   return (
     <Transition.Root show={open.removeSale} as={Fragment}>
@@ -105,7 +71,7 @@ const ModRemoveSale = ({ open, setOpen, sale, nft }) => {
                         <p className="ml-3 text-purple-500">(Coming Soon)</p>
                       </div>
                       <div className="flex items-center justify-center pt-4 pb-3">
-                        {loading ? (
+                        {modal.loading ? (
                           <div className="flex ">
                             <LoaderIcon />
                             <div className="pr-5">
@@ -123,7 +89,7 @@ const ModRemoveSale = ({ open, setOpen, sale, nft }) => {
                           </div>
                         ) : (
                           <>
-                            {error && (
+                            {modal.error && (
                               <div className="  ">
                                 {" "}
                                 <img
@@ -133,7 +99,7 @@ const ModRemoveSale = ({ open, setOpen, sale, nft }) => {
                                 />{" "}
                               </div>
                             )}
-                            {isRemoved && (
+                            {modal.isRemoved && (
                               <div className="  ">
                                 {" "}
                                 <img
@@ -146,8 +112,8 @@ const ModRemoveSale = ({ open, setOpen, sale, nft }) => {
                             <div className="">
                               <ButtonOnClick
                                 onClick={handleRemoveButton}
-                                buttonRemove={!isRemoved}
-                                buttonSuccess={isRemoved}
+                                buttonRemove={!modal.isRemoved}
+                                buttonSuccess={modal.isRemoved}
                               >
                                 Remove {nft.title}
                               </ButtonOnClick>

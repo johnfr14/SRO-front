@@ -143,15 +143,15 @@ const ModPurchase = ({ open, setOpen, sale, nft, user }) => {
                             type="text"
                             placeholder="1"
                           />
-                          <p className="flex text-xs text-yellow-400 pt-2">
+                          <div className="flex text-xs text-yellow-400 pt-2">
                             Enter quantity : <p className="ml-1 text-white"> 1 available </p>
-                          </p>
+                          </div>
                         </div>
                       </div>
                       <div className="pt-5 ml-4 text-left">
-                        <p className="flex text-yellow-400">Balance : <p className="ml-2 text-white">{user.balance.xsro} XSRO</p></p>
-                        <p className="flex text-yellow-400">Service fee : <p className="ml-2 text-white">{(sale.price * 0.025).toFixed(5)} XSRO</p></p>
-                        <p className="flex text-yellow-400">Total Price : <p className="ml-2 text-white">{sale.price} XSRO</p></p>
+                        <div className="flex text-yellow-400">Balance : <p className="ml-2 text-white">{user.balance.xsro} XSRO</p></div>
+                        <div className="flex text-yellow-400">Service fee : <p className="ml-2 text-white">{(sale.price * 0.025).toFixed(5)} XSRO</p></div>
+                        <div className="flex text-yellow-400">Total Price : <p className="ml-2 text-white">{sale.price} XSRO</p></div>
                       </div>
 
                       {/*Approve xsro*/}
