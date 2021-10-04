@@ -121,6 +121,7 @@ export const initialStateModal = {
   isOnSale: false,
   isEdited: false,
   isRemoved: false,
+  isBought: false,
   newPrice: false,
   setIsApproved: false,
 }
@@ -244,6 +245,74 @@ export const handleRemove = async (sale, marketplace, modal, setModal, open, set
       progress: undefined,
     });
     setModal({...modal, isRemoved: true});
+    setTimeout(() => {
+      setOpen({ ...open, removeSale: false })
+    }, 2000);
+  } catch (e) {
+    setModal({...modal, loading: false});
+    setModal({...modal, error: true});
+    toast.error(e.message, {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: false,
+      draggable: true,
+      progress: undefined,
+    });
+  }
+}
+
+export const handleApproveXsro = async (xsro, sale, modal, setModal) => {
+  try {
+    setModal({...modal, loading: true});
+    const tx = await xsro.approve(
+      MarketplaceAddress,
+      ethers.utils.parseEther(sale.price)
+    );
+    await tx.wait();
+    setModal({...modal, loading: false});
+    setModal({...modal, isApproved: true});
+    toast.success(`Nft approved successfully \n`, {
+      position: "top-right",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: false,
+      draggable: true,
+      progress: undefined,
+    });
+  } catch (e) {
+    setModal({...modal, loading: false});
+    setModal({...modal, error: true});
+    toast.error(e.message, {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: false,
+      draggable: true,
+      progress: undefined,
+    });
+  }
+}
+
+export const handleBuy = async (sale, marketplace, modal, setModal, open, setOpen) => {
+  try {
+    setModal({...modal, loading: true});
+    const tx = await marketplace.buyNft(sale.saleId);
+    await tx.wait()
+    setModal({...modal, loading: false});
+    toast.success(`Nft bought successfully ! \n`, {
+      position: "top-right",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: false,
+      draggable: true,
+      progress: undefined,
+    });
+    setModal({...modal, isBought: true});
     setTimeout(() => {
       setOpen({ ...open, removeSale: false })
     }, 2000);

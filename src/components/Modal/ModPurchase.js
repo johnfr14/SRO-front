@@ -3,86 +3,23 @@ import { Fragment, useRef } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { useContracts } from "../../context/ContractContext";
 import { ButtonOnClick } from "../Button";
-import { toast } from "react-toastify";
 import { LoaderIcon } from "..";
 import { deleteIcon, checkmarkIcon } from "../../images";
 import classnames from "classnames";
-import { MarketplaceAddress } from "../../contracts/Marketplace";
-import { ethers } from "ethers";
+import { handleApproveXsro, handleBuy, initialStateModal } from "../../dataFunctions/handleButtons";
 
 const ModPurchase = ({ open, setOpen, sale, nft, user }) => {
   const cancelButtonRef = useRef(null);
   const { marketplace, xsro } = useContracts();
-  const [isApproved, setIsApproved] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
+  const [modal, setModal] = useState(initialStateModal)
 
-  //Function to approve
-  const handleApproveButton = async () => {
-    try {
-      setLoading(true);
-      const tx = await xsro.approve(
-        MarketplaceAddress,
-        ethers.utils.parseEther(sale.price)
-      );
-      await tx.wait();
-      setLoading(false);
-      setIsApproved(true);
-      toast.success(`Amount approved \n`, {
-        position: "top-right",
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: false,
-        draggable: true,
-        progress: undefined,
-      });
-    } catch (e) {
-      setLoading(false);
-      setError(true);
-      toast.error(e.message, {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: false,
-        draggable: true,
-        progress: undefined,
-      });
-    }
-  };
+  const handleApproveButton = () => handleApproveXsro(xsro, sale, modal, setModal)
+  const handleBuyButton = () => handleBuy(sale, marketplace, modal, setModal, open, setOpen)
 
-  const handleBuyButton = async () => {
-    try {
-      setLoading(true);
-      const tx = await marketplace.buyNft(sale.saleId);
-      await tx.wait();
-      setLoading(false);
-      toast.success(`Nft bougth successfully \n`, {
-        position: "top-right",
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: false,
-        draggable: true,
-        progress: undefined,
-      });
-      setTimeout(() => {
-        setOpen({ ...open, buyNft: false });
-      }, 2000);
-    } catch (e) {
-      setLoading(false);
-      toast.error(e.message, {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: false,
-        draggable: true,
-        progress: undefined,
-      });
-    }
-  };
+  // useEffect(() => {
+  //   fetchApprovedXsro(nextStep.nftId, sro721)
+  //   .then(result => setModal({...initialStateModal, isApproved: result === MarketplaceAddress}));
+  // }, [sale.id, sro721]);
 
   return (
     <Transition.Root show={open.buyNft} as={Fragment}>
@@ -157,7 +94,7 @@ const ModPurchase = ({ open, setOpen, sale, nft, user }) => {
                       {/*Approve xsro*/}
 
                       <div className="flex items-center justify-center pt-4 pb-3">
-                        {isApproved ? (
+                        {modal.isApproved ? (
                           <>
                             <div className=" mr-2 ">
                               <img
@@ -174,11 +111,11 @@ const ModPurchase = ({ open, setOpen, sale, nft, user }) => {
                                   "text-black px-8 py-3"
                                 )}
                               >
-                                Appoved
+                                Approved
                               </button>
                             </div>
                           </>
-                        ) : loading ? (
+                        ) : modal.loading ? (
                           <div className="flex ">
                             <LoaderIcon />
                             <div className="pr-5">
@@ -196,7 +133,7 @@ const ModPurchase = ({ open, setOpen, sale, nft, user }) => {
                           </div>
                         ) : (
                           <>
-                            {error && (
+                            {modal.error && (
                               <div className="  ">
                                 {" "}
                                 <img
@@ -221,8 +158,29 @@ const ModPurchase = ({ open, setOpen, sale, nft, user }) => {
                       {/*Buy NFT*/}
 
                       <div className="flex items-center justify-center pt-4 pb-3">
-                        {isApproved ? (
-                          loading ? (
+                        {modal.isApproved ? (
+                          modal.isBought ? (
+                            <>
+                              <div className=" pr-5 ">
+                                <img
+                                  alt=""
+                                  className="w-7 "
+                                  src={checkmarkIcon}
+                                />
+                              </div>
+                              <div className="pr-5">
+                                <button
+                                  disabled={true}
+                                  className={classnames(
+                                    "bg-green-100 rounded-xl",
+                                    "text-black px-8 py-3"
+                                  )}
+                                >
+                                  Success !
+                                </button>
+                              </div>
+                            </>
+                          ) : modal.loading ? (
                             <div className="flex items-center justify-center pt-4 pb-3">
                               <LoaderIcon />
                               <div className="">
@@ -240,7 +198,7 @@ const ModPurchase = ({ open, setOpen, sale, nft, user }) => {
                             </div>
                           ) : (
                             <>
-                              {error && (
+                              {modal.error && (
                                 <div className="mr-2">
                                   {" "}
                                   <img
