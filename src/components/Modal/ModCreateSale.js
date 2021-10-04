@@ -2,98 +2,24 @@ import { Fragment, useRef, useState, useEffect } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { useContracts } from "../../context/ContractContext";
 import { MarketplaceAddress } from "../../contracts/Marketplace";
-
 import { LoaderIcon } from "..";
 import classnames from "classnames";
 import { deleteIcon, checkmarkIcon } from "../../images";
 import { ButtonOnClick } from "../Button";
-import { toast } from "react-toastify";
-import { ethers } from "ethers";
+import { fetchApprovedNft } from "../../dataFunctions/fetchData";
+import { handleApproveNft, handleCreateSale, initialStateModal } from "../../dataFunctions/handleButtons";
 
 export default function ModCreateSale({ nextStep, setNextStep }) {
   const { marketplace, sro721 } = useContracts();
-  const [error, setError] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [isApproved, setIsApproved] = useState(false);
-  const [isOnSale, setIsOnSale] = useState(false);
+  const [modal, setModal] = useState(initialStateModal)
   const cancelButtonRef = useRef(null);
 
-  //Function to approve
-  const handleApproveNft = async () => {
-    try {
-      setLoading(true);
-      const tx = await sro721.approve(MarketplaceAddress, nextStep.nftId);
-      await tx.wait();
-      setLoading(false);
-      setIsApproved(true);
-      toast.success(`Nft minted \n`, {
-        position: "top-right",
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: false,
-        draggable: true,
-        progress: undefined,
-      });
-    } catch (e) {
-      setLoading(false);
-      setError(true);
-      toast.error(e.message, {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: false,
-        draggable: true,
-        progress: undefined,
-      });
-    }
-  };
-  //Function to create
-  const handleCreateSaleButton = async () => {
-    try {
-      setLoading(true);
-      const tx = await marketplace.createSale(
-        nextStep.collection,
-        nextStep.nftId,
-        ethers.utils.parseEther(nextStep.price)
-      );
-      await tx.wait();
-      setLoading(false);
-      setIsOnSale(true);
-      toast.success(`Sale created sucessfully`, {
-        position: "top-right",
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: false,
-        draggable: true,
-        progress: undefined,
-      });
-      setTimeout(() => {
-        setNextStep({ ...nextStep, isNext: false });
-      }, 2000);
-    } catch (e) {
-      setError(true);
-      setLoading(false);
-      toast.error(e.message, {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: false,
-        draggable: true,
-        progress: undefined,
-      });
-    }
-  };
+  const handleApprovebutton = () =>  handleApproveNft(sro721, nextStep, modal, setModal)
+  const handleCreateSaleButton = () => handleCreateSale(marketplace, nextStep, setNextStep, modal, setModal)
 
   useEffect(() => {
-    const fetchApprovedNft = async () => {
-      const address = await sro721.getApproved(nextStep.nftId);
-      setIsApproved(address === MarketplaceAddress);
-    };
-    fetchApprovedNft();
+    fetchApprovedNft(nextStep.nftId, sro721)
+    .then(result => setModal({...initialStateModal, isApproved: result === MarketplaceAddress}));
   }, [nextStep.nftId, sro721]);
 
   return (
@@ -151,7 +77,7 @@ export default function ModCreateSale({ nextStep, setNextStep }) {
                       </div>
 
                       <div className="flex items-center justify-center pt-4 pb-3">
-                        {isApproved ? (
+                        {modal.isApproved ? (
                           <>
                             <div className=" mr-2 ">
                               <img
@@ -172,7 +98,7 @@ export default function ModCreateSale({ nextStep, setNextStep }) {
                               </button>
                             </div>
                           </>
-                        ) : loading ? (
+                        ) : modal.loading ? (
                           <div className="flex ">
                             <LoaderIcon />
                             <div className="pr-5">
@@ -190,7 +116,7 @@ export default function ModCreateSale({ nextStep, setNextStep }) {
                           </div>
                         ) : (
                           <>
-                            {error && (
+                            {modal.error && (
                               <div className="  ">
                                 {" "}
                                 <img
@@ -202,7 +128,7 @@ export default function ModCreateSale({ nextStep, setNextStep }) {
                             )}
                             <div className="">
                               <ButtonOnClick
-                                onClick={handleApproveNft}
+                                onClick={handleApprovebutton}
                                 buttonStyle
                               >
                                 Start
@@ -223,8 +149,8 @@ export default function ModCreateSale({ nextStep, setNextStep }) {
                         </div>
                       </div>
                       <div className="flex items-center justify-center pt-4 pb-3">
-                        {isApproved ? (
-                          isOnSale ? (
+                        {modal.isApproved ? (
+                          modal.isOnSale ? (
                             <>
                               <div className=" pr-5 ">
                                 <img
@@ -245,7 +171,7 @@ export default function ModCreateSale({ nextStep, setNextStep }) {
                                 </button>
                               </div>
                             </>
-                          ) : loading ? (
+                          ) : modal.loading ? (
                             <div className="flex items-center justify-center pt-4 pb-3">
                               <LoaderIcon />
                               <div className="">
@@ -263,7 +189,7 @@ export default function ModCreateSale({ nextStep, setNextStep }) {
                             </div>
                           ) : (
                             <>
-                              {error && (
+                              {modal.error && (
                                 <div className="mr-2">
                                   {" "}
                                   <img

@@ -10,7 +10,6 @@ import {
   ModEditPrice,
 } from "../Modal";
 import { SRO721Address } from "../../contracts/SRO721";
-import { ToastContainer } from "react-toastify";
 
 const linkToNameTag2 = "/";
 
@@ -47,7 +46,6 @@ const Nft = ({
 
   return (
     <>
-      <ToastContainer />
       <ModFixedPrice
         open={open}
         setOpen={setOpen}

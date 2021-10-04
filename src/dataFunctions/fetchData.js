@@ -286,3 +286,9 @@ export const fetchNft = async(sro721, marketplace, id) => {
     console.error(error.message)
   }
 }
+
+//---------- NFT Page----------//
+export const fetchApprovedNft = async (id, sro721) => {
+  const address = await sro721.getApproved(id);
+  return address
+};

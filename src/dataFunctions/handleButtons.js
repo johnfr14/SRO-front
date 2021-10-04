@@ -1,6 +1,8 @@
 import { toast } from "react-toastify";
-import { pinOnIpfs, userData } from "./fetchData";
 import axios from "axios";
+import { ethers } from "ethers";
+import { pinOnIpfs, userData } from "./fetchData";
+import { MarketplaceAddress } from "../contracts/Marketplace";
 
 //---------- General ----------//
 export const handleLikeButton = async (nft, sro721) => {
@@ -70,8 +72,8 @@ export const handleSettingProfileButton = async(userState, dispatch, watch) => {
   }
 }
 
+// src/components/CreateNftPage/Erc721.js
 export const handleCreateNft = async (userState, data, watch, sro721, setLoading, history) => {
-  // loading on ? oui loading on tu as bien vue 
   setLoading(true);
   try {
     const uriHash =
@@ -108,3 +110,85 @@ export const handleCreateNft = async (userState, data, watch, sro721, setLoading
     setLoading(false);
   }
 }
+
+
+
+//---------- Modal buttons ----------//
+
+export const initialStateModal = {
+  error: false,
+  loading: false,
+  isOnSale: false,
+  isEdited: false,
+  newPrice: false,
+  setIsApproved: false,
+}
+
+export const handleApproveNft = async (sro721, nextStep, modal, setModal) => {
+  try {
+    setModal({...modal, loading: true});
+    const tx = await sro721.approve(MarketplaceAddress, nextStep.nftId);
+    await tx.wait();
+    setModal({...modal, loading: false});
+    setModal({...modal, setIsApproved: true});
+    toast.success(`Nft approved successfully \n`, {
+      position: "top-right",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: false,
+      draggable: true,
+      progress: undefined,
+    });
+  } catch (e) {
+    setModal({...modal, loading: false});
+    setModal({...modal, error: true});
+    toast.error(e.message, {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: false,
+      draggable: true,
+      progress: undefined,
+    });
+  }
+}
+
+export const handleCreateSale = async (marketplace, nextStep, setNextStep, modal, setModal) => {
+  try {
+    setModal({...modal, loading: true});
+    const tx = await marketplace.createSale(
+      nextStep.collection,
+      nextStep.nftId,
+      ethers.utils.parseEther(nextStep.price)
+    );
+    await tx.wait();
+    setModal({...modal, loading: false});
+    setModal({...modal, isOnSale: true});
+    toast.success(`Sale created sucessfully`, {
+      position: "top-right",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: false,
+      draggable: true,
+      progress: undefined,
+    });
+    setTimeout(() => {
+      setNextStep({ ...nextStep, isNext: false });
+    }, 2000);
+  } catch (e) {
+    setModal({...modal, error: true});
+    setModal({...modal, loading: false});
+    toast.error(e.message, {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: false,
+      draggable: true,
+      progress: undefined,
+    });
+  }
+};

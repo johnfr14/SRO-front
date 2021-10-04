@@ -7,7 +7,6 @@ import {
 } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import ModWrongNetwork from "./components/Modal/ModWrongNetwork";
-
 import "./App.css";
 
 const Home = lazy(() => import("./pages/Home"));

@@ -9,7 +9,7 @@ import { deleteIcon, checkmarkIcon } from "../../images";
 import classnames from "classnames";
 import { ethers } from 'ethers'
 
-const ModEditPrice = ({ open, setOpen, sale, nft, user }) => {
+const ModEditPrice = ({ open, setOpen, sale, nft }) => {
   const cancelButtonRef = useRef(null);
   const { marketplace } = useContracts()
   const [isEdited, setIsEdited] = useState(false)
@@ -96,10 +96,10 @@ const ModEditPrice = ({ open, setOpen, sale, nft, user }) => {
                       <div className="">
                         <div className="text-white text-center">
                           <h2 className="text-5xl text-yellow-400 font-bold py-4">Edit Price</h2>
-                          <p className="text-sm font-bold">
+                          <div className="text-sm font-bold">
                             You are about to edit price for the NFT
                             <p className="text-yellow-400">{nft.title}</p>
-                          </p>
+                          </div>
                         </div>
                       </div>
                       <div className="">
@@ -110,7 +110,7 @@ const ModEditPrice = ({ open, setOpen, sale, nft, user }) => {
                             placeholder="1"
                             onChange={(e) => setNewPrice(e.target.value)}
                           />
-                          <p className="flex justify-center mt-3 text-left text-yellow-400">Current price : <p className="ml-1 text-white"> {sale.price} XSRO</p></p>
+                          <p className="flex justify-center mt-3 text-left text-yellow-400">Current price : <span className="ml-1 text-white"> {sale.price} XSRO</span></p>
                         </div>
                       </div>
                       <div className="flex items-center justify-center pt-4 pb-3">

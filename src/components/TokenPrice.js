@@ -27,9 +27,9 @@ const TokenPrice = ({ register, watch, errors }) => {
       )}
       <div className="text-xs ">
         <p className="pt-4">Service fee 2.5%</p>
-        <p className="flex text-yellow-400">
+        <div className="flex text-yellow-400">
           You will receive : <p className="ml-1 text-white">{watch().price * 0.975} {watch().token}</p>
-        </p>
+        </div>
       </div>
     </div>
   );
