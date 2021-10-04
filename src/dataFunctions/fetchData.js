@@ -1,5 +1,6 @@
 import axios from "axios";
 import { ethers } from "ethers";
+import { MarketplaceAddress } from "../contracts/Marketplace";
 import { SRO721Address } from "../contracts/SRO721";
 import { userDefault } from "../images";
 
@@ -278,7 +279,7 @@ export const fetchNft = async(sro721, marketplace, id) => {
     } 
     const fetchNft = await sro721.getNftById(id)
     const owner = await sro721.ownerOf(id)
-    const ownerData = await userData(owner.toLowerCase())
+    const ownerData = await userData(owner)
     const uri = await sro721.tokenURI(id)
   
     return {data: {...fetchNft, url: uri}, owner: ownerData, sale: sale}
@@ -292,3 +293,8 @@ export const fetchApprovedNft = async (id, sro721) => {
   const address = await sro721.getApproved(id);
   return address
 };
+
+export const fetchApprovedXsro = async (xsro, userAddress) => {
+  const amount = await xsro.allowance(userAddress, MarketplaceAddress)
+  return amount.toString() 
+}

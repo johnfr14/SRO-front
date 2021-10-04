@@ -13,7 +13,6 @@ const MediaCard = lazy(() => import("../Card/MediaCard"));
 const Card = ({ idx, user, data }) => {
   const { sro721, marketplace } = useContracts();
   const [nft, setNft] = useState(defaultCardData);
-  // console.log(nft)
 
   const handleButton = () => handleLikeButton(nft, sro721).then((result) => setNft(result))
 

@@ -43,7 +43,6 @@ const Nft = ({
     price: null,
     isNext: false,
   });
-
   return (
     <>
       <ModFixedPrice
@@ -131,7 +130,7 @@ const Nft = ({
               </div>
               {sale.status === "1" ? (
                 <div className="flex items-center justify-center mb-5 mt-8 space-x-10">
-                  {owner.fullAddress.toLowerCase() === user.fullAddress ? (
+                  {owner.fullAddress === user.fullAddress ? (
                     <>
                       <ButtonOnClick
                         onClick={() => setOpen({ ...open, editPrice: true })}
@@ -164,7 +163,7 @@ const Nft = ({
                 </div>
               ) : (
                 <div className="flex items-center justify-center mb-5 mt-8 space-x-10">
-                  {owner.fullAddress.toLowerCase() === user.fullAddress ? (
+                  {owner.fullAddress === user.fullAddress ? (
                     <ButtonOnClick
                       onClick={() => setOpen({ ...open, createSale: true })}
                       buttonStyle
@@ -185,7 +184,7 @@ const Nft = ({
                 </div>
               )}
               <div className="flex items-center justify-center mb-5 mt-8 space-x-10">
-                {owner.fullAddress.toLowerCase() === user.fullAddress ? (
+                {owner.fullAddress === user.fullAddress ? (
                   <>
                     {/* <Button target={""} buttonStyle>
                       Start Auction(Coming Soon)
