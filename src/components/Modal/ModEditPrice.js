@@ -3,54 +3,17 @@ import { Fragment, useRef } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { useContracts } from "../../context/ContractContext";
 import { ButtonOnClick } from "../Button";
-import { toast } from "react-toastify";
 import { LoaderIcon } from "..";
 import { deleteIcon, checkmarkIcon } from "../../images";
 import classnames from "classnames";
-import { ethers } from 'ethers'
+import { handleEdit, initialStateModal } from '../../dataFunctions/handleButtons';
 
 const ModEditPrice = ({ open, setOpen, sale, nft }) => {
-  const cancelButtonRef = useRef(null);
   const { marketplace } = useContracts()
-  const [isEdited, setIsEdited] = useState(false)
-  const [newPrice, setNewPrice] = useState(false)
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState(false)
+  const cancelButtonRef = useRef(null);
+  const [modal, setModal] = useState(initialStateModal)
 
-
-  const handleEditButton = async () => {
-    try {
-      setLoading(true)
-      const tx = await marketplace.setPrice(sale.saleId, ethers.utils.parseEther(newPrice))
-      await tx.wait()
-      setLoading(false)
-      toast.success(`Nft removed successfully \n`, {
-        position: "top-right",
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: false,
-        draggable: true,
-        progress: undefined,
-      });
-      setIsEdited(true)
-      setTimeout(() => {
-        setOpen({ ...open, editPrice: false })
-      }, 2000);
-    } catch (e) {
-      setLoading(false)
-      setError(true);
-      toast.error(e.message, {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: false,
-        draggable: true,
-        progress: undefined,
-      });
-    }
-  }
+  const handleEditButton = () => handleEdit(sale, marketplace, modal, setModal, open, setOpen)
 
   return (
     <Transition.Root show={open.editPrice} as={Fragment}>
@@ -108,13 +71,13 @@ const ModEditPrice = ({ open, setOpen, sale, nft }) => {
                             className="appearance-none block w-full bg-gray-900 text-white border  shadow-inner rounded-md py-3 px-4  leading-tight focus:outline-none  focus:border-gray-500"
                             type="text"
                             placeholder="1"
-                            onChange={(e) => setNewPrice(e.target.value)}
+                            onChange={(e) => setModal({...modal, newPrice: e.target.value})}
                           />
                           <p className="flex justify-center mt-3 text-left text-yellow-400">Current price : <span className="ml-1 text-white"> {sale.price} XSRO</span></p>
                         </div>
                       </div>
                       <div className="flex items-center justify-center pt-4 pb-3">
-                        {loading ? (
+                        {modal.loading ? (
                           <div className="flex ">
                             <LoaderIcon />
                             <div className="pr-5">
@@ -132,7 +95,7 @@ const ModEditPrice = ({ open, setOpen, sale, nft }) => {
                           </div>
                         ) : (
                           <>
-                            {error && (
+                            {modal.error && (
                               <div className="  ">
                                 {" "}
                                 <img
@@ -142,7 +105,7 @@ const ModEditPrice = ({ open, setOpen, sale, nft }) => {
                                 />{" "}
                               </div>
                             )}
-                            {isEdited && (
+                            {modal.isEdited && (
                               <div className="  ">
                                 {" "}
                                 <img
@@ -156,7 +119,7 @@ const ModEditPrice = ({ open, setOpen, sale, nft }) => {
                               <ButtonOnClick
                                 onClick={handleEditButton}
                                 buttonStyle
-                                buttonSuccess={isEdited}
+                                buttonSuccess={modal.isEdited}
                               >
                                 Set new price
                               </ButtonOnClick>

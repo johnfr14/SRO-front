@@ -1,22 +1,12 @@
 import { Fragment, useRef } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { useForm } from "react-hook-form";
-
 import { TokenPrice } from "..";
 import { ButtonOnClick } from "../Button";
 
-export default function ModFixedPrice({
-  open,
-  setOpen,
-  setNextStep,
-  nextStep,
-}) {
+export default function ModFixedPrice({ open, setOpen, setNextStep, nextStep }) {
   const cancelButtonRef = useRef(null);
-  const {
-    register,
-    watch,
-    formState: { errors },
-  } = useForm();
+  const { register, watch, formState: { errors } } = useForm();
 
   const handlePriceButton = () => {
     setNextStep({

@@ -192,3 +192,37 @@ export const handleCreateSale = async (marketplace, nextStep, setNextStep, modal
     });
   }
 };
+
+export const handleEdit = async (sale, marketplace, modal, setModal, open, setOpen) => {
+  try {
+    setModal({...modal, loading: true});
+    const tx = await marketplace.setPrice(sale.saleId, ethers.utils.parseEther(modal.newPrice))
+    await tx.wait()
+    setModal({...modal, loading: false});
+    toast.success(`New price Edited successfully ! \n`, {
+      position: "top-right",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: false,
+      draggable: true,
+      progress: undefined,
+    });
+    setModal({...modal, isEdited: true});
+    setTimeout(() => {
+      setOpen({ ...open, editPrice: false })
+    }, 2000);
+  } catch (e) {
+    setModal({...modal, loading: false});
+    setModal({...modal, error: true});
+    toast.error(e.message, {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: false,
+      draggable: true,
+      progress: undefined,
+    });
+  }
+}
