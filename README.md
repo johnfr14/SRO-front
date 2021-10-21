@@ -1,6 +1,6 @@
 <div>
 <div align="center">
-  <img alt="Welcome SRO" src="./src/images/logo/sarahro.png">
+  <img alt="Welcome SRO" src="https://ipfs.io/ipfs/QmbdSfiJuBP2XRcM1wuLWMCXLhRoQTvYM8fHYRwyHcKxoa">
   </div>
     <h1 align="center"><b>xSRO Swap</b></h1>
     <div align="center">
