@@ -48,7 +48,7 @@
     "extends": [
       "react-app",
       "react-app/jest",
-      "plugin:@next/next/recommended",
+      "plugin:@next/next/recommended"
     ]
   },
   "browserslist": {
