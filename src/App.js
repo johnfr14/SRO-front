@@ -6,7 +6,6 @@ import {
   Redirect,
 } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
-import ModWrongNetwork from "./components/Modal/ModWrongNetwork";
 import "./App.css";
 
 const Home = lazy(() => import("./pages/Home"));
@@ -19,7 +18,6 @@ function App() {
   return (
     <>
       <ToastContainer />
-      <ModWrongNetwork />
       <Router>
         <Suspense fallback={<div>Loading...</div>}>
           <Switch>

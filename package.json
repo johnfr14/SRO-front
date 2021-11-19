@@ -19,7 +19,6 @@
     "dotenv": "^10.0.0",
     "dotenv-cra": "^3.0.1",
     "framer-motion": "^4",
-    "ipfs-core": "^0.10.3",
     "next": "^11.1.2",
     "postcss": "^7",
     "postcss-cli": "^8.3.1",
@@ -39,7 +38,7 @@
   },
   "scripts": {
     "start": "craco start",
-    "build": "craco build",
+    "build": "next build",
     "test": "craco test",
     "eject": "react-scripts eject",
     "export": "craco build && craco export"
@@ -47,8 +46,7 @@
   "eslintConfig": {
     "extends": [
       "react-app",
-      "react-app/jest",
-      "plugin:@next/next/recommended"
+      "react-app/jest"
     ]
   },
   "browserslist": {
