@@ -21,6 +21,8 @@
     "framer-motion": "^4",
     "ipfs-core": "^0.10.3",
     "next": "^11.1.2",
+    "postcss": "^7",
+    "postcss-cli": "^8.3.1",
     "postcss-import": "^14.0.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
@@ -36,15 +38,17 @@
     "web3-hooks": "^1.0.3"
   },
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
+    "start": "craco start",
+    "build": "craco build",
+    "test": "craco test",
+    "eject": "react-scripts eject",
+    "export": "craco build && craco export"
   },
   "eslintConfig": {
     "extends": [
       "react-app",
-      "react-app/jest"
+      "react-app/jest",
+      "plugin:@next/next/recommended",
     ]
   },
   "browserslist": {
