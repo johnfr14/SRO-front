@@ -19,7 +19,6 @@
     "dotenv": "^10.0.0",
     "dotenv-cra": "^3.0.1",
     "framer-motion": "^4",
-    "ipfs-core": "^0.10.3",
     "next": "^11.1.2",
     "postcss": "^7",
     "postcss-cli": "^8.3.1",
