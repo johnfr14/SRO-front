@@ -1,23 +1,18 @@
 import { lazy, useEffect, useState, memo } from "react";
-import { useContracts } from "../../context/ContractContext";
-import { fetchCardList } from "../../dataFunctions/fetchData";
 import { useUser } from '../../context/UserContext'
+import { onSale } from "../../TheGraph/api";
 
 const Card = lazy(() => import("../Card/Card"));
 const Noitems = lazy(() => import("../UserMainPage/Noitems"));
 
 const CardList = ({ idx, marketPlace }) => {
-  const { marketplace, sro721 } = useContracts();
   const { userState } = useUser()
   const [data, setData] = useState([]);
-  const [fetch, setFetch] = useState(true);
+  console.log(data)
 
   useEffect(() => {
-    if (sro721 !== null && userState.data.address !== null && fetch) {
-      fetchCardList(idx, userState.data, sro721, marketplace).then(result => setData(result));
-      setFetch(false)
-    }
-  }, [idx, userState.data, sro721, marketplace, fetch]);
+    onSale().then(result => setData(result))
+  }, []);
 
   return (
     <>
