@@ -26,16 +26,16 @@ export const onSale = async () => {
 }
 
 // SRO721.sol
-export const nfts = () => {
-
-    axios({
-        url: 'https://api.thegraph.com/subgraphs/name/johnfr14/sro',
+export const nfts = async () => {
+    const result = await axios({
+        url: 'https://api.thegraph.com/subgraphs/id/QmQTVV1oDvedYSafqrDsR2eUnDbdhP2gLdG5jhXaQWdpxv',
         method: 'post',
         data: {
         query: `
             query {
-                nfts {
+                nfts (orderBy: nftId, orderDirection: asc) {
                     id
+                    nftId
                     author
                     owner
                     timeStamp
@@ -44,12 +44,11 @@ export const nfts = () => {
                     isLiked
                     title
                     description
-                    tokenURI
+                    url
                 }
             }
         `
-    }
-    }).then((result) => {
-        console.log(result.data)
-    });
+        }
+    })
+    return result.data.data.nfts
 }

@@ -187,11 +187,11 @@ export const fetchCardList = async (index, user, sro721, marketplace) => {
   }
 }
 
-export const fetchData = async (index, user, data, sro721, marketplace) => {
+export const fetchData = async (index, user, data, dataNFTS, sro721, marketplace) => {
   try {
     switch (index) {
       case 0:
-        return await fetchLastNftOnSale(user, data, sro721);
+        return await fetchLastNftOnSale(data, dataNFTS);
       case 1:
         return await getNftOnSale(user, data.id, marketplace, sro721);
       case 2:
@@ -206,15 +206,12 @@ export const fetchData = async (index, user, data, sro721, marketplace) => {
   }
 }
 
-export const fetchLastNftOnSale = async(user, sale, sro721) => {
+export const fetchLastNftOnSale = async(sale, dataNFTS) => {
   try {
-    const metadata = await sro721.getNftById(sale.nftId)
-    const url = await sro721.tokenURI(sale.nftId);
-    const creatorData = await userData(metadata.author.toLowerCase());
-    const owner = await sro721.ownerOf(sale.nftId);
-    const ownerData = await userData(owner.toLowerCase())
-    const isLiked = await getLikedNft(user.fullAddress, sale.nftId, sro721)
-    return {id: sale.nftId.toString(), metadata: {...metadata, url: url}, sale: {...sale, price: ethers.utils.formatEther(sale.price)}, owner: ownerData, creator: creatorData, isLiked: isLiked }
+    const metadata = dataNFTS[sale.nftId - 1]
+    const creatorData = await userData(dataNFTS[sale.nftId - 1].author.toLowerCase());
+    const ownerData = await userData(dataNFTS[sale.nftId - 1].owner.toLowerCase())
+    return {id: sale.nftId.toString(), metadata: metadata, sale: {...sale, price: ethers.utils.formatEther(sale.price)}, owner: ownerData, creator: creatorData, isLiked: true }
   } catch (e){
     console.error(e)
   }
