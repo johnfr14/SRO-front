@@ -1,6 +1,6 @@
 import { lazy, useEffect, useState, memo } from "react";
 import { useUser } from '../../context/UserContext'
-import { onSale, nfts } from "../../TheGraph/api";
+import { onSale, onSaleOwned, created, owned, nfts } from "../../TheGraph/api";
 
 const Card = lazy(() => import("../Card/Card"));
 const Noitems = lazy(() => import("../UserMainPage/Noitems"));
@@ -12,9 +12,22 @@ const CardList = ({ idx, marketPlace }) => {
 
   useEffect(() => {
     nfts().then(result => setNfts(result))
-    onSale().then(result => setData(result))
-  }, []);
-
+    switch (idx) {
+      case 0: 
+        onSale().then(result => setData(result))
+        break
+      case 1:
+        onSaleOwned(userState.data.fullAddress).then(result => setData(result))
+        break
+      case 2:
+        owned(userState.data.fullAddress).then(result => setData(result))
+        break
+      case 3:
+        created(userState.data.fullAddress).then(result => setData(result))
+        break
+      default:
+    }
+  }, [idx, userState.data.fullAddress]);
   return (
     <>
       {data.length > 0 && dataNFTS.length > 0 ? (
