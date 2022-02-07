@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Fragment, useRef } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { useContracts } from "../../context/ContractContext";
@@ -7,6 +7,7 @@ import { LoaderIcon } from "..";
 import { deleteIcon, checkmarkIcon } from "../../images";
 import classnames from "classnames";
 import { handleApproveXsro, handleBuy, initialStateModal } from "../../dataFunctions/handleButtons";
+import { fetchApprovedXsro } from "../../dataFunctions/fetchData";
 
 const ModPurchase = ({ open, setOpen, sale, nft, user }) => {
   const cancelButtonRef = useRef(null);
@@ -16,10 +17,10 @@ const ModPurchase = ({ open, setOpen, sale, nft, user }) => {
   const handleApproveButton = () => handleApproveXsro(xsro, sale, modal, setModal)
   const handleBuyButton = () => handleBuy(sale, marketplace, modal, setModal, open, setOpen)
 
-  // useEffect(() => {
-  //   fetchApprovedXsro(nextStep.nftId, sro721)
-  //   .then(result => setModal({...initialStateModal, isApproved: result === MarketplaceAddress}));
-  // }, [sale.id, sro721]);
+  useEffect(() => {
+    fetchApprovedXsro(xsro, user.fullAddress)
+    .then(result => setModal({...initialStateModal, isApproved: result >= sale.price}));
+  }, [sale.price, xsro, user.fullAddress]);
 
   return (
     <Transition.Root show={open.buyNft} as={Fragment}>

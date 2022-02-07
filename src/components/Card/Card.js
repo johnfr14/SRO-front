@@ -10,19 +10,21 @@ import { logoSRO } from "../../images";
 import { handleLikeButton } from "../../dataFunctions/handleButtons";
 const MediaCard = lazy(() => import("../Card/MediaCard"));
 
-const Card = ({ idx, user, data }) => {
-  const { sro721, marketplace } = useContracts();
+const Card = ({ idx, user, data, dataNFTS }) => {
+  const { sro721 } = useContracts();
   const [nft, setNft] = useState(defaultCardData);
-  // console.log(nft)
-
+  const [fetch, setfetch] = useState(true);
+  
   const handleButton = () => handleLikeButton(nft, sro721).then((result) => setNft(result))
 
   useEffect(() => {
-    if (sro721 !== null) {
-      fetchData(idx, user, data, sro721, marketplace)
+    if (fetch) {
+      fetchData(idx, user, data, dataNFTS)
       .then((result) => setNft(result));
+      setfetch(false)
     }
-  }, [idx, marketplace, sro721, data, user]);
+    
+  }, [idx, dataNFTS, data, user, fetch]);
 
   return (
     <div className="max-w-xs bg-gray-900 shadow-lg rounded-xl p-2 border-2 border-gray-200 border-opacity-25 pb-5 relative">

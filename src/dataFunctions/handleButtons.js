@@ -132,7 +132,7 @@ export const handleApproveNft = async (sro721, nextStep, modal, setModal) => {
     const tx = await sro721.approve(MarketplaceAddress, nextStep.nftId);
     await tx.wait();
     setModal({...modal, loading: false});
-    setModal({...modal, setIsApproved: true});
+    setModal({...modal, isApproved: true});
     toast.success(`Nft approved successfully \n`, {
       position: "top-right",
       autoClose: 2000,
@@ -314,7 +314,7 @@ export const handleBuy = async (sale, marketplace, modal, setModal, open, setOpe
     });
     setModal({...modal, isBought: true});
     setTimeout(() => {
-      setOpen({ ...open, removeSale: false })
+      setOpen({ ...open, buyNft: false })
     }, 2000);
   } catch (e) {
     setModal({...modal, loading: false});
