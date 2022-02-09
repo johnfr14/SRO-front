@@ -1,9 +1,14 @@
 const axios = require("axios")
 
-//Marketplace.sol
-export const onSale = async () => {
+/****************************************
+            Marketplace.sol
+*****************************************/
+//Query: https://api.thegraph.com/subgraphs/name/johnfr14/marketplace
+
+
+export const getNftOnSale = async () => {
     const result = await axios({
-        url: 'https://api.thegraph.com/subgraphs/id/QmdTJ5vrWPN8sKKBdQESWTm71EpZH92HUc91cyCVEuVFgm',
+        url: 'https://api.thegraph.com/subgraphs/name/johnfr14/marketplace',
         method: 'post',
         data: {
             query: `
@@ -25,12 +30,13 @@ export const onSale = async () => {
     return result.data.data.sales
 }
 
+// Fetch only the nfts put on sale by the user
 export const onSaleOwned = async (address) => {
     
     let result 
     try {
     result = await axios({
-        url: 'https://api.thegraph.com/subgraphs/id/QmdTJ5vrWPN8sKKBdQESWTm71EpZH92HUc91cyCVEuVFgm',
+        url: 'https://api.thegraph.com/subgraphs/name/johnfr14/marketplace',
         method: 'post',
         data: {
             query: `
@@ -56,27 +62,35 @@ export const onSaleOwned = async (address) => {
     return result
 }
 
-// SRO721.sol
+/****************************************
+                SRO.sol
+*****************************************/
+//Query: https://api.thegraph.com/subgraphs/name/johnfr14/sro
+
+
+// fetch all the nfts created with all the datas existing
 export const nfts = async () => {
     const result = await axios({
-        url: 'https://api.thegraph.com/subgraphs/id/QmQTVV1oDvedYSafqrDsR2eUnDbdhP2gLdG5jhXaQWdpxv',
+        url: 'https://api.thegraph.com/subgraphs/name/johnfr14/sro',
         method: 'post',
         data: {
         query: `
             query {
-                nfts (orderBy: nftId, orderDirection: asc) {
+                nfts {
                     id
                     nftId
-                    author
-                    owner
-                    timeStamp
-                    royalties
-                    likes
-                    isLiked
                     title
                     description
+                    timeStamp
+                    author {id}
+                    owner {id}
+                    royalties
+                    likeCount
+                    liked (where: {isLiked: true}){
+                        userAddress
+                    }
                     url
-                }
+                  }
             }
         `
         }
@@ -84,27 +98,29 @@ export const nfts = async () => {
     return result.data.data.nfts
 }
 
+// Fetch only the nfts created by the user
 export const created = async (address) => {
     let result 
     try {
     result = await axios({
-        url: 'https://api.thegraph.com/subgraphs/id/QmQTVV1oDvedYSafqrDsR2eUnDbdhP2gLdG5jhXaQWdpxv',
+        url: 'https://api.thegraph.com/subgraphs/name/johnfr14/sro',
         method: 'post',
         data: {
             query: `
                 query {
-                    nfts(where: {author: "${address}"}, orderBy: id, orderDirection: asc) 
-                    {
+                    nfts (where: {author: {id: "${address}"}}) {
                         id
                         nftId
-                        author
-                        owner
-                        timeStamp
-                        royalties
-                        likes
-                        isLiked
                         title
                         description
+                        timeStamp
+                        author {id}
+                        owner {id}
+                        royalties
+                        likeCount
+                        liked (where: {isLiked: true}){
+                                userAddress
+                        }
                         url
                     }
                 }
@@ -118,27 +134,29 @@ export const created = async (address) => {
     return result
 }
 
+// Fetch only the owned created by the user
 export const owned = async (address) => {
     let result 
     try {
     result = await axios({
-        url: 'https://api.thegraph.com/subgraphs/id/QmQTVV1oDvedYSafqrDsR2eUnDbdhP2gLdG5jhXaQWdpxv',
+        url: 'https://api.thegraph.com/subgraphs/name/johnfr14/sro',
         method: 'post',
         data: {
             query: `
                 query {
-                    nfts(where: {owner: "${address}"}, orderBy: id, orderDirection: asc) 
-                    {
+                    nfts (where: {owner: {id: "${address}"}}) {
                         id
                         nftId
-                        author
-                        owner
-                        timeStamp
-                        royalties
-                        likes
-                        isLiked
                         title
                         description
+                        timeStamp
+                        author {id}
+                        owner {id}
+                        royalties
+                        likeCount
+                        liked (where: {isLiked: true}){
+                            userAddress
+                        }
                         url
                     }
                 }
