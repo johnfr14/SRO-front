@@ -1,12 +1,14 @@
 import { lazy, useEffect, useState, memo } from "react";
 import { useUser } from '../../context/UserContext'
 import { getNftOnSale, onSaleOwned, created, owned, nfts } from "../../TheGraph/api";
+import {useLocation} from 'react-router-dom'
 
 const Card = lazy(() => import("../Card/Card"));
 const Noitems = lazy(() => import("../UserMainPage/Noitems"));
 
 const CardList = ({ idx, marketPlace }) => {
   const { userState } = useUser()
+  const location = useLocation();
   const [cardList, setCardList] = useState([]);
   const [allNfts, setAllNfts] = useState([]);
 
@@ -17,17 +19,17 @@ const CardList = ({ idx, marketPlace }) => {
         getNftOnSale().then(result => setCardList(result))
         break
       case 1:
-        onSaleOwned(userState.data.fullAddress).then(result => setCardList(result))
+        onSaleOwned(location.state || location.pathname.split('/').pop()).then(result => setCardList(result))
         break
       case 2:
-        owned(userState.data.fullAddress).then(result => setCardList(result))
+        owned(location.state || location.pathname.split('/').pop()).then(result => setCardList(result))
         break
       case 3:
-        created(userState.data.fullAddress).then(result => setCardList(result))
+        created(location.state || location.pathname.split('/').pop()).then(result => setCardList(result))
         break
       default:
     }
-  }, [idx, userState.data.fullAddress]);
+  }, [idx, location]);
   return (
     <>
       {cardList.length > 0 && allNfts.length > 0 ? (
