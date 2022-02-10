@@ -108,30 +108,31 @@ export const created = async (address) => {
         data: {
             query: `
                 query {
-                    nfts (where: {author: {id: "${address}"}}) {
-                        id
-                        nftId
-                        title
-                        description
-                        timeStamp
-                        author {id}
-                        owner {id}
-                        royalties
-                        likeCount
-                        liked (where: {isLiked: true}){
-                                userAddress
+                    user (id: "${address.toLowerCase()}"){
+                        created {
+                          id
+                          nftId
+                          title
+                          description
+                          timeStamp
+                          author {id}
+                          owner {id}
+                          royalties
+                          likeCount
+                          liked (where: {isLiked: true}) {
+                            userAddress
+                          }
+                          url
                         }
-                        url
                     }
                 }
             `
         }
     })
-        result = result.data.data.nfts
     } catch (error) {
         result = []
     }
-    return result
+    return result.data.data.user.created
 }
 
 // Fetch only the owned created by the user
@@ -144,28 +145,29 @@ export const owned = async (address) => {
         data: {
             query: `
                 query {
-                    nfts (where: {owner: {id: "${address}"}}) {
-                        id
-                        nftId
-                        title
-                        description
-                        timeStamp
-                        author {id}
-                        owner {id}
-                        royalties
-                        likeCount
-                        liked (where: {isLiked: true}){
+                    user (id: "${address.toLowerCase()}"){
+                        owned {
+                          id
+                          nftId
+                          title
+                          description
+                          timeStamp
+                          author {id}
+                          owner {id}
+                          royalties
+                          likeCount
+                          liked (where: {isLiked: true}) {
                             userAddress
+                          }
+                          url
                         }
-                        url
                     }
                 }
             `
         }
     })
-        result = result.data.data.nfts
     } catch (error) {
         result = []
     }
-    return result
+    return result.data.data.user.owned
 }

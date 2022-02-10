@@ -108,17 +108,17 @@ export const pinOnIpfs = async (file) => {
 
 // src/components/UserMainPage/CardList.js
 
-export const fetchData = async (index, user, data, dataNFTS, sro721, marketplace) => {
+export const fetchData = async (index, user, card, nftMetadata) => {
   try {
     switch (index) {
       case 0:
-        return await fetchLastNftOnSale(data, dataNFTS);
+        return await fetchLastNftOnSale(user, card, nftMetadata);
       case 1:
-        return await getNftOnSale(user, data, dataNFTS);
+        return await getNftOnSale(user, card, nftMetadata);
       case 2:
-        return await getNftOwned(user, data);
+        return await getNftOwned(user, card);
       case 3:
-        return await getNftCreated(user, data);
+        return await getNftCreated(user, card);
       default:
         return "error";
     }
@@ -127,40 +127,50 @@ export const fetchData = async (index, user, data, dataNFTS, sro721, marketplace
   }
 }
 
-export const fetchLastNftOnSale = async(sale, dataNFTS) => {
+export const fetchLastNftOnSale = async(user, card, nftMetadata) => {
   try {
-    const metadata = dataNFTS[sale.nftId - 1]
-    const creatorData = await userData(dataNFTS[sale.nftId - 1].author.toLowerCase());
-    const ownerData = await userData(dataNFTS[sale.nftId - 1].owner.toLowerCase())
-    return {id: sale.nftId.toString(), metadata: metadata, sale: {...sale, price: ethers.utils.formatEther(sale.price)}, owner: ownerData, creator: creatorData, isLiked: true }
+    let isLiked =  nftMetadata.liked.every(elem => elem.userAddress !== user.fullAddress.toLowerCase())
+    isLiked = !isLiked
+    const creatorData = await userData(nftMetadata.author.id);
+    const ownerData = await userData(nftMetadata.owner.id)
+    return {id: card.nftId.toString(), metadata: nftMetadata, sale: {...card, price: ethers.utils.formatEther(card.price)}, owner: ownerData, creator: creatorData, isLiked: isLiked }
   } catch (e){
     console.error(e)
   }
 }
 
-export const getNftOnSale = async (user, sale, dataNFTS) => {
+export const getNftOnSale = async (user, card, nftMetadata) => {
   try {
-    const metadata = dataNFTS[sale.nftId - 1]
-    const creator = await userData(dataNFTS[sale.nftId - 1].author.toLowerCase());
-    return {id: sale.nftId.toString(), metadata: metadata, sale: {...sale, price: ethers.utils.formatEther(sale.price)}, owner: user, creator: creator, isLiked: true }
+    let isLiked =  nftMetadata.liked.every(elem => elem.userAddress !== user.fullAddress.toLowerCase())
+    isLiked = !isLiked
+    const creator = await userData(nftMetadata.author.id);
+    const owner = await userData(nftMetadata.owner.id);
+    return { sale: {...card, price: ethers.utils.formatEther(card.price)}, owner: owner, creator: creator, isLiked: isLiked }
   } catch (error) {
     console.error(error.message)    
   }
 };
 
-export const getNftOwned = async (user, data) => {
+export const getNftOwned = async (user, nftMetadata) => {
   try{
-    const creator = await userData(data.author.toLowerCase());
-    return {...defaultCardData, id: data.nftId, metadata: data, owner: user, creator: creator, isLiked: true}
+    let isLiked =  nftMetadata.liked.every(elem => elem.userAddress !== user.fullAddress.toLowerCase())
+    isLiked = !isLiked
+    const creator = await userData(nftMetadata.author.id);
+    const owner = await userData(nftMetadata.owner.id);
+    return {...defaultCardData, owner: owner, creator: creator, isLiked: isLiked}
   } catch (error) {
     console.error(error.message)
   }
 };
 
-export const getNftCreated = async (user, data) => {
+export const getNftCreated = async (user, nftMetadata) => {
   try {
-    const owner = await userData(data.owner);
-    return {...defaultCardData, id: data.nftId, metadata: data, owner: owner, creator: user, isLiked: true}
+    console.log(nftMetadata)
+    let isLiked =  nftMetadata.liked.every(elem => elem.userAddress !== user.fullAddress.toLowerCase())
+    isLiked = !isLiked
+    const owner = await userData(nftMetadata.owner.id);
+    const creator = await userData(nftMetadata.author.id);
+    return {...defaultCardData, owner: owner, creator: creator, isLiked: isLiked}
   } catch (error) {
     console.error(error.message)    
   }
