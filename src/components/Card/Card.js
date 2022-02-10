@@ -59,6 +59,7 @@ const Card = ({ idx, user, card, nftMetadata }) => {
             <div className="absolute flex flex-col top-0 right-0 p-3">
               <button
                 onClick={handleButton}
+                disabled={user.fullAddress.startsWith('0x0000000')}
                 className="transition ease-in duration-300 bg-gray-800  hover:text-yellow-400 shadow hover:shadow-md text-gray-500 rounded-full w-8 h-8 text-center p-1"
               >
                 <svg
