@@ -47,14 +47,6 @@ export const defaultCardData = {
 }
 
 //------------- General --------------//
-// const getLikedNft = async (user, id, sro721) => {
-//   try {
-//     const isLiked = await sro721.isLiked(user, id.toString());
-//     return isLiked;
-//   } catch (error) {
-//     console.error(error.message)    
-//   }
-// };
 
 export const SubstrAdress = (dataAdress) => {
   return dataAdress.substr(0, 6) + "..." + dataAdress.substr(-4);
@@ -165,7 +157,6 @@ export const getNftOwned = async (user, nftMetadata) => {
 
 export const getNftCreated = async (user, nftMetadata) => {
   try {
-    console.log(nftMetadata)
     let isLiked =  nftMetadata.liked.every(elem => elem.userAddress !== user.fullAddress.toLowerCase())
     isLiked = !isLiked
     const owner = await userData(nftMetadata.owner.id);

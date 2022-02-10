@@ -5,11 +5,11 @@ import { pinOnIpfs, userData } from "./fetchData";
 import { MarketplaceAddress } from "../contracts/Marketplace";
 
 //---------- General ----------//
-export const handleLikeButton = async (nft, sro721, isLiked) => {
+export const handleLikeButton = async (nftId, likeCount, isLiked, sro721 ) => {
     try {
-      const tx = await sro721.like(nft.id);
+      const tx = await sro721.like(nftId);
       await tx.wait();
-      return {...nft,  likeCount: !nft.isLiked ? nft.metadata.likes + 1 : nft.metadata.likes - 1, isLiked: !isLiked}
+      return {likeCount: isLiked ? likeCount - 1 : likeCount + 1, isLiked: !isLiked}
     } catch (e) {
       console.error(e.message);
       toast.error(e.message, {

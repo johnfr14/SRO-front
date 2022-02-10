@@ -15,9 +15,10 @@ const MediaCard = lazy(() => import("../Card/MediaCard"));
 const Card = ({ idx, user, card, nftMetadata }) => {
   const { sro721 } = useContracts();
   const [nft, setNft] = useState({...defaultCardData, nftMetadata});
+  const [like, setLike] = useState({likeCount: nftMetadata.likeCount, isLiked: nftMetadata.liked.find(element => element.userAddress === user.fullAddress.toLowerCase())})
   const [fetch, setfetch] = useState(true);
   
-  const handleButton = () => handleLikeButton(nftMetadata, sro721, nft.isLiked).then((result) => setNft(result))
+  const handleButton = () => handleLikeButton(nftMetadata.id, like.likeCount, like.isLiked, sro721).then((result) => setLike(result))
 
   useEffect(() => {
     if (fetch && user.address !== null) {
@@ -63,7 +64,7 @@ const Card = ({ idx, user, card, nftMetadata }) => {
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="h-6 w-6"
-                  fill={nft.isLiked ? "red" : "none"}
+                  fill={like.isLiked ? "red" : "none"}
                   viewBox="0 0 24 24"
                   stroke="currentColor"
                 >
@@ -74,7 +75,7 @@ const Card = ({ idx, user, card, nftMetadata }) => {
                     d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
                   />
                 </svg>
-                <p children={nftMetadata.likeCount}></p>
+                <p children={like.likeCount}></p>
               </button>
             </div>
             <Suspense fallback={<div>Loading...</div>}>
