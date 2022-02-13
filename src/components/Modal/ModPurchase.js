@@ -16,7 +16,6 @@ const ModPurchase = ({ open, setOpen, sale, nft, user }) => {
 
   const handleApproveButton = () => handleApproveXsro(xsro, sale, modal, setModal)
   const handleBuyButton = () => handleBuy(sale, marketplace, modal, setModal, open, setOpen)
-
   useEffect(() => {
     fetchApprovedXsro(xsro, user.fullAddress)
     .then(result => setModal({...initialStateModal, isApproved: result >= sale.price}));
@@ -87,7 +86,7 @@ const ModPurchase = ({ open, setOpen, sale, nft, user }) => {
                         </div>
                       </div>
                       <div className="pt-5 ml-4 text-left">
-                        <div className="flex text-yellow-400">Balance : <p className="ml-2 text-white">{user.balance.xsro} XSRO</p></div>
+                        {!user.fullAddress.startsWith('0x000') && <div className="flex text-yellow-400">Balance : <p className="ml-2 text-white">{user.balance.xsro} XSRO</p></div>}
                         <div className="flex text-yellow-400">Service fee : <p className="ml-2 text-white">{(sale.price * 0.025).toFixed(5)} XSRO</p></div>
                         <div className="flex text-yellow-400">Total Price : <p className="ml-2 text-white">{sale.price} XSRO</p></div>
                       </div>

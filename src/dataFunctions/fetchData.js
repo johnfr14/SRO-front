@@ -1,7 +1,6 @@
 import axios from "axios";
 import { ethers } from "ethers";
 import { MarketplaceAddress } from "../contracts/Marketplace";
-import { SRO721Address } from "../contracts/SRO721";
 import { userDefault } from "../images";
 
 export const defaultCardData = {
@@ -69,7 +68,6 @@ export const userData = async (address) => {
     portfolio: user.profile.portfolio,
     avatar: user.profile.avatar,
   };
-
   return data;
 } catch (e) {
   console.error(e.message)
@@ -168,31 +166,6 @@ export const getNftCreated = async (user, nftMetadata) => {
 };
 
 // src/pages/NftPage.js
-export const fetchNft = async(sro721, marketplace, id) => {
-  try {
-    let sale = {status: '0'};
-    if (await marketplace.isOnSale(SRO721Address, id)) {
-      const saleId = await marketplace.getSaleId(SRO721Address, id)
-      const result = await marketplace.getSale(saleId)
-      sale = {
-        status: result[0].toString(),
-        nftId: result[1].toString(),
-        saleId: saleId,
-        price: ethers.utils.formatEther(result[2]),
-        seller: result[3],
-        collection: result[4],
-      }
-    } 
-    const fetchNft = await sro721.getNftById(id)
-    const owner = await sro721.ownerOf(id)
-    const ownerData = await userData(owner)
-    const uri = await sro721.tokenURI(id)
-  
-    return {data: {...fetchNft, url: uri}, owner: ownerData, sale: sale}
-  } catch (error) {
-    console.error(error.message)
-  }
-}
 
 //---------- NFT Page----------//
 export const fetchApprovedNft = async (id, sro721) => {

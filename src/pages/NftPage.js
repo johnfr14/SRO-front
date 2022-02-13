@@ -3,9 +3,8 @@ import Layout from "../components/Layout";
 import { useState, useEffect } from 'react'
 import { useRouteMatch } from "react-router-dom";
 import { Container, Nft } from "../components/index";
-import { useContracts } from "../context/ContractContext";
 import { useUser } from '../context/UserContext'
-import { fetchNft } from "../dataFunctions/fetchData";
+import { getNftById } from "../TheGraph/api"
 
 const MediaDemo =
   "https://img.rarible.com/prod/image/upload/t_preview/prod-itemImages/0xd07dc4262bcdbf85190c01c996b4c06a461d2430:8207";
@@ -14,35 +13,33 @@ let SymboleNft = "SRO";
 
 const BuyNft = () => {
   const { userState } = useUser()
-  const { sro721, marketplace } = useContracts();
   const [nft, setNft] = useState()
+  const [fetch, setFetch] = useState(true)
   const match = useRouteMatch("/:address/:id");
 
   useEffect(() => {
-    if(sro721 !== null) {
-      fetchNft(sro721, marketplace, match.params.id).then((result) => setNft(result))
+    if(fetch) {
+      getNftById(match.params.id).then((result) => setNft(result))
     }
-  }, [sro721, marketplace, match.params.id])
-
+  }, [match.params.id, setFetch, fetch])
   return (
     <>
       <Layout>
         {nft && <Container
           children={
             <Nft
-              mediaURL={nft.data.url || MediaDemo}
+              mediaURL={nft.url || MediaDemo}
               nftId={match.params.id}
-              nftName={nft.owner.username}
-              nftTitle={nft.data.title}
+              nftTitle={nft.title}
               nftNumberOfCopie={nftNumberOfCopie}
-              nftDescription={nft.data.description}
-              priceNft={nft.sale.status === '1' ? nft.sale.price: 'not for sale'}
+              nftDescription={nft.description}
+              priceNft={nft.status === '1' ? nft.sale.price: 'not for sale'}
               SymboleNft={SymboleNft}
-              Royalties={nft.data.royalties}
-              owner={nft.owner}
+              Royalties={nft.royalties}
+              ownerAddress={nft.owner.id}
               user={userState.data}
               sale={nft.sale}
-              nft={nft.data}
+              nft={nft}
             />
           }
         />}

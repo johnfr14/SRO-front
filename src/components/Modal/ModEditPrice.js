@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Fragment, useRef } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { useContracts } from "../../context/ContractContext";
@@ -7,13 +7,23 @@ import { LoaderIcon } from "..";
 import { deleteIcon, checkmarkIcon } from "../../images";
 import classnames from "classnames";
 import { handleEdit, initialStateModal } from '../../dataFunctions/handleButtons';
+import { ethers } from 'ethers'
 
 const ModEditPrice = ({ open, setOpen, sale, nft }) => {
   const { marketplace } = useContracts()
   const cancelButtonRef = useRef(null);
   const [modal, setModal] = useState(initialStateModal)
+  const [price ,setPrice] = useState(null)
+  const [fetch ,setFetch] = useState(true)
 
   const handleEditButton = () => handleEdit(sale, marketplace, modal, setModal, open, setOpen)
+
+  useEffect(() => {
+    if (sale.length > 0 && fetch) {
+      setPrice(ethers.utils.formatEther(sale[0].price))
+      setFetch(false)
+    }
+  }, [sale, fetch])
 
   return (
     <Transition.Root show={open.editPrice} as={Fragment}>
@@ -73,7 +83,7 @@ const ModEditPrice = ({ open, setOpen, sale, nft }) => {
                             placeholder="1"
                             onChange={(e) => setModal({...modal, newPrice: e.target.value})}
                           />
-                          <p className="flex justify-center mt-3 text-left text-yellow-400">Current price : <span className="ml-1 text-white"> {sale.price} XSRO</span></p>
+                          <p className="flex justify-center mt-3 text-left text-yellow-400">Current price : <span className="ml-1 text-white"> {price} XSRO</span></p>
                         </div>
                       </div>
                       <div className="flex items-center justify-center pt-4 pb-3">

@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { NftViewBuy, TabZoneBuyNft } from "./index";
 import { Button, ButtonOnClick } from "../Button";
 import { NameTag } from "../Tags";
+import { userData } from "../../dataFunctions/fetchData";
 import {
   ModFixedPrice,
   ModCreateSale,
@@ -10,6 +11,8 @@ import {
   ModEditPrice,
 } from "../Modal";
 import { SRO721Address } from "../../contracts/SRO721";
+import { defaultCardData } from "../../dataFunctions/fetchData";
+import { SubstrAdress } from "../../dataFunctions/fetchData";
 
 const linkToNameTag2 = "/";
 
@@ -18,14 +21,13 @@ const NameTagTitle2 = "Collection: SRO";
 const Nft = ({
   mediaURL,
   nftId,
-  nftName,
   nftTitle,
   nftNumberOfCopie,
   nftDescription,
   priceNft,
   SymboleNft,
   Royalties,
-  owner,
+  ownerAddress,
   user,
   sale,
   nft,
@@ -43,6 +45,15 @@ const Nft = ({
     price: null,
     isNext: false,
   });
+  const [owner, setOwner] = useState(defaultCardData.owner)
+  const [fetch, setFetch] = useState (true)
+
+  useEffect(() => {
+    if (fetch) {
+      userData(ownerAddress).then(result => setOwner(result))
+      setFetch(false)
+    }
+  }, [ownerAddress, fetch])
   return (
     <>
       <ModFixedPrice
@@ -90,7 +101,7 @@ const Nft = ({
                 </div> */}
                 <div className="flex text-left">
                   <h3 className="text-yellow-300 font-bold">Owner : </h3>
-                  <p className="pl-4 text-gray-300">{nftName}</p>
+                  <p className="pl-4 text-gray-300">{owner.username + ` ${SubstrAdress(ownerAddress)}` || SubstrAdress(ownerAddress)}</p>
                 </div>
                 <div className="flex  text-left ">
                   <h3 className="text-yellow-300 font-bold">
@@ -106,13 +117,13 @@ const Nft = ({
                 </div>
               </div>
               <div className="flex flex-col md:flex-row items-center justify-around mx-2">
-                <div className="mb-3 md:mb-0 m-2">
+                {owner && <div className="mb-3 md:mb-0 m-2">
                   <NameTag
                     linkToNameTag={owner.fullAddress}
                     userIcon={owner.avatar}
                     NameTagTitle={owner.username}
                   />
-                </div>
+                </div>}
                 <div className="mb-3 md:mb-0 m-2">
                   <NameTag
                     linkToNameTag={linkToNameTag2}
@@ -128,9 +139,9 @@ const Nft = ({
               <div className="">
                 <TabZoneBuyNft />
               </div>
-              {sale.status === "1" ? (
+              {sale.length > 0 ? (
                 <div className="flex items-center justify-center mb-5 mt-8 space-x-10">
-                  {owner.fullAddress === user.fullAddress ? (
+                  {ownerAddress === user.fullAddress.toLowerCase() ? (
                     <>
                       <ButtonOnClick
                         onClick={() => setOpen({ ...open, editPrice: true })}
@@ -163,7 +174,7 @@ const Nft = ({
                 </div>
               ) : (
                 <div className="flex items-center justify-center mb-5 mt-8 space-x-10">
-                  {owner.fullAddress === user.fullAddress ? (
+                  {ownerAddress === user.fullAddress.toLowerCase() ? (
                     <ButtonOnClick
                       onClick={() => setOpen({ ...open, createSale: true })}
                       buttonStyle
@@ -184,7 +195,7 @@ const Nft = ({
                 </div>
               )}
               <div className="flex items-center justify-center mb-5 mt-8 space-x-10">
-                {owner.fullAddress === user.fullAddress ? (
+                {ownerAddress === user.fullAddress.toLowerCase() ? (
                   <>
                     {/* <Button target={""} buttonStyle>
                       Start Auction(Coming Soon)
