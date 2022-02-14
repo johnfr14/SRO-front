@@ -17,7 +17,7 @@ const Header = () => {
       <div className="flex flex-row items-center justify-around sm:space-x-5 sm:mx-auto md:mx-0">
         <Button target={"/"}>Marketplace</Button>
         <Button target={`/user/${web3State.account}`}>Dashboard</Button>
-        <NavLink className="text-white hover:text-primary-200 " to={{ pathname: "https://swap.sarahro.io/" }} target="_blank">Swap xSRO</NavLink>
+        <NavLink className="text-white hover:text-primary-200 " to={{ pathname: "https://sro-swap-training.netlify.app/" }} target="_blank">Swap xSRO</NavLink>
 
         {!web3State.isLogged ? <Login noLogged className={"hidden md:block"} /> :
         web3State.chainId === 4 ? <Button target={"/create/erc721"} buttonStyle className={"hidden md:block"}>Create NFT</Button> :
