@@ -6,7 +6,6 @@ import { Web3Context } from "web3-hooks";
 
 const MarketPlace = () => {
   const [web3State] = React.useContext(Web3Context);  
-  console.log(web3State)
   return (
     <>
       <div>
