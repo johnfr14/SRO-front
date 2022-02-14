@@ -24,7 +24,6 @@ const Nft = ({
   nftTitle,
   nftNumberOfCopie,
   nftDescription,
-  priceNft,
   SymboleNft,
   Royalties,
   ownerAddress,
@@ -53,7 +52,7 @@ const Nft = ({
       userData(ownerAddress).then(result => setOwner(result))
       setFetch(false)
     }
-  }, [ownerAddress, fetch])
+  }, [ownerAddress, fetch, sale])
   return (
     <>
       <ModFixedPrice
@@ -139,7 +138,7 @@ const Nft = ({
               <div className="">
                 <TabZoneBuyNft />
               </div>
-              {sale.length > 0 ? (
+              {sale.price !== null ? (
                 <div className="flex items-center justify-center mb-5 mt-8 space-x-10">
                   {ownerAddress === user.fullAddress.toLowerCase() ? (
                     <>
@@ -162,7 +161,7 @@ const Nft = ({
                         onClick={() => setOpen({ ...open, buyNft: true })}
                         buttonStyle
                       >
-                        Buy for {priceNft} {SymboleNft}
+                        Buy for {sale.price} {SymboleNft}
                       </ButtonOnClick>
                       <ButtonOnClick >
                         <div className="flex">

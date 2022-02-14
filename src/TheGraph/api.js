@@ -1,5 +1,6 @@
+import { defaultCardData } from "../dataFunctions/fetchData"
+import { ethers } from "ethers"
 const axios = require("axios")
-
 
 /****************************************
             Marketplace.sol
@@ -222,8 +223,15 @@ export const getNftById = async (nftId) => {
         }
     })
 
+    if (sale.data.data.sales.length > 0) {
+        sale = sale.data.data.sales[0]
+        sale.price = ethers.utils.formatEther(sale.price)
+    } else {
+        sale = defaultCardData.sale
+    }
+
     } catch (error) {
         result = {}
     }
-    return {...result.data.data.nft, sale: sale.data.data.sales }
+    return {...result.data.data.nft, sale: sale }
 }

@@ -69,7 +69,7 @@ const ModPurchase = ({ open, setOpen, sale, nft, user }) => {
                             You are about to purchase{" "}
                             <i className="text-yellow-400 mr-1"> {nft.title}</i>
                             from {" "}
-                            <i className="text-purple-500 mr-1"> {nft.author}</i>
+                            <i className="text-purple-500 mr-1"> {nft.author.id}</i>
                           </p>
                         </div>
                       </div>

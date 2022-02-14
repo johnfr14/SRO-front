@@ -14,7 +14,7 @@ const ModRemoveSale = ({ open, setOpen, sale, nft }) => {
   const [modal, setModal] = useState(initialStateModal)
 
 
-  const handleRemoveButton = async () => handleRemove(sale[0], marketplace, modal, setModal, open, setOpen)
+  const handleRemoveButton = async () => handleRemove(sale, marketplace, modal, setModal, open, setOpen)
 
   return (
     <Transition.Root show={open.removeSale} as={Fragment}>
