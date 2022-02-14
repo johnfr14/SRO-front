@@ -1,18 +1,17 @@
 import classnames from "classnames";
 import { NavLink } from "react-router-dom";
 
-function Button({ children, className, target, buttonStyle }) {
+function Button({ children, className, target, buttonStyle, wrongNetwork }) {
   return (
     <>
       <NavLink
-        to={target}
+        to={target ? target : ''}
         className={classnames(
-          " transition duration-300 bg-gradient-to-br rounded-xl hover:opacity-75",
+          "text-white text-center transition duration-300 rounded-xl hover:opacity-75",
           className,
-          (buttonStyle &&
-            "text-black px-8 py-3 from-primary-200 to-primary-200") ||
-            "text-white hover:text-primary-200"
-        )}
+          wrongNetwork && "px-8 py-3 bg-red-500",
+          buttonStyle && "text-gray-800 bg-yellow-400 px-8 py-3 hover:bg-yellow-600")
+        }
       >
         {children}
       </NavLink>

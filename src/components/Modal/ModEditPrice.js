@@ -12,6 +12,7 @@ const ModEditPrice = ({ open, setOpen, sale, nft }) => {
   const { marketplace } = useContracts()
   const cancelButtonRef = useRef(null);
   const [modal, setModal] = useState(initialStateModal)
+ 
 
   const handleEditButton = () => handleEdit(sale, marketplace, modal, setModal, open, setOpen)
 

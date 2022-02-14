@@ -27,23 +27,6 @@
 <div>
   <h2><b>À propos</b></h2>
   <h4 id="swap-about" > <b>SarahRo</b> est une place de marché en ligne qui relie les artistes et les collectionneurs grâce à la technologie Blockchain pour vendre, investir et posséder facilement des œuvres d’art et des objets de collection en toute transparence. </h4>
-  <p>
-  Pour plus d'informations : 
-    <ul>
-    <li>Site - <a href="https://www.sarahro.io">sarahro.io</a></li>
-    <li>Swap xSRO - <a href="https://www.swap.sarahro.io">swap.sarahro.io</a></li>
-    <li>Marketplace SRO - <a href="https://www.apps.sarahro.io">apps.sarahro.io</a></li>
-    <li>Documentations SRO - <a href="https://www.docs.sarahro.io">docs.sarahro.io</a></li>
-    <li><a href="https://www.docs.sarahro.io">Repertoires GitHub</a></li>
-    <ul>
-      <li>Front - <a href="https://github.com/SRO-SarahRo/xsro-front">xsro-front</a></li>
-      <li>Swap - <a href="https://github.com/SRO-SarahRo/xsro-swap">xsro-swap</a></li>
-      <li>Contrats - <a href="https://github.com/SRO-SarahRo/xsro-contracts">xsro-contracts</a> </li>
-      <li>Base de donnée - <a href="https://github.com/SRO-SarahRo/bdd-sro">bdd-sro</a> </li>
-      <li>Documentations - <a href="https://github.com/SRO-SarahRo/doc.xsro">doc.xsro</a> </li>
-    </ul>
-  </ul>
-  </p>
 </div>
 
 ----

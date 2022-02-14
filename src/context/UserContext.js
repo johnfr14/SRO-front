@@ -9,8 +9,8 @@ export const UserContext = createContext()
 
 const initialState = { 
   data: {
-    fullAddress: null,
-    address: null,
+    fullAddress: '0x0000000000000000000000000000000000000000',
+    address: '0x00...0000',
     name: null,
     bio: null,
     url: null,
@@ -30,7 +30,7 @@ export const UserContextProvider = ({children}) => {
     const getAccount = async () => {
       try {
         dispatch({type: 'FETCH_INIT'})
-        const data = await userData(web3State.account)
+        const data = await userData(ethers.utils.getAddress(web3State.account))
         const balanceXsro = await xsro.balanceOf(web3State.account)
         dispatch({
           type: 'UPDATE_PROFILE',

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Fragment, useRef } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { useContracts } from "../../context/ContractContext";
@@ -7,6 +7,7 @@ import { LoaderIcon } from "..";
 import { deleteIcon, checkmarkIcon } from "../../images";
 import classnames from "classnames";
 import { handleApproveXsro, handleBuy, initialStateModal } from "../../dataFunctions/handleButtons";
+import { fetchApprovedXsro } from "../../dataFunctions/fetchData";
 
 const ModPurchase = ({ open, setOpen, sale, nft, user }) => {
   const cancelButtonRef = useRef(null);
@@ -15,11 +16,10 @@ const ModPurchase = ({ open, setOpen, sale, nft, user }) => {
 
   const handleApproveButton = () => handleApproveXsro(xsro, sale, modal, setModal)
   const handleBuyButton = () => handleBuy(sale, marketplace, modal, setModal, open, setOpen)
-
-  // useEffect(() => {
-  //   fetchApprovedXsro(nextStep.nftId, sro721)
-  //   .then(result => setModal({...initialStateModal, isApproved: result === MarketplaceAddress}));
-  // }, [sale.id, sro721]);
+  useEffect(() => {
+    fetchApprovedXsro(xsro, user.fullAddress)
+    .then(result => setModal({...initialStateModal, isApproved: result >= sale.price}));
+  }, [sale.price, xsro, user.fullAddress]);
 
   return (
     <Transition.Root show={open.buyNft} as={Fragment}>
@@ -69,7 +69,7 @@ const ModPurchase = ({ open, setOpen, sale, nft, user }) => {
                             You are about to purchase{" "}
                             <i className="text-yellow-400 mr-1"> {nft.title}</i>
                             from {" "}
-                            <i className="text-purple-500 mr-1"> {nft.author}</i>
+                            <i className="text-purple-500 mr-1"> {nft.author.id}</i>
                           </p>
                         </div>
                       </div>
@@ -86,7 +86,7 @@ const ModPurchase = ({ open, setOpen, sale, nft, user }) => {
                         </div>
                       </div>
                       <div className="pt-5 ml-4 text-left">
-                        <div className="flex text-yellow-400">Balance : <p className="ml-2 text-white">{user.balance.xsro} XSRO</p></div>
+                        {!user.fullAddress.startsWith('0x000') && <div className="flex text-yellow-400">Balance : <p className="ml-2 text-white">{user.balance.xsro} XSRO</p></div>}
                         <div className="flex text-yellow-400">Service fee : <p className="ml-2 text-white">{(sale.price * 0.025).toFixed(5)} XSRO</p></div>
                         <div className="flex text-yellow-400">Total Price : <p className="ml-2 text-white">{sale.price} XSRO</p></div>
                       </div>

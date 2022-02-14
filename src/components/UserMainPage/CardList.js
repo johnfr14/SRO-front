@@ -1,30 +1,41 @@
 import { lazy, useEffect, useState, memo } from "react";
-import { useContracts } from "../../context/ContractContext";
-import { fetchCardList } from "../../dataFunctions/fetchData";
 import { useUser } from '../../context/UserContext'
+import { getNftOnSale, onSaleOwned, created, owned, nfts } from "../../TheGraph/api";
+import {useLocation} from 'react-router-dom'
 
 const Card = lazy(() => import("../Card/Card"));
 const Noitems = lazy(() => import("../UserMainPage/Noitems"));
 
 const CardList = ({ idx, marketPlace }) => {
-  const { marketplace, sro721 } = useContracts();
   const { userState } = useUser()
-  const [data, setData] = useState([]);
-  const [fetch, setFetch] = useState(true);
+  const location = useLocation();
+  const [cardList, setCardList] = useState([]);
+  const [allNfts, setAllNfts] = useState([]);
 
   useEffect(() => {
-    if (sro721 !== null && userState.data.address !== null && fetch) {
-      fetchCardList(idx, userState.data, sro721, marketplace).then(result => setData(result));
-      setFetch(false)
+    nfts().then(result => setAllNfts(result))
+    switch (idx) {
+      case 0: 
+        getNftOnSale().then(result => setCardList(result))
+        break
+      case 1:
+        onSaleOwned(location.state || location.pathname.split('/').pop()).then(result => setCardList(result))
+        break
+      case 2:
+        owned(location.state || location.pathname.split('/').pop()).then(result => setCardList(result))
+        break
+      case 3:
+        created(location.state || location.pathname.split('/').pop()).then(result => setCardList(result))
+        break
+      default:
     }
-  }, [idx, userState.data, sro721, marketplace, fetch]);
-
+  }, [idx, location]);
   return (
     <>
-      {data.length > 0 ? (
+      {cardList.length > 0 && allNfts.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 md:gap-x-10 xl-grid-cols-4 gap-y-5 gap-x-6 ">
-          {data.map((data, index) => (
-            <Card key={index} idx={idx} user={userState.data} data={data} />
+          {cardList.map((data, index) => (
+            <Card key={index} idx={idx} user={userState.data} card={data} nftMetadata={allNfts.find(nft => nft.id === data.nftId.toString())} />
           ))}
         </div>
       ) : (

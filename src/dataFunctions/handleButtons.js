@@ -5,11 +5,11 @@ import { pinOnIpfs, userData } from "./fetchData";
 import { MarketplaceAddress } from "../contracts/Marketplace";
 
 //---------- General ----------//
-export const handleLikeButton = async (nft, sro721) => {
+export const handleLikeButton = async (nftId, likeCount, isLiked, sro721 ) => {
     try {
-      const tx = await sro721.like(nft.id);
+      const tx = await sro721.like(nftId);
       await tx.wait();
-      return {...nft, metadata: {...nft.metadata, likes: !nft.isLiked ? nft.metadata.likes + 1 : nft.metadata.likes - 1  }, isLiked: !nft.isLiked}
+      return {likeCount: isLiked ? likeCount - 1 : likeCount + 1, isLiked: !isLiked}
     } catch (e) {
       console.error(e.message);
       toast.error(e.message, {
@@ -132,7 +132,7 @@ export const handleApproveNft = async (sro721, nextStep, modal, setModal) => {
     const tx = await sro721.approve(MarketplaceAddress, nextStep.nftId);
     await tx.wait();
     setModal({...modal, loading: false});
-    setModal({...modal, setIsApproved: true});
+    setModal({...modal, isApproved: true});
     toast.success(`Nft approved successfully \n`, {
       position: "top-right",
       autoClose: 2000,
@@ -314,7 +314,7 @@ export const handleBuy = async (sale, marketplace, modal, setModal, open, setOpe
     });
     setModal({...modal, isBought: true});
     setTimeout(() => {
-      setOpen({ ...open, removeSale: false })
+      setOpen({ ...open, buyNft: false })
     }, 2000);
   } catch (e) {
     setModal({...modal, loading: false});
