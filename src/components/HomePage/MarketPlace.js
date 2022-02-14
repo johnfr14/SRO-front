@@ -27,7 +27,7 @@ const MarketPlace = () => {
         </div>
       </div>
     </>
-  );
+  )
 };
 
 export default MarketPlace;
