@@ -11,7 +11,7 @@ const Header = () => {
   return (
     <div className="flex flex-col justify-between px-6 py-8 space-y-8 md:space-y-0 md:flex-row md:px-10 md:py-10">
       <div className="flex flex-row items-center justify-between">
-        <Button target={"/"} className="text-yellow-400 text-3xl">Training marketplace</Button>
+        <Button target={"/"} className="text-yellow-400 text-3xl">SRO Training marketplace</Button>
         <Login noLogged className={"md:hidden"} />
       </div>
       <div className="flex flex-row items-center justify-around sm:space-x-5 sm:mx-auto md:mx-0">
