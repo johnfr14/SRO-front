@@ -5,12 +5,12 @@ const axios = require("axios")
 /****************************************
             Marketplace.sol
 *****************************************/
-//Query: https://api.thegraph.com/subgraphs/name/johnfr14/marketplace
+//Query: https://api.thegraph.com/subgraphs/name/johnfr14/training-marketplace
 
 // Fetch all nfts currently on sales
 export const getNftOnSale = async () => {
     const result = await axios({
-        url: 'https://api.thegraph.com/subgraphs/name/johnfr14/marketplace',
+        url: 'https://api.thegraph.com/subgraphs/name/johnfr14/training-marketplace',
         method: 'post',
         data: {
             query: `
@@ -38,7 +38,7 @@ export const onSaleOwned = async (address) => {
     let result 
     try {
     result = await axios({
-        url: 'https://api.thegraph.com/subgraphs/name/johnfr14/marketplace',
+        url: 'https://api.thegraph.com/subgraphs/name/johnfr14/training-marketplace',
         method: 'post',
         data: {
             query: `
@@ -67,13 +67,13 @@ export const onSaleOwned = async (address) => {
 /****************************************
                 SRO.sol
 *****************************************/
-//Query: https://api.thegraph.com/subgraphs/name/johnfr14/sro
+//Query: https://api.thegraph.com/subgraphs/name/johnfr14/training-marketplace-sro721
 
 
 // fetch all the nfts created so far
 export const nfts = async () => {
     const result = await axios({
-        url: 'https://api.thegraph.com/subgraphs/name/johnfr14/sro',
+        url: 'https://api.thegraph.com/subgraphs/name/johnfr14/training-marketplace-sro721',
         method: 'post',
         data: {
         query: `
@@ -105,7 +105,7 @@ export const created = async (address) => {
     let result 
     try {
     result = await axios({
-        url: 'https://api.thegraph.com/subgraphs/name/johnfr14/sro',
+        url: 'https://api.thegraph.com/subgraphs/name/johnfr14/training-marketplace-sro721',
         method: 'post',
         data: {
             query: `
@@ -142,7 +142,7 @@ export const owned = async (address) => {
     let result 
     try {
     result = await axios({
-        url: 'https://api.thegraph.com/subgraphs/name/johnfr14/sro',
+        url: 'https://api.thegraph.com/subgraphs/name/johnfr14/training-marketplace-sro721',
         method: 'post',
         data: {
             query: `
@@ -180,7 +180,7 @@ export const getNftById = async (nftId) => {
     let sale = null
     try {
     result = await axios({
-        url: 'https://api.thegraph.com/subgraphs/name/johnfr14/sro',
+        url: 'https://api.thegraph.com/subgraphs/name/johnfr14/training-marketplace-sro721',
         method: 'post',
         data: {
             query: `
@@ -204,7 +204,7 @@ export const getNftById = async (nftId) => {
     })
 
     sale = await axios({
-        url: 'https://api.thegraph.com/subgraphs/name/johnfr14/marketplace',
+        url: 'https://api.thegraph.com/subgraphs/name/johnfr14/training-marketplace',
         method: 'post',
         data: {
             query: `
