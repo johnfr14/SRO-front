@@ -9,7 +9,7 @@ const axios = require("axios")
 
 // Fetch all nfts currently on sales
 export const getNftOnSale = async () => {
-    const result = await axios({
+    let result = await axios({
         url: 'https://api.thegraph.com/subgraphs/name/johnfr14/training-marketplace',
         method: 'post',
         data: {
@@ -29,7 +29,12 @@ export const getNftOnSale = async () => {
             `
         }
     })
-    return result.data.data.sales
+    if (result.data.data === undefined) {
+        result = {}
+    } else {
+        result = result.data.data.sales 
+    }
+    return result
 }
 
 // Fetch only the nfts put on sale by the user
@@ -43,21 +48,30 @@ export const onSaleOwned = async (address) => {
         data: {
             query: `
                 query {
-                    sales(where: {seller: "${address}", status: 1}, orderBy: saleId, orderDirection: asc) 
-                    {
+                    user (id: "${address}") {
                         id
-                        saleId
-                        nftId
-                        status
-                        price
-                        seller
-                        collection
-                    }
+                        totalAmountSold
+                        maxSold
+                          Sales (where: {status: "1"}){
+                          id
+                          saleId
+                          nftId
+                          status
+                          price
+                          seller {id}
+                          collection
+                        }
+                        totalSold
+                      }
                 }
             `
         }
     })
-    result = result.data.data.sales
+        if (result.data.data === undefined) {
+            result = {}
+        } else {
+            result = result.data.data.user.Sales
+        }
     } catch (error) {
         result = []
     }
@@ -178,7 +192,6 @@ export const owned = async (address) => {
 export const getNftById = async (nftId) => {
     let result = null
     let sale = null
-    try {
     result = await axios({
         url: 'https://api.thegraph.com/subgraphs/name/johnfr14/training-marketplace-sro721',
         method: 'post',
@@ -197,11 +210,16 @@ export const getNftById = async (nftId) => {
                         likeCount
                         liked (where: {isLiked: true}){userAddress}
                         url    
-                      }
+                    }
                 }
             `
         }
     })
+    if (result.data.data === undefined) {
+        result = {}
+    } else {
+        result = result.data.data.nft
+    }
 
     sale = await axios({
         url: 'https://api.thegraph.com/subgraphs/name/johnfr14/training-marketplace',
@@ -209,7 +227,7 @@ export const getNftById = async (nftId) => {
         data: {
             query: `
                 query {
-                    sales (where: {nftId: "${result.data.data.nft.nftId}", status: "1"}){
+                    sales (where: {nftId: "${result.nftId}", status: "1"}){
                         id
                         saleId
                         nftId
@@ -222,7 +240,7 @@ export const getNftById = async (nftId) => {
             `
         }
     })
-
+    
     if (sale.data.data.sales.length > 0) {
         sale = sale.data.data.sales[0]
         sale.price = ethers.utils.formatEther(sale.price)
@@ -230,8 +248,5 @@ export const getNftById = async (nftId) => {
         sale = defaultCardData.sale
     }
 
-    } catch (error) {
-        result = {}
-    }
-    return {...result.data.data.nft, sale: sale }
+    return await {...result, sale: sale }
 }
